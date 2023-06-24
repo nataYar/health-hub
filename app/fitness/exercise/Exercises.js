@@ -18,7 +18,7 @@ const Exercises = ({}) => {
     const exerciseCount = 600;
         for (let i = 0; i < exerciseCount; i++) {
           newExercises.push(
-            <div> jhbj {i}</div>
+            <> jhbj {i}</>
           );
         }
     
