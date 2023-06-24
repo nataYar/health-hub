@@ -3,8 +3,9 @@ import PropTypes from "prop-types";
 import { Box, ButtonBase } from "@mui/material";
 
 const SideNavItem = (props) => {
-  const { active = false, disabled, external, icon, path, text } = props;
+  const { active = false, disabled, external, icon, path, text, handleDrawerToggle } = props;
 
+ 
   const linkProps = path
     ? external
       ? {
@@ -21,6 +22,7 @@ const SideNavItem = (props) => {
   return (
     <li>
       <ButtonBase
+       onClick={handleDrawerToggle}
         sx={{
           alignItems: "center",
           borderRadius: 1,

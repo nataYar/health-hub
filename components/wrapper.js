@@ -1,18 +1,19 @@
-'use client'
+"use client";
 import { Box } from "@mui/material";
 
-const Wrapper = ({children}) => {
+const Wrapper = ({ children }) => {
   return (
     <Box
-    sx={{
-      padding: { xs: '80px 0 0 0' , md: '100px 0 0 280px' },
-      width: '100%',
-      minHeight: '100vh',
-    }}
-  >
-    {children}
-  </Box>
-  )
-}
+      sx={{
+        padding: { xs: "100px 0 0 0", sm: "100px 30px 0 270px" },
+        width: "100%",
+        minHeight: "100vh",
+        height: "auto",
+      }}
+    >
+      {children}
+    </Box>
+  );
+};
 
-export default Wrapper
+export default Wrapper;

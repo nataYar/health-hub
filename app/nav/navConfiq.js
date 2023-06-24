@@ -10,12 +10,12 @@ export const topNavItems = [
   {
     text: 'Home',
     icon: <DashboardRoundedIcon />,
-    link: '/' 
+    link: '/dashboard' 
   },
   {
-    text: 'Saved',
+    text: ' Favorites',
     icon: <StarRoundedIcon/>,
-    link: '/saved' 
+    link: '/favorites' 
   },
   {
     text: 'Recommended',
@@ -26,43 +26,38 @@ export const topNavItems = [
 
 export const navItems = [
     {
-      text: 'Food',
+      text: 'Food / Log',
       icon: <RamenDiningRoundedIcon />,
       link: '/food', 
       subItems: [
-        { text: 'Sub-item 1-1', link: '/food/subitem1-1' },
+        // { text: 'food log', link: '/health/food_log' },
         { text: 'Sub-item 1-2', link: '/food/subitem1-2' },
         { text: 'Sub-item 1-3', link: '/food/subitem1-3' },
       ],
     },
     {
-      text: 'Fitness',
+      text: 'Fitness / Log',
       icon: <FitnessCenterRoundedIcon />,
       link: '/fitness', 
       subItems: [
-        { text: 'Sub-item 2-1', link: '/fitness/subitem2-1' },
+        { text: 'Exercise', link: '/fitness/exercise' },
         { text: 'Sub-item 2-2', link: '/fitness/subitem2-2' },
         { text: 'Sub-item 2-3', link: '/fitness/subitem2-3' },
       ],
     },
     {
-      text: 'Health',
+      text: 'Health / Log',
       icon: <LocalHospitalRoundedIcon />, 
       link: '/health', 
       subItems: [
-        { text: 'Sub-item 3-1', link: '/health/subitem3-1' },
+        
         { text: 'Sub-item 3-2', link: '/health/subitem3-2' },
-        { text: 'Sub-item 3-3', link: '/health/subitem3-3' },
+        { text: 'Symptoms checker', link: '/health/symptoms' },
       ],
     },
     {
       text: 'News',
       icon: <NewspaperRoundedIcon />, 
-      link: '/news', 
-      subItems: [
-        { text: 'Sub-item 4-1', link: '/news/subitem4-1' },
-        { text: 'Sub-item 4-2', link: '/news/subitem4-2' },
-        { text: 'Sub-item 4-3', link: '/news/subitem4-3' },
-      ],
+      link: '/news'
     },
   ];

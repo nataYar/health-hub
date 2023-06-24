@@ -1,8 +1,11 @@
-import React from 'react'
+'use client'
+
+import { useState } from 'react'
+import Wrapper from '@/components/Wrapper'
 
 const Fitness = () => {
   return (
-    <div>Fitnessssssssssssss</div>
+    <Wrapper>My log</Wrapper>
   )
 }
 

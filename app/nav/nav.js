@@ -2,18 +2,18 @@
 
 import { useState } from "react";
 import { usePathname } from "next/navigation";
+import NextLink from "next/link";
 import { navItems, topNavItems } from "./navConfiq";
 import SideNavItem from "./sideNavItem";
 import TopNav from "./topNav";
-import { 
-  Drawer, 
-  Divider, 
+import {
+  Drawer,
+  Divider,
   CssBaseline,
-  Box, 
-  List, 
-  ListItem, 
-  Toolbar, 
-  Button 
+  Box,
+  List,
+  Toolbar,
+  Button,
 } from "@mui/material";
 
 const drawerWidth = 240;
@@ -30,7 +30,7 @@ const Nav = (props) => {
   const drawer = (
     <Box
       sx={{
-        height: 'auto',
+        minHeight: "100%",
         backgroundColor: "neutral.800",
         color: "common.white",
       }}
@@ -38,66 +38,75 @@ const Nav = (props) => {
       <Toolbar />
 
       <List>
-      { topNavItems.map((item, index) => {
-        const active = item.link ? (pathname === item.link) : false;
-        return (
-          <div key={index}>
-            <SideNavItem
-              active={active}
-              disabled={item.disabled}
-              external={item.external}
-              icon={item.icon}
-              key={index}
-              path={item.link}
-              text={item.text}
-            />
-        </div>
-        )
-      })}
+        {topNavItems.map((item, index) => {
+          const active = item.link ? pathname === item.link : false;
+          return (
+            <div key={index}>
+              <SideNavItem
+                active={active}
+                disabled={item.disabled}
+                external={item.external}
+                icon={item.icon}
+                key={index}
+                path={item.link}
+                text={item.text}
+                handleDrawerToggle={handleDrawerToggle}
+              />
+            </div>
+          );
+        })}
       </List>
 
       <Divider sx={{ borderColor: "neutral.700" }} />
 
       <List>
-      {navItems.map((item, index) => {
-        const active = item.link ? (pathname === item.link) : false;
-        return (
-          <div key={index}>
-            <SideNavItem
-              active={active}
-              disabled={item.disabled}
-              external={item.external}
-              icon={item.icon}
-              key={index}
-              path={item.link}
-              text={item.text}
-            />
+        {navItems.map((item, index) => {
+          const active = item.link ? pathname === item.link : false;
+          return (
+            <div key={index}>
+              <SideNavItem
 
-          <List component="div" 
-          sx={{
-                display:'flex',
-                flexDirection:"column",
-                alignItems:"center"
-              }}
-              >
-            {item.subItems.map((el, ind) => (
-                <Button 
-                key={ind}
-                variant="contained"
+                active={active}
+                disabled={item.disabled}
+                external={item.external}
+                icon={item.icon}
+                key={index}
+                path={item.link}
+                text={item.text}
+                handleDrawerToggle={handleDrawerToggle}
+              />
+
+              <List
+                component="div"
                 sx={{
-                  backgroundColor: "neutral.800",
-                  color: "neutral.400",
-                  flexGrow: 1,
-                  fontFamily: (theme) => theme.typography.fontFamily,
-                  fontSize: 12,
-                  whiteSpace: "nowrap",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
                 }}
-                >{el.text}</Button>
-            ))}
-          </List>
-        </div>
-        )
-      })}
+              >
+                { item.subItems ? item.subItems.map((el, ind) => (
+                <NextLink href={el.link} key={ind}>
+                  <Button
+                    variant="contained"
+                    onClick={handleDrawerToggle}
+                    sx={{
+                      backgroundColor: "neutral.800",
+                      color: "neutral.400",
+                      flexGrow: 1,
+                      fontFamily: (theme) => theme.typography.fontFamily,
+                      fontSize: 12,
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {el.text}
+                  </Button>
+                </NextLink>
+                  
+                )) :  null}
+              </List>
+            </div>
+          );
+        })}
       </List>
     </Box>
   );
@@ -108,10 +117,13 @@ const Nav = (props) => {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <TopNav drawerWidth={drawerWidth} handleDrawerToggle={handleDrawerToggle} />
+      <TopNav
+        drawerWidth={drawerWidth}
+        handleDrawerToggle={handleDrawerToggle}
+      />
       <Box
         component="nav"
-        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }} 
+        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
         //sm- small screens
         aria-label="mailbox folders"
       >

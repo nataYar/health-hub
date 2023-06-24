@@ -3,7 +3,7 @@ import Wrapper from '@/components/Wrapper';
 export default function Dashboard() {
   return (
     <Wrapper>
-      Dashboard
+      all statistics from your logs- food, health, fitness, 
     </Wrapper>
   )
 }
