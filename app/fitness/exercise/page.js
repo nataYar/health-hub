@@ -9,6 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import Exercises from "./Exercises";
+import ExercisesNextPagination from "./ExercisesNextPagination"
 
 const RenderExercises = () => {
   const exerciseCount = 200;
@@ -54,6 +55,7 @@ const Exercise = () => {
           />
           <Exercises bodyPart={"bodyPart"} exercises={exercises} setExercises={setExercises}/> */}
          <Exercises />
+         {/* <ExercisesNextPagination /> */}
         </Box>
       </Stack>
     </Wrapper>

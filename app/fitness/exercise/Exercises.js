@@ -14,19 +14,29 @@ const Exercises = ({}) => {
 
   useEffect(() => {
     const renderExercises = () => {
-        const newExercises = [];
-    const exerciseCount = 600;
-        for (let i = 0; i < exerciseCount; i++) {
-          newExercises.push(
-            <> jhbj {i}</>
-          );
-        }
-    
-        setExercises(newExercises);
-      };
-    
-      renderExercises();
+      const newExercises = [];
+      const exerciseCount = 600;
+      for (let i = 0; i < exerciseCount; i++) {
+        newExercises.push({ text: `jhbj ${i}`, id: i, like: false  });
+      }
+      setExercises(newExercises);
+    };
+
+    renderExercises();
   }, []);
+
+  useEffect(() => {
+
+console.log(exercises)
+// const indexOfLastExercise = currentPage * exercisesPerPage;
+// const indexOfFirstExercise = indexOfLastExercise - exercisesPerPage;
+
+// const currentExercises = exercises.slice(
+//   indexOfFirstExercise,
+//   indexOfLastExercise
+// );
+// console.log(currentExercises)
+  }, [exercises])
 
   //   useEffect(() => {
   //     const fetchExercisesData = async () => {
@@ -53,7 +63,13 @@ const Exercises = ({}) => {
   //   Pagination
   const indexOfLastExercise = currentPage * exercisesPerPage;
   const indexOfFirstExercise = indexOfLastExercise - exercisesPerPage;
-  const currentExercises = exercises.slice(indexOfFirstExercise, indexOfLastExercise);
+  
+  const currentExercises = exercises.slice(
+    indexOfFirstExercise,
+    indexOfLastExercise
+  );
+
+  useEffect(() => {console.log(currentExercises)}, [currentExercises])
 
   const paginate = (event, value) => {
     setCurrentPage(value);
@@ -61,15 +77,15 @@ const Exercises = ({}) => {
     // window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-//   if (!currentExercises.length) return <div>loading...</div>;
+  //   if (!currentExercises.length) return <div>loading...</div>;
 
   return (
     <Box
       id="exercises"
       sx={{
         mt: { xs: "40px", lg: "50px" },
-height:"100%",
-width:"100%",
+        height: "100%",
+        width: "100%",
       }}
       mt="50px"
       p="10px"
@@ -90,10 +106,9 @@ width:"100%",
         ))}
 
         {/* {currentExercises.map((exercise, ind) => (
-          <div style={{ width: "100px", height: "50px" }} key={ind} >{exercise}</div>
+          <div style={{ width: "100px", height: "50px" }} key={ind} >{exercise.text}</div>
         ))} */}
 
-        {/* <RenderExercisesComp/> */}
       </Stack>
 
       <Stack sx={{ mt: { lg: "114px", xs: "70px" } }} alignItems="center">

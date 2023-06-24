@@ -3,14 +3,14 @@ import { useState } from "react";
 import { Button, Stack, Typography } from "@mui/material";
 import StarBorderRoundedIcon from '@mui/icons-material/StarBorderRounded';
 import StarRoundedIcon from "@mui/icons-material/StarRounded";
-
 import styles from "./fitness.module.css";
 
 const ExerciseCard = ({ exercise }) => {
-  const [isLiked, setIsLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState(exercise.like);
 
   const handleClick = () => {
     setIsLiked(!isLiked);
+    exercise.like = !isLiked;
   };
 
   return (
@@ -24,9 +24,9 @@ const ExerciseCard = ({ exercise }) => {
         alignItems: "center",
       }}
     >
-      {isLiked ? (
+        {exercise.like ? (
         <StarRoundedIcon
-        onClick={handleClick}
+          onClick={handleClick}
           sx={{
             position: "absolute",
             right: "0",
@@ -44,13 +44,13 @@ const ExerciseCard = ({ exercise }) => {
         />
       )}
 
-      {exercise}
-      <img
+      {exercise.name}
+      {/* <img
         className={styles.exercise_card}
         src={exercise.gifUrl}
         alt={exercise.name}
         loading="lazy"
-      />
+      /> */}
       <Stack direction="row">
         <Button
           sx={{
@@ -62,7 +62,7 @@ const ExerciseCard = ({ exercise }) => {
             textTransform: "capitalize",
           }}
         >
-          {exercise.bodyPart}
+          {/* {exercise.bodyPart} */}
         </Button>
         <Button
           sx={{
@@ -74,7 +74,7 @@ const ExerciseCard = ({ exercise }) => {
             textTransform: "capitalize",
           }}
         >
-          {exercise.target}
+          {/* {exercise.target} */}
         </Button>
       </Stack>
       <Typography
@@ -90,7 +90,7 @@ const ExerciseCard = ({ exercise }) => {
         textTransform="capitalize"
       >
         {/* {exercise.name} */}
-        {exercise}
+        {exercise.text}
       </Typography>
     </Stack>
   );
