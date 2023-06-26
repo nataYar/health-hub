@@ -4,7 +4,6 @@ import { Box, ButtonBase } from "@mui/material";
 
 const SideNavItem = (props) => {
   const { active = false, disabled, external, icon, path, text, handleDrawerToggle } = props;
-
  
   const linkProps = path
     ? external
@@ -19,8 +18,10 @@ const SideNavItem = (props) => {
         }
     : {};
 
+    console.log(text)
   return (
-    <li>
+    <>
+      
       <ButtonBase
        onClick={handleDrawerToggle}
         sx={{
@@ -59,23 +60,14 @@ const SideNavItem = (props) => {
             {icon}
           </Box>
         ) : (
-          <Box
-            component="span"
-            sx={{
-              alignItems: "center",
-              color: "neutral.400",
-              display: "inline-flex",
-              justifyContent: "center",
-              mr: 2,
-              ...(active && {
-                color: "primary.main",
-              }),
-            }}
-          ></Box>
+          null
         )}
         <Box
           component="span"
+         
           sx={{
+            // textAlign: icon ? 'left' : 'center',
+            ml: icon ? 0 : '55px',
             color: "neutral.400",
             flexGrow: 1,
             fontFamily: (theme) => theme.typography.fontFamily,
@@ -94,17 +86,8 @@ const SideNavItem = (props) => {
           {text}
         </Box>
       </ButtonBase>
-    </li>
+    </>
   );
-};
-
-SideNavItem.propTypes = {
-  active: PropTypes.bool,
-  disabled: PropTypes.bool,
-  external: PropTypes.bool,
-  icon: PropTypes.node,
-  path: PropTypes.string,
-  text: PropTypes.string.isRequired,
 };
 
 export default SideNavItem;

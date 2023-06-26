@@ -31,7 +31,7 @@ export const navItems = [
       link: '/food', 
       subItems: [
         // { text: 'food log', link: '/health/food_log' },
-        { text: 'Sub-item 1-2', link: '/food/subitem1-2' },
+        { text: 'Calories', link: '/food/calculate' },
         { text: 'Sub-item 1-3', link: '/food/subitem1-3' },
       ],
     },

@@ -65,7 +65,6 @@ const Nav = (props) => {
           return (
             <div key={index}>
               <SideNavItem
-
                 active={active}
                 disabled={item.disabled}
                 external={item.external}
@@ -77,32 +76,26 @@ const Nav = (props) => {
               />
 
               <List
-                component="div"
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
               >
-                { item.subItems ? item.subItems.map((el, ind) => (
-                <NextLink href={el.link} key={ind}>
-                  <Button
-                    variant="contained"
-                    onClick={handleDrawerToggle}
-                    sx={{
-                      backgroundColor: "neutral.800",
-                      color: "neutral.400",
-                      flexGrow: 1,
-                      fontFamily: (theme) => theme.typography.fontFamily,
-                      fontSize: 12,
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    {el.text}
-                  </Button>
-                </NextLink>
-                  
-                )) :  null}
+                {item.subItems
+                  ? item.subItems.map((el, ind) => {
+                      console.log(el.text);
+                      const active = el.link ? pathname === el.link : false;
+                      return (
+                        <div key={index}>
+                          <SideNavItem
+                            active={active}
+                            disabled={el.disabel}
+                            external={el.external}
+                            icon={el.icon ? el.icon : null}
+                            path={el.link}
+                            text={el.text}
+                            handleDrawerToggle={handleDrawerToggle}
+                          />
+                        </div>
+                      );
+                    })
+                  : null}
               </List>
             </div>
           );

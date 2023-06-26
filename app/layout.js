@@ -2,8 +2,8 @@ import { Inter } from 'next/font/google';
 import Nav from './nav/nav';
 import { Providers } from './context/providers';
 import './styles/globals.css';
-const inter = Inter({ subsets: ['latin'] })
 
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'Health Hub',

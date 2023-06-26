@@ -25,18 +25,6 @@ const Exercises = ({}) => {
     renderExercises();
   }, []);
 
-  useEffect(() => {
-
-console.log(exercises)
-// const indexOfLastExercise = currentPage * exercisesPerPage;
-// const indexOfFirstExercise = indexOfLastExercise - exercisesPerPage;
-
-// const currentExercises = exercises.slice(
-//   indexOfFirstExercise,
-//   indexOfLastExercise
-// );
-// console.log(currentExercises)
-  }, [exercises])
 
   //   useEffect(() => {
   //     const fetchExercisesData = async () => {
@@ -68,8 +56,6 @@ console.log(exercises)
     indexOfFirstExercise,
     indexOfLastExercise
   );
-
-  useEffect(() => {console.log(currentExercises)}, [currentExercises])
 
   const paginate = (event, value) => {
     setCurrentPage(value);

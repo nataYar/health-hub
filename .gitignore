@@ -5,7 +5,7 @@
 ./app/utils/.env
 
 node_modules
-
+.app/aws-exports.js
 #amplify-do-not-edit-begin
 amplify
 amplify/\#current-cloud-backend
