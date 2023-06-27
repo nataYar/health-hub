@@ -35,7 +35,7 @@ const TopNav = ({ drawerWidth, handleDrawerToggle }) => {
     color: '#fff',
   };
 
-  const initials = myUser ? myUser[0].toUpperCase() : <Avatar />;
+  const initials = myUser ? myUser[0].toUpperCase() : <Avatar sx={{ height:"48px", width:"48px"}}/>;
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);

@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { usePathname } from "next/navigation";
-import NextLink from "next/link";
 import { navItems, topNavItems } from "./navConfiq";
 import SideNavItem from "./sideNavItem";
 import TopNav from "./topNav";
@@ -12,8 +11,7 @@ import {
   CssBaseline,
   Box,
   List,
-  Toolbar,
-  Button,
+  Toolbar
 } from "@mui/material";
 
 const drawerWidth = 240;
@@ -79,10 +77,9 @@ const Nav = (props) => {
               >
                 {item.subItems
                   ? item.subItems.map((el, ind) => {
-                      console.log(el.text);
                       const active = el.link ? pathname === el.link : false;
                       return (
-                        <div key={index}>
+                        <div key={ind}>
                           <SideNavItem
                             active={active}
                             disabled={el.disabel}

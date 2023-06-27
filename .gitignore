@@ -1,8 +1,8 @@
 .next/**
 
 # node_modules
-.env
-./app/utils/.env
+.env.local
+./app/utils/.env.local
 
 node_modules
 .app/aws-exports.js

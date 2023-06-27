@@ -24,7 +24,7 @@ function AuthContainer({ signOut, user }) {
 
   const handleUserExists = () => {
     updateUser(user.attributes.nickname);
-    router.push("./dashboard")
+    // router.push("./dashboard")
   }
 
   return (

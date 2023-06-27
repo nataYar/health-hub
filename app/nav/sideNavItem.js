@@ -1,10 +1,17 @@
 import NextLink from "next/link";
-import PropTypes from "prop-types";
 import { Box, ButtonBase } from "@mui/material";
 
 const SideNavItem = (props) => {
-  const { active = false, disabled, external, icon, path, text, handleDrawerToggle } = props;
- 
+  const {
+    active = false,
+    disabled,
+    external,
+    icon,
+    path,
+    text,
+    handleDrawerToggle,
+  } = props;
+
   const linkProps = path
     ? external
       ? {
@@ -18,12 +25,10 @@ const SideNavItem = (props) => {
         }
     : {};
 
-    console.log(text)
   return (
     <>
-      
       <ButtonBase
-       onClick={handleDrawerToggle}
+        onClick={handleDrawerToggle}
         sx={{
           alignItems: "center",
           borderRadius: 1,
@@ -59,15 +64,12 @@ const SideNavItem = (props) => {
           >
             {icon}
           </Box>
-        ) : (
-          null
-        )}
+        ) : null}
         <Box
           component="span"
-         
           sx={{
             // textAlign: icon ? 'left' : 'center',
-            ml: icon ? 0 : '55px',
+            ml: icon ? 0 : "55px",
             color: "neutral.400",
             flexGrow: 1,
             fontFamily: (theme) => theme.typography.fontFamily,
