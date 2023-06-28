@@ -24,7 +24,7 @@ function RecipeLists({ data }) {
     <Container>
       <Grid className="flexbox">
         {/* {data &&
-          data.hits.map((item, index) => (
+          data.hints.map((item, index) => (
             <div key={index} className="flexItem">
               <div className="img-wrapper">
                 <img src={item.recipe.image} alt={item.recipe.label} />
