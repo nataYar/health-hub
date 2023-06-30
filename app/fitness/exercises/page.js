@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import Wrapper from "@/components/Wrapper";
+
 import HorizontalBar from "./HorizontalBar";
 import { exerciseOptions, fetchData } from "@/app/utils/exerciseData";
 import {
@@ -44,7 +44,7 @@ const Exercise = () => {
   // }, []);
 
   return (
-    <Wrapper>
+
       <Stack>
         <Box sx={{ width: "100%" }}>
           {/* <HorizontalBar
@@ -58,8 +58,9 @@ const Exercise = () => {
          {/* <ExercisesNextPagination /> */}
         </Box>
       </Stack>
-    </Wrapper>
+
   );
 };
 
 export default Exercise;
+

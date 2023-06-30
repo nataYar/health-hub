@@ -1,44 +1,59 @@
 "use client";
-import { useState } from "react";
-import Wrapper from "@/components/Wrapper";
+import { useState, useEffect } from "react";
 import SearchBar from "./SearchBar";
 import BottomTable from "./BottomTable";
-
+import SideTable from "./SideTable";
 import { fetchFoodData, fetchNutritionData } from "../utils/foodData";
-import { Typography, TextField } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 
 const Food = () => {
   const [searchedTerm, setSearchedTerm] = useState("");
   const [query, setQuery] = useState("");
   const [data, setData] = useState("");
-  // const [sideBar, setSideBar] = useState(false);
 
   const searchRecipe = async (searchQuery) => {
     try {
-      // const ingr = searchQuery.split('\n');
-      // console.log(ingr)
       const response = await fetchNutritionData(searchQuery);
-      // console.log(response);
-      // setData(response);
-      // props.setLoader(false)
+      if (response !== undefined) {
+        setData(response);
+      }
     } catch (error) {
       console.error("Error while fetching recipe data:", error);
     }
   };
 
-  return (
-    <Wrapper>
-      <Typography variant="h4">Get nutrition value of your meal</Typography>
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
-      <SearchBar
-        data={data}
-        searchedTerm={searchedTerm}
-        setSearchedTerm={setSearchedTerm}
-        setQuery={setQuery}
-        searchRecipe={searchRecipe}
-      />
-      <BottomTable  data={data} />
-    </Wrapper>
+  return (
+      <Stack
+        sx={{
+          flexDirection: { xs: "column", sm: "row" },
+        }}
+        justifyContent="space-between"
+        spacing={0}
+        flexWrap="wrap"
+      >
+        <Stack
+          direction="column"
+          flexWrap="wrap"
+          sx={{
+            width: { xs: "100%", sm: "60%" },
+          }}
+        >
+          <SearchBar
+            data={data}
+            searchedTerm={searchedTerm}
+            setSearchedTerm={setSearchedTerm}
+            setQuery={setQuery}
+            searchRecipe={searchRecipe}
+          />
+          <BottomTable data={data} />
+        </Stack>
+
+        <SideTable data={data} />
+      </Stack>
   );
 };
 

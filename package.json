@@ -15,7 +15,6 @@
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.13.5",
     "aws-amplify": "^5.3.1",
-    "aws-crt": "^1.15.18",
     "encoding": "^0.1.13",
     "eslint": "8.43.0",
     "eslint-config-next": "13.4.6",

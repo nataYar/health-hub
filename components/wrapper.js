@@ -9,6 +9,7 @@ const Wrapper = ({ children }) => {
         width: "100%",
         minHeight: "100vh",
         height: "auto",
+        backgroundColor:"neutral.50",
       }}
     >
       {children}

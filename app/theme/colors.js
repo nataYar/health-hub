@@ -11,6 +11,13 @@ const withAlphas = (color) => {
   };
 };
 
+export const extraColors = {
+  green: '#10b981',
+  red: '#f04438',
+  orange:'#f79009',
+}
+
+
 export const neutral = {
   50: '#F8F9FA',
   100: '#F3F4F6',

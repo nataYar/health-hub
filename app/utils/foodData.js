@@ -7,7 +7,6 @@ const nutritionApiKey = process.env.NEXT_PUBLIC_EDAMAM_NUTRITION_KEY;
 const recipeApiId = process.env.NEXT_PUBLIC_EDAMAM_RECIPE_ID;
 const recipeApiKey = process.env.NEXT_PUBLIC_EDAMAM_RECIPE_KEY;
 
-
 export const fetchFoodData = async (searchQuery) => {
   try {
     const response = await fetch(
@@ -29,41 +28,39 @@ export const fetchFoodData = async (searchQuery) => {
 // 10 oz chickpeas
 export const fetchNutritionData = async (searchQuery) => {
   try {
-    const ingr = searchQuery.split('\n');
-    console.log(ingr);
+    const ingr = searchQuery.includes("\n")
+    ? searchQuery.split("\n")
+        .map(str => str.trim().replace(/(^,)|(,$)/g, ''))
+    : [searchQuery];
+
+    // console.log(ingr)
     const url = `https://api.edamam.com/api/nutrition-details?app_id=${nutritionApiId}&app_key=${nutritionApiKey}`;
 
     const response = await fetch(url, {
-      method: 'POST',
-      cache: 'no-cache',
+      method: "POST",
+      cache: "no-cache",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ ingr })
+      body: JSON.stringify({ ingr }),
     });
 
-    const data = await response.json();
-    console.log(data)
-    return data;
-
-
-    // const url=`https://api.edamam.com/api/nutrition-details?app_id=${nutritionApiId}&app_key=${nutritionApiKey}&nutrition-type=cooking&ingr=${searchQuery}`
-
-    // const response = await fetch(url);
-
-    // if (!response.ok) {
-    //   throw new Error("Request failed");
-    // }
-
-    // const data = await response.json();
-    // return data;
+    if (response.status === 200) {
+      const data = await response.json();
+      console.log(data)
+      return data;
+    } else {
+      // Handle non-200 status code
+      console.error("Server error occurred");
+      return;
+      // Display an error message or take appropriate action
+    }
   } catch (error) {
-    console.error(error);
+    console.log(error)
   }
 };
 
-
-export const fetchRecipeData = async (searchQuery, diet = "", health="") => {
+export const fetchRecipeData = async (searchQuery, diet = "", health = "") => {
   try {
     let apiUrl = `https://api.edamam.com/api/recipes/v2?type=public&q=${searchQuery}&app_id=${nutritionApiId}&app_key=${nutritionApiKey}`;
 
@@ -82,17 +79,17 @@ export const fetchRecipeData = async (searchQuery, diet = "", health="") => {
     }
 
     const data = await response.json();
-    console.log(data)
+    console.log(data);
     return data;
   } catch (error) {
-    console.error(error);
+    console.log(error)
+    
   }
 };
 
 // https://api.edamam.com/api/nutrition-details?app_id=a8451563&app_key=c17250c5ea86c79ed53cba21d1daa96e //nutrition
 
 //   https://api.edamam.com/api/food-database/v2/parser?app_id=8e0bd067&app_key=6a38cf87ae8017de073395be73379658&ingr=banana&nutrition-type=cooking
-
 
 // page.js: 16
 // {text: 'milk', parsed: Array(1), hints: Array(2

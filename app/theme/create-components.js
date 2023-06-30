@@ -201,7 +201,7 @@ export function createComponents(config) {
             backgroundColor: 'transparent',
             [`& .${outlinedInputClasses.notchedOutline}`]: {
               borderColor: palette.primary.main,
-              boxShadow: `${palette.primary.main} 0 0 0 2px`
+              boxShadow: `${palette.primary.main} 0 0 0 1px`
             }
           },
           [`&.${filledInputClasses.error}`]: {
@@ -276,8 +276,8 @@ export function createComponents(config) {
         root: {
           borderBottom: 'none',
           [`& .${tableCellClasses.root}`]: {
-            borderBottom: 'none',
-            backgroundColor: palette.neutral[50],
+            // borderBottom: 'none',
+            backgroundColor: '#FFF',
             color: palette.neutral[700],
             fontSize: 12,
             fontWeight: 600,
