@@ -1,19 +1,24 @@
-"use client";
-import { Box } from "@mui/material";
+'use client'
+import { Stack } from "@mui/material";
 
 const Wrapper = ({ children }) => {
   return (
-    <Box
+    <Stack
+    direction='column'
+
       sx={{
-        padding: { xs: "100px 0 0 0", sm: "100px 30px 0 270px" },
+        padding: { xs: "100px 0 0 0", sm: "100px 30px 0px 270px" },
+        display: "flex",
+        flexFlow: 'column wrap',
+        alignItems: {xs: 'center', sm: 'flex-start'},
         width: "100%",
         minHeight: "100vh",
         height: "auto",
-        backgroundColor:"neutral.50",
+        backgroundColor: 'neutral.100'
       }}
     >
       {children}
-    </Box>
+    </Stack>
   );
 };
 

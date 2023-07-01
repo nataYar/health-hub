@@ -24,10 +24,12 @@ const SearchBar = ({ data, searchedTerm, setSearchedTerm, searchRecipe }) => {
           width: "100%", 
           mb:"15px",
           boxShadow: "rgba(0, 0, 0, 0.04) 0px 5px 22px, rgba(0, 0, 0, 0.03) 0px 0px 0px 0.5",
-          color: "neutral.800"
+          color: "neutral.800",
+          borderRadius: "20px",
          }} >
         <TextField
-        sx={{ mx:"0",
+        sx={{ 
+          mx:"0",
          px:"0", 
         width:"100%",   
         borderRadius: "20px",

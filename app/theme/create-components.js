@@ -150,11 +150,11 @@ export function createComponents(config) {
       styleOverrides: {
         root: {
           backgroundColor: 'transparent',
-          borderRadius: 8,
-          borderStyle: 'solid',
+          borderRadius: 20,
+          // borderStyle: 'solid',
           borderWidth: 1,
           overflow: 'hidden',
-          borderColor: palette.neutral[200],
+          // borderColor: palette.neutral[200],
           transition: muiTheme.transitions.create([
             'border-color',
             'box-shadow'

@@ -4,7 +4,7 @@ import SearchBar from "./SearchBar";
 import BottomTable from "./BottomTable";
 import SideTable from "./SideTable";
 import { fetchFoodData, fetchNutritionData } from "../utils/foodData";
-import { Stack, Typography } from "@mui/material";
+import { Stack, backdropClasses } from "@mui/material";
 
 const Food = () => {
   const [searchedTerm, setSearchedTerm] = useState("");
@@ -30,6 +30,7 @@ const Food = () => {
       <Stack
         sx={{
           flexDirection: { xs: "column", sm: "row" },
+          width:'100%',
         }}
         justifyContent="space-between"
         spacing={0}
