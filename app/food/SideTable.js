@@ -41,12 +41,12 @@ const SideTable = ({ data }) => {
         height: "auto",
         mb: "30px",
         borderRadius: "20px",
-        boxShadow:
-          "rgba(0, 0, 0, 0.04) 0px 5px 22px, rgba(0, 0, 0, 0.03) 0px 0px 0px 0.5",
+        // boxShadow:
+        //   "rgba(0, 0, 0, 0.04) 0px 5px 22px, rgba(0, 0, 0, 0.03) 0px 0px 0px 0.5",
         color: "neutral.800",
       }}
     >
-      <Typography sx={{ color: "#111927" }} textAlign="center" variant="h5">
+      <Typography sx={{ color: "#111927", mb:'12px' }} textAlign="center" variant="h5">
         Nutrition Facts
       </Typography>
       <Divider sx={{ borderWidth: "1px" }} />

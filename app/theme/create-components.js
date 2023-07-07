@@ -149,12 +149,13 @@ export function createComponents(config) {
     MuiFilledInput: {
       styleOverrides: {
         root: {
+          padding: '12px',
           backgroundColor: 'transparent',
           borderRadius: 20,
-          // borderStyle: 'solid',
+          borderStyle: 'solid',
           borderWidth: 1,
           overflow: 'hidden',
-          // borderColor: palette.neutral[200],
+          borderColor: palette.neutral[200],
           transition: muiTheme.transitions.create([
             'border-color',
             'box-shadow'
@@ -276,7 +277,7 @@ export function createComponents(config) {
         root: {
           borderBottom: 'none',
           [`& .${tableCellClasses.root}`]: {
-            // borderBottom: 'none',
+            borderBottom: 'none',
             backgroundColor: '#FFF',
             color: palette.neutral[700],
             fontSize: 12,

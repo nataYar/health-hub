@@ -1,6 +1,6 @@
 "use client";
-import { Stack } from "@mui/material";
-
+import { Stack, useTheme  } from "@mui/material";
+import { extraColors } from '../../../theme/colors';
 import {
   Chart as ChartJS,
   ArcElement,
@@ -15,18 +15,21 @@ ChartJS.register(
   Tooltip,
   Legend
 )
-const data = {
-  labels: ["Carbs", "Protein", "Fat"],
-  datasets: [
-    {
-      data: [300, 50, 100],
-      backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
-      hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
-    },
-  ],
-};
 
 const DonutChart = () => {
+  const theme = useTheme();
+  
+  const data = {
+    labels: ["Carbs", "Protein", "Fat"],
+    datasets: [
+      {
+        data: [300, 50, 100],
+        backgroundColor: [extraColors.red, extraColors.green, theme.palette.primary.main],
+        hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+      },
+    ],
+  };
+
   return (
     <Stack sx={{ 
       width:'350px', 

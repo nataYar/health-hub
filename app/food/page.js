@@ -22,10 +22,6 @@ const Food = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
   return (
       <Stack
         sx={{

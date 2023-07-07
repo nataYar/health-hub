@@ -1,5 +1,6 @@
 "use client";
 import {
+  Paper,
   Table,
   TableBody,
   TableCell,
@@ -8,7 +9,7 @@ import {
   TableRow,
   Tooltip,
   Box,
-  Menu, MenuItem, Typography
+  Menu, MenuItem
 } from "@mui/material";
 import MoreHorizRoundedIcon from "@mui/icons-material/MoreHorizRounded";
 import { useEffect, useState } from "react";
@@ -16,11 +17,6 @@ import { useEffect, useState } from "react";
 const BottomTable = ({ data }) => {
   const [log, setLog] = useState([]);
   const [anchorRow, setAnchorRow] = useState(null);
-
-  useEffect(() => {
-   console.log(log)
-  }, [log]);
-
 
   useEffect(() => {
     if (data) {
@@ -42,7 +38,6 @@ const BottomTable = ({ data }) => {
   }, [data]);
 
   const handleDeleteItem = (index) => {
-    console.log('delete')
     setLog((prevState) => {
       const updatedLog = [...prevState];
       updatedLog.splice(index, 1);
@@ -96,12 +91,11 @@ const BottomTable = ({ data }) => {
 
   return (
     <Box
+    component={Paper}
       sx={{
         mt: "30px",
         width: "100%",
         borderRadius: "20px",
-        boxShadow:
-          "rgba(0, 0, 0, 0.04) 0px 5px 22px, rgba(0, 0, 0, 0.03) 0px 0px 0px 0.5",
       }}
     >
       <TableContainer
@@ -109,16 +103,13 @@ const BottomTable = ({ data }) => {
           width: "100%",
           borderRadius: "20px",
           backgroundColor: "common.white",
-          boxShadow:
-            "rgba(0, 0, 0, 0.04) 0px 5px 22px, rgba(0, 0, 0, 0.03) 0px 0px 0px 0.5",
           color: "neutral.800",
         }}
       >
         <Table
           sx={{
             backgroundColor: "white",
-            boxShadow:
-              "rgba(0, 0, 0, 0.04) 0px 5px 22px, rgba(0, 0, 0, 0.03) 0px 0px 0px 0.5",
+
           }}
         >
           <TableHead
@@ -152,7 +143,6 @@ const BottomTable = ({ data }) => {
               </TableCell>
             </TableRow>
           </TableHead>
-          {/* <Divider/> */}
           
           <TableBody>
             {log

@@ -6,9 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "amplify-modelgen": "amplify codegen models"
   },
   "dependencies": {
+    "@aws-amplify/core": "^5.5.2",
+    "@aws-amplify/datastore": "^4.6.3",
     "@aws-amplify/ui-react": "^5.0.2",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",

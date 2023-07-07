@@ -1,16 +1,17 @@
 'use client'
 import DonutChart  from "./charts/DonutChart";
-import { Container } from "@mui/material";
+import { Box } from "@mui/material";
 import LineChart from "./charts/LineChart";
 
 export default function Dashboard() {
  
 
   return (
-    <Container>
-      all statistics from your logs- food, exercises, weight 
+    <Box display="flex" flexDirection='row' justifyContent="center" alignItems="flex-start"
+    sx={{ gap: '25px', width: '100%', height:'auto'}}
+    >
       <LineChart />
       <DonutChart  />
-    </Container>
+    </Box>
   );
 }
