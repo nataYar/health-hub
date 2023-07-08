@@ -31,7 +31,7 @@ const DonutChart = () => {
       {
         data: [nutrients.carbs, nutrients.protein, nutrients.fat],
         backgroundColor: [extraColors.orange, extraColors.green, theme.palette.primary.main],
-        hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+        hoverBackgroundColor: [extraColors.orange, extraColors.green, theme.palette.primary.main],
       },
     ],
   };

@@ -60,7 +60,7 @@ const WeightLogger = () => {
       }}
     >
       <Typography
-        variant="h4"
+        variant="h5"
         sx={{
           mb: "20px",
         }}

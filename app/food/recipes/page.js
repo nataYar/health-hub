@@ -144,7 +144,6 @@ const Recipes = () => {
         </FormControl>
       </Stack>
 
-      {/* <Stack direction='row' flexWrap='wrap' justifyContent='space-evenly' rowGap='10px' marginTop='30px'> */}
       <Masonry columns={{ xs: 1, md: 2, lg: 3}}spacing={5}>
         {recipes.length > 0 ? (
           recipes[0].hits.map((el, index) => (
@@ -161,7 +160,6 @@ const Recipes = () => {
           ))
         ) : <></>}
       </Masonry>
-      {/* </Stack> */}
     </Stack>
   );
 };

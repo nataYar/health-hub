@@ -80,7 +80,6 @@ const LineChart = () => {
     datasets: [
       {
         label: "Weight",
-        fill: false,
         lineTension: 0.1,
         backgroundColor: "#FFF",
         borderColor: theme.palette.primary.main,
@@ -102,37 +101,24 @@ const LineChart = () => {
     ],
   };
 
-   // xs: 0,
-  //       sm: 600,
-  //       md: 900,
-  //       lg: 1200,
-  //       xl: 1440,
-
-
-  const chartWidth = () => {
-    if (weightData.datasets[0].data.length > 5 && screenWidth > 900) {
-      return "650px";
-
-    } else if (weightData.datasets[0].data.length < 5 && screenWidth > 900) {
-      return "500px";
-    }  else if (weightData.datasets[0].data.length > 5 &&  600 < screenWidth < 900) {
-      return "400px";
-    } 
-    else if (weightData.datasets[0].data.length > 5 || weightData.datasets[0].data.length < 5 && screenWidth < 600) {
-      return "100%";
-    } 
-  };
-
   const weightValues = weightData.datasets[0].data;
   const minWeight = Math.min(...weightValues);
   const maxWeight = Math.max(...weightValues);
+  
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false, // Set display to false to hide the chart legend
+      },
+    },
+  };
 
   
   return (
     <Stack
     direction='column'
     justifyContent='space-between'
-
       sx={{
          width: {
           xs: '100%',
@@ -149,8 +135,17 @@ const LineChart = () => {
         borderRadius: "20px",
       }}
     >
-
-      <Line data={weightData} width={'auto'} height={"200px"} />
+<Typography
+        variant="h5"
+        sx={{
+          mb: "20px",
+        }}
+      >
+        Weight
+      </Typography>
+      <Line options={options} 
+      redraw={true} 
+      data={weightData} width={'auto'} height={"165px"} />
 
       <Typography variant="h5" sx={{ mt: "20px" }}>
         <span
