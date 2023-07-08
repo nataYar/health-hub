@@ -3,12 +3,10 @@
 import { useState } from "react";
 import {
   Box,
-  Stack,
   Select,
   MenuItem,
   FormControl,
   InputLabel,
-  Typography,
 } from "@mui/material";
 
 const DatePicker = ({ weightEntry, handleChange }) => {

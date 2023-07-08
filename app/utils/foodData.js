@@ -24,16 +24,12 @@ export const fetchFoodData = async (searchQuery) => {
   }
 };
 
-// 1 cup rice,
-// 10 oz chickpeas
 export const fetchNutritionData = async (searchQuery) => {
   try {
     const ingr = searchQuery.includes("\n")
     ? searchQuery.split("\n")
         .map(str => str.trim().replace(/(^,)|(,$)/g, ''))
     : [searchQuery];
-
-    // console.log(ingr)
     const url = `https://api.edamam.com/api/nutrition-details?app_id=${nutritionApiId}&app_key=${nutritionApiKey}`;
 
     const response = await fetch(url, {
@@ -60,18 +56,23 @@ export const fetchNutritionData = async (searchQuery) => {
   }
 };
 
-export const fetchRecipeData = async (searchQuery, diet = "", health = "") => {
+// https://api.edamam.com/api/recipes/v2?type=public&q=chicken&app_id=2120c2c1&app_key=9463be80aeaf7a080fb9f414625d6bf5
+
+// https://api.edamam.com/api/recipes/v2?type=public&q=beef&app_id=2120c2c1&app_key=9463be80aeaf7a080fb9f414625d6bf5&diet=Balanced&allergy=Fish-free
+
+// https://api.edamam.com/api/recipes/v2?type=public&q=beef&app_id=2120c2c1&app_key=9463be80aeaf7a080fb9f414625d6bf5&diet=balanced&health=dairy-free
+export const fetchRecipeData = async (searchQuery, diet = "", allergy = "") => {
   try {
-    let apiUrl = `https://api.edamam.com/api/recipes/v2?type=public&q=${searchQuery}&app_id=${nutritionApiId}&app_key=${nutritionApiKey}`;
+    let apiUrl = `https://api.edamam.com/api/recipes/v2?type=public&q=${searchQuery}&app_id=${recipeApiId}&app_key=${recipeApiKey}`;
+    
 
     if (diet) {
       apiUrl += `&diet=${diet}`;
     }
 
-    if (health) {
-      apiUrl += `&health=${health}`;
+    if (allergy) {
+      apiUrl += `&health=${allergy}`;
     }
-
     const response = await fetch(apiUrl);
 
     if (!response.ok) {
@@ -79,51 +80,8 @@ export const fetchRecipeData = async (searchQuery, diet = "", health = "") => {
     }
 
     const data = await response.json();
-    console.log(data);
     return data;
   } catch (error) {
     console.log(error)
-    
   }
 };
-
-// https://api.edamam.com/api/nutrition-details?app_id=a8451563&app_key=c17250c5ea86c79ed53cba21d1daa96e //nutrition
-
-//   https://api.edamam.com/api/food-database/v2/parser?app_id=8e0bd067&app_key=6a38cf87ae8017de073395be73379658&ingr=banana&nutrition-type=cooking
-
-// page.js: 16
-// {text: 'milk', parsed: Array(1), hints: Array(2
-// • 1), .
-// links: {77 v hints: Array (21)
-// v OR
-// v food:
-// category: "Generic foods" categoryLabel: "food" foodId: "food_b49rs1kaw@jktabzkg2vvanvvsis image: "https://www.edamam.com/food-img/7c'
-// knownAs: "whole milk" label: "Milk"
-// v nutrients:
-// CHOCDF: 4.8
-// ENERC_KCAL: 61
-// FAT: 3.25
-// FIBTG: 0
-// PROCNT: 3.15
-// • [Prototype]l: Object
-// • [IPrototype]l: Object ~ measures: Array (11)
-// 0:
-// label: "Serving" uri: "http://www.edamam.com/ontologies/ec
-// weight: 244
-// • [Prototype]l: Object
-// • 1: furi: 'http://www.edamam.com/ontologies,
-// • 2: {uri: 'http://www.edamam.com/ontologies,
-// • 3: {uri: 'http://www.edamam.com/ontologies,
-// • 4: {uri: 'http://www.edamam.com/ontologies,
-// • 5: {uri: 'http://www.edamam.com/ontologies,
-// • 6: {uri: 'http://www.edamam.com/ontologies,
-// > 7: {uri: 'http://www.edamam.com/ontologies,
-// • 8: {uri: 'http://www.edamam.com/ontologies,
-// • 9: furi: 'http://www.edamam.com/ontologies,
-// • 10: furi: 'http://www.edamam.com/ontologie:
-// length: 11
-// • [Prototype]l: Array(0)
-// • [Prototype]l: Object
-// • 1: {food: {.), measures: Array (11)}
-// » 2: {food: {.), measures: Array (8)}
-// D 3. Sfood. S Y measures: Arravl§Y

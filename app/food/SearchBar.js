@@ -2,6 +2,7 @@ import { Box, Grid, TextField, Button, Paper } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
 const SearchBar = ({ data, searchedTerm, setSearchedTerm, searchRecipe }) => {
+ 
   const handleSearch = () => {
     searchRecipe(searchedTerm);
     clearInput();

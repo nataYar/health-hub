@@ -16,11 +16,6 @@ export const topNavItems = [
     text: ' Favorites',
     icon: <StarRoundedIcon/>,
     link: '/favorites' 
-  },
-  {
-    text: 'Recommended',
-    icon: <EmojiEmotionsRoundedIcon />,
-    link: '/recommended' 
   }
 ]
 

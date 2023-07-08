@@ -18,7 +18,6 @@ import AuthButton from "./authButton";
 
 const TopNav = ({ drawerWidth, handleDrawerToggle }) => {
   const { myUser } = useContext(UserContext);
-  const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const settings = ["Profile"];
 
@@ -62,8 +61,7 @@ const TopNav = ({ drawerWidth, handleDrawerToggle }) => {
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
-        // backgroundColor: "white",
-        width: { sm: `calc(100% - ${drawerWidth}px)` },
+        width: { md: `calc(100% - ${drawerWidth}px)` },
         ml: { sm: `${drawerWidth}px` },
       }}
     >
@@ -87,7 +85,7 @@ const TopNav = ({ drawerWidth, handleDrawerToggle }) => {
           sx={{
             color: "neutral.400",
             mr: 2,
-            display: { sm: "none" },
+            display: { md: "none" },
           }}
         >
           <MenuIcon />
