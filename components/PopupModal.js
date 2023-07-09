@@ -6,7 +6,7 @@ const PopupModal = ({ text, open, onClose }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       onClose();
-    }, 1500);
+    }, 15000);
 
     return () => {
       clearTimeout(timer);
@@ -25,9 +25,8 @@ const PopupModal = ({ text, open, onClose }) => {
         zIndex: '100',
         display: 'flex',
         flexDirection: 'column',
-        height: 'auto',
+
         padding: '20px',
-        borderRadius: '20px',
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'primary.main',

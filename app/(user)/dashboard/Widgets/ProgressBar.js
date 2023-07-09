@@ -6,11 +6,10 @@ const ProgressBar = ({ percentage }) => {
     <Box
       sx={{
         width: '100%',
-        height: '20px',
+        height: '6px',
         border: '1px solid',
-        borderColor:'neutral.300',
-        borderRadius: '8px',
-        backgroundColor: 'white',
+        borderColor:'neutral.200',
+        backgroundColor: 'neutral.300',
         overflow: 'hidden',
       }}
     >

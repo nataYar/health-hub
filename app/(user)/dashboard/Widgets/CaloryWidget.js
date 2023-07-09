@@ -1,22 +1,17 @@
 import {
   Card,
-  CardContent,
-  CardHeader,
   Typography,
-  Divider,
   Avatar,
-  Box,
   Grid,
 } from "@mui/material";
-import { extraColors } from "@/app/theme/colors";
 
 import ProgressBar from "./ProgressBar";
 
 import RamenDiningRoundedIcon from "@mui/icons-material/RamenDiningRounded";
 
-const TopWidgets = () => {
+const CaloryWidget = () => {
   return (
-    <Card sx={{ p: "12px", width: "300px" }}>
+    <Card sx={{ p: "12px", width: "300px", height: "140px"  }}>
       <Grid
         container
         direction="row"
@@ -43,7 +38,8 @@ const TopWidgets = () => {
               color: "extraColors.green",
               mt: 1,
               borderRadius: "50%",
-              height:'auto', width:' auto'
+              height:'auto', 
+              width:' auto'
             }}
           >
             <RamenDiningRoundedIcon sx={{ height:'30px', width:' 30px'}}/>
@@ -59,18 +55,22 @@ const TopWidgets = () => {
             variant="body2"
               sx={{
                 fontWeight: 500,
-                color: "neutral.800",
+                color: "neutral.500",
                 mb: 0.75,
               }}
             >
-              Remaining calories
+              Remaining calories 
+              <br/>
+              for today
             </Typography>
-            <ProgressBar percentage="80" />
           </Grid>
         </Grid>
+        <Grid item sx={{ mb: 1.25 }}>
+        <ProgressBar percentage="80" />
+            </Grid>
       </Grid>
     </Card>
   );
 };
 
-export default TopWidgets;
+export default CaloryWidget;

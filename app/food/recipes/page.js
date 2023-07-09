@@ -12,23 +12,30 @@ import {
   IconButton,
   Divider,
   InputBase,
-  Paper
+  Paper,
+  Item
 } from "@mui/material";
 import Masonry from "@mui/lab/Masonry";
+
 
 import SearchIcon from "@mui/icons-material/Search";
 
 import { diets, allergies } from "./searchQ";
 import { fetchRecipeData } from "@/app/utils/foodData";
 import RecipeCard from "./RecipeCard";
-import PopupModal from '../../../components/PopupModal'
+import PopupModal from "../../../components/PopupModal";
 
 const Recipes = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [recipes, setRecipes] = useState([]);
   const [search, setSearch] = useState("");
-  // const [query, setQuery] = useState("");
   const [diet, setDiet] = useState("");
   const [allergy, setAllergy] = useState("");
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   const getRecipes = async () => {
     try {
@@ -38,7 +45,8 @@ const Recipes = () => {
         setRecipes(recipesArray);
         setSearch("");
       } else {
-        console.log('nothing was returned')
+        setIsModalOpen(true);
+        console.log("nothing was returned");
       }
     } catch (error) {
       console.error("Error while fetching recipe data:", error);
@@ -65,14 +73,23 @@ const Recipes = () => {
   };
 
   return (
-    <Stack width="100%" direction="column" alignItems="center">
-      <Box component="form" noValidate autoComplete="off">
+    <Stack width="100%" direction="column" alignItems="center" >
+      <Box
+        width="100%" 
+        component="form"
+        noValidate
+        autoComplete="off"
+        onSubmit={handleSearchSubmit}
+
+        sx={{ display: 'flex', direction:'row', justifyContent:'center'}}
+
+      >
         <Paper
           sx={{
             p: "2px 4px",
             display: "flex",
             alignItems: "center",
-            width: 400,
+            width: {xs: '100%', md: '400px'},
           }}
         >
           <InputBase
@@ -84,7 +101,14 @@ const Recipes = () => {
           />
           <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
           <IconButton
+            type="submit"
             onClick={handleSearchSubmit}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                handleSearchSubmit(e);
+              }
+            }}
             color="primary"
             sx={{ p: "10px" }}
             aria-label="search"
@@ -144,25 +168,34 @@ const Recipes = () => {
         </FormControl>
       </Stack>
 
-      <Masonry columns={{ xs: 1, md: 2, lg: 3}}spacing={5}>
+      <Masonry columns={{ xs: 1, md: 2, lg: 3 }} spacing={5}
+      height='auto'>
         {recipes.length > 0 ? (
-          recipes[0].hits.map((el, index) => (
-            <RecipeCard
-            key={index}
+          recipes[0].hits.map(( el, index) => (
+
+              <RecipeCard
+              key={index} 
                 title={el.recipe.label}
                 image={el.recipe.image}
                 calories={el.recipe.calories}
                 cuisineType={el.recipe.cuisineType[0]}
                 dietLabels={el.recipe.dietLabels}
                 ingredients={el.recipe.ingredients}
-                totalWeight={el.recipe.totalWeight} 
-               />  
+                totalWeight={el.recipe.totalWeight}
+              />
+        
           ))
-        ) : <></>}
+        ) : (
+          <></>
+        )}
       </Masonry>
+      <PopupModal
+        text="Nothing found"
+        open={isModalOpen}
+        onClose={handleCloseModal}
+      />
     </Stack>
   );
 };
 
 export default Recipes;
-
