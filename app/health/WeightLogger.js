@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import DatePicker from "./DatePicker";
+import React, { useState, useEffect } from "react";
+import DatePickerContainer from "../../components/DatePickerContainer";
 import { Stack, TextField, Button, Typography } from "@mui/material";
 import PopupModal from '../../components/PopupModal'
+import dayjs from 'dayjs';
 
 const WeightLogger = () => {
   const [weightEntry, setWeightEntry] = useState({
@@ -9,6 +10,25 @@ const WeightLogger = () => {
     date: { day: "", month: "", year: "" },
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+const [selectedDate, setSelectedDate ] = useState(null)
+
+useEffect(()=>{
+  selectedDate ? 
+  // console.log(selectedDate.format('YYYY-MM-DD'))
+  setWeightEntry((prevEntry) => ({
+    ...prevEntry,
+    date: selectedDate.format('YYYY-MM-DD')
+  }))
+  : null;
+}, [selectedDate])
+
+useEffect(()=>{
+
+  console.log(weightEntry)
+ 
+}, [weightEntry])
+
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
@@ -22,12 +42,13 @@ const WeightLogger = () => {
     }));
   };
 
-  const handleDateChange = (num, datePart) => {
-    setWeightEntry((prevEntry) => ({
-      ...prevEntry,
-      date: { ...prevEntry.date, [datePart]: num },
-    }));
-  };
+  // const handleDateChange = (date) => {
+  //   setWeightEntry((prevEntry) => ({
+  //     ...prevEntry,
+  //     date: date
+  //   }));
+  // };
+
   const passWeightData = () => {
     console.log(weightEntry);
     setIsModalOpen(true);
@@ -77,7 +98,8 @@ const WeightLogger = () => {
             mb: "20px",
           }}
         />
-        <DatePicker weightEntry={weightEntry} handleChange={handleDateChange} />
+
+        <DatePickerContainer selectedDate={selectedDate} setSelectedDate={setSelectedDate}/>
 
         <Button variant="contained" type="submit">
           Log Weight

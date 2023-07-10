@@ -3,6 +3,7 @@ import Nav from './nav/nav';
 import { Providers } from './context/providers';
 import './styles/globals.css';
 import Wrapper from '@/components/Wrapper';
+
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
