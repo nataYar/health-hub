@@ -1,4 +1,5 @@
 export const exercisesData = [
+  "Custom",
     'Aerobics',
     'Basketball',
     'Boxing',

@@ -81,7 +81,7 @@ const BottomTable = ({ data }) => {
           open={Boolean(anchorRow)}
           onClose={handleCloseRowMenu}
         >
-            <MenuItem sx={{ backgroundColor: "white"}}  onClick={() => handleDeleteItem(ind)}>
+            <MenuItem sx={{ backgroundColor: "white"}}  onClick={(ind) => handleDeleteItem(ind)}>
               Delete
             </MenuItem>
         </Menu>

@@ -1,34 +1,30 @@
-import React, { useState, useEffect } from "react";
+"use client";
+
+// import { UserContext } from "../context/userProvider";
+import React, { useState, useEffect, useContext } from "react";
 import DatePickerContainer from "../../components/DatePickerContainer";
 import { Stack, TextField, Button, Typography } from "@mui/material";
-import PopupModal from '../../components/PopupModal'
-import dayjs from 'dayjs';
+import PopupModal from "../../components/PopupModal";
+import dayjs from "dayjs";
 
 const WeightLogger = () => {
   const [weightEntry, setWeightEntry] = useState({
     weight: "",
-    date: { day: "", month: "", year: "" },
+    date: "",
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-const [selectedDate, setSelectedDate ] = useState(null)
+  const [selectedDate, setSelectedDate] = useState(null);
 
-useEffect(()=>{
-  selectedDate ? 
-  // console.log(selectedDate.format('YYYY-MM-DD'))
-  setWeightEntry((prevEntry) => ({
-    ...prevEntry,
-    date: selectedDate.format('YYYY-MM-DD')
-  }))
-  : null;
-}, [selectedDate])
-
-useEffect(()=>{
-
-  console.log(weightEntry)
- 
-}, [weightEntry])
-
+  useEffect(() => {
+    selectedDate
+      ? // console.log(selectedDate.format('YYYY-MM-DD'))
+        setWeightEntry((prevEntry) => ({
+          ...prevEntry,
+          date: selectedDate.format("YYYY-MM-DD"),
+        }))
+      : null;
+  }, [selectedDate]);
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
@@ -42,19 +38,12 @@ useEffect(()=>{
     }));
   };
 
-  // const handleDateChange = (date) => {
-  //   setWeightEntry((prevEntry) => ({
-  //     ...prevEntry,
-  //     date: date
-  //   }));
-  // };
-
   const passWeightData = () => {
     console.log(weightEntry);
     setIsModalOpen(true);
     setWeightEntry({
       weight: "",
-      date: { day: "", month: "", year: "" },
+      date: "",
     });
   };
 
@@ -62,9 +51,7 @@ useEffect(()=>{
     event.preventDefault();
 
     weightEntry.weight &&
-    weightEntry.date.day &&
-    weightEntry.date.month &&
-    weightEntry.date.year
+    weightEntry.date
       ? passWeightData()
       : alert("Please log weight and date");
   };
@@ -77,29 +64,43 @@ useEffect(()=>{
       borderRadius="20px"
       backgroundColor="white"
       sx={{
-        width: {xs: '90%', md:'35%'}
+        width: { xs: "90%", md: "35%" },
       }}
     >
       <Typography
         variant="h5"
         sx={{
           mb: "20px",
+          textAlign: "center",
         }}
       >
         Weight Logger
       </Typography>
-      <form onSubmit={handleSubmit}>
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          width: "100%",
+          height: "250px",
+          display: "flex",
+          flexFlow: "column nowrap",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
         <TextField
           type="number"
           label="Weight in lb"
           value={weightEntry.weight}
           onChange={handleWeightChange}
           sx={{
-            mb: "20px",
+            width: "100%",
           }}
         />
 
-        <DatePickerContainer selectedDate={selectedDate} setSelectedDate={setSelectedDate}/>
+        <DatePickerContainer
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+        />
 
         <Button variant="contained" type="submit">
           Log Weight

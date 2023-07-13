@@ -11,7 +11,7 @@ import RamenDiningRoundedIcon from "@mui/icons-material/RamenDiningRounded";
 
 const CaloryWidget = () => {
   return (
-    <Card sx={{ p: "12px", width: "300px", height: "140px"  }}>
+    <Card sx={{ p: "12px",  width: { xs: "100%", md: "280px" },  height: "140px"  }}>
       <Grid
         container
         direction="row"

@@ -42,7 +42,7 @@ const DonutChart = () => {
       sx={{
         width: {
           xs: "100%",
-          sm: "400px",
+          sm: '48%',
           md: "350px",
         },
         height: {

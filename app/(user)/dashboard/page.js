@@ -7,23 +7,43 @@ import {
 import LineChart from "./charts/LineChart";
 import CaloryWidget from "./Widgets/CaloryWidget";
 import WeightWidget from "./Widgets/WeightWidget";
+import ExerciseWidget from "./Widgets/ExerciseWidget";
 
 export default function Dashboard() {
   return (
-    <Stack  width='100%' height='auto' >
-      <Stack width='100%' height='auto' direction='row' flexWrap='wrap' justifyContent='space-evenly' alignItems='center' marginBottom='30px'> 
+    <Box
+    sx={{
+      width:{ sm: "100%",lg:"85%"},
+      mx:"auto",
+      color: "neutral.800",
+      borderRadius: "20px",
+    }}
+  >
+      <Box 
+      width='100%' height='auto' 
+      sx={{
+        mt: "15px",
+            gap: "15px",
+            width: "auto",
+            display: "flex",
+            direction: { xs: "column", md: "row" },
+            flexWrap: "wrap",
+            alignItems: { xs: "center" },
+            justifyContent: { xs: "center", md: "flex-start", lg:"space-between" },
+            mb:"20px"
+          }}> 
         <CaloryWidget />
         <WeightWidget />
-        {/* 
-        <TopWidgets /> */}
-      </Stack>
-      <Box display="flex" flexDirection='row'  flexWrap='wrap' justifyContent="space-evenly" alignItems="flex-start"
+        <ExerciseWidget />
+      </Box>
+
+      <Box display="flex" flexDirection='row'  flexWrap='wrap' justifyContent="space-between" alignItems="flex-start"
       sx={{ gap: '25px', width: '100%', height:'auto'}}
       >
       <LineChart />
       <DonutChart  />
     </Box>
-    </Stack>
+    </Box>
       
   );
 }

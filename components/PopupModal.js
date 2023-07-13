@@ -6,7 +6,7 @@ const PopupModal = ({ text, open, onClose }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       onClose();
-    }, 15000);
+    }, 2000);
 
     return () => {
       clearTimeout(timer);

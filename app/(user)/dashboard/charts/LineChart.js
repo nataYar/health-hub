@@ -1,6 +1,7 @@
 "use client";
-import { useState, useEffect } from "react";
-import { Stack, Typography, useTheme, Box } from "@mui/material";
+import { useState, useContext} from "react";
+// import { UserContext } from "../../../context/userProvider";
+import { Stack, Typography, useTheme } from "@mui/material";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -18,27 +19,9 @@ ChartJS.register(
 );
 
 const LineChart = () => {
-  const [screenWidth, setScreenWidth] = useState(null);
+  // const { screenWidth } = useContext(UserContext);
   const theme = useTheme();
-
-  useEffect(() => {
-    const handleResize = () => {
-      setScreenWidth(window.innerWidth);
-    };
-
-    // Check if window is defined (to avoid errors during server-side rendering)
-    if (typeof window !== 'undefined') {
-      setScreenWidth(window.innerWidth);
-      window.addEventListener('resize', handleResize);
-    }
-
-    // Clean up the event listener on component unmount
-    return () => {
-      if (typeof window !== 'undefined') {
-        window.removeEventListener('resize', handleResize);
-      }
-    };
-  }, []);
+  
 
   const weightData = {
     labels: [
@@ -122,7 +105,7 @@ const LineChart = () => {
       sx={{
          width: {
           xs: '100%',
-          sm: '400px',
+          sm: '48%',
           md: '500px',
           lg: '500px'
         } ,

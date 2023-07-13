@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useState } from 'react';
+import { createContext, useState, useEffect } from 'react';
 
 // Create the user context
 const UserContext = createContext();
@@ -9,8 +9,25 @@ const UserContext = createContext();
 const UserProvider = ({ children }) => {
   const [myUser, setMyUser] = useState(null);
   const [testUser, setTestUser] = useState("Eikichi Onizuka");
-
-  // Define any functions or state values related to the user context here
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+ 
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    }
+    // Check if window is defined (to avoid errors during server-side rendering)
+    if (typeof window !== 'undefined') {
+        setScreenWidth(window.innerWidth);
+        window.addEventListener('resize', handleResize);
+      }
+  
+      // Clean up the event listener on component unmount
+      return () => {
+        if (typeof window !== 'undefined') {
+          window.removeEventListener('resize', handleResize);
+        }
+      };
+  }, [])
 
   // Example function to update the user
   const updateUser = (newUser) => {
@@ -22,7 +39,8 @@ const UserProvider = ({ children }) => {
     myUser,
     updateUser,
     testUser,
-    setTestUser
+    setTestUser, 
+    screenWidth
   };
 
   return <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>;
