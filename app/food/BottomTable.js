@@ -93,7 +93,7 @@ const BottomTable = ({ data }) => {
     <Box
     component={Paper}
       sx={{
-        mt: "30px",
+        my: "30px",
         width: "100%",
         borderRadius: "20px",
       }}

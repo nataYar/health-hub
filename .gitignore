@@ -27,5 +27,5 @@ amplify-gradle-config.json
 amplifytools.xcconfig
 .secret-*
 **.sample
-#amplify-do-not-edit-end
+
 .next/cache/webpack/client-development/13.pack

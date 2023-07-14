@@ -18,18 +18,20 @@ const SearchBar = ({ data, searchedTerm, setSearchedTerm, searchRecipe }) => {
 
   return (
     <Box
+    component={Paper}
       sx={{
-        width: "100%",
+        width: "100%", 
+        p: "20px",
+        borderRadius: "20px",
       }}
     >
       <Box
-       component={Paper}
+       
         sx={{
-          backgroundColor:'red',
           width: "100%",
           mb: "15px",
           color: "neutral.800",
-          borderRadius: "20px",
+        
         }}
       >
         <TextField
@@ -50,7 +52,7 @@ const SearchBar = ({ data, searchedTerm, setSearchedTerm, searchRecipe }) => {
           onChange={handleInputChange}
         />
       </Box>
-      <Grid container direction="row" justifyContent="space-evenly" spacing={2}>
+      <Grid container direction="row" justifyContent="flex-start" spacing={1}>
         <Grid item>
           <Button
             variant="contained"

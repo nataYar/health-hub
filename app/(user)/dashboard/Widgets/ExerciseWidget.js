@@ -1,9 +1,10 @@
 'use client'
 import { useState } from "react";
 import { Card, Typography, Avatar, Grid, Box, Stack } from "@mui/material";
-import ShowChartIcon from "@mui/icons-material/ShowChart";
-import { extraColors } from "@/app/theme/colors";
+
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
+import ArrowDownwardOutlinedIcon from "@mui/icons-material/ArrowDownwardOutlined";
+import ArrowUpwardOutlinedIcon from "@mui/icons-material/ArrowUpwardOutlined";
 
 const ExerciseWidget = () => {
   return (
@@ -25,6 +26,9 @@ const ExerciseWidget = () => {
           }}
         >
           {/* {currentWeight} */}
+          25 <span style={{fontWeight: 500,
+          fontSize:'14px',
+          color: "#6C737F"}}> min</span>
         </Typography>
       </Grid>
       <Grid item>
@@ -55,7 +59,7 @@ const ExerciseWidget = () => {
               mb: 0.75,
             }}
           >
-            Current weight
+            Daily activity
           </Typography>
         </Grid>
       </Grid>

@@ -37,17 +37,19 @@ const FitnessLogContainer = ({ exercises, setExercisesArray }) => {
   
     const settingsRow = (ind) => {
       return (
-        <TableCell sx={{ width: '10px'}}>
+        <TableCell 
+        sx={{ width: '10px'}}
+        >
           <Tooltip title="Open settings">
            <MoreHorizRoundedIcon 
-            sx={{ color: "neutral.400"}}
+            sx={{ color: "neutral.500"}}
            onClick={handleOpenRowMenu}
             size="small"/>
           </Tooltip>
   
           <Menu
             sx={{ 
-            mt: "45px" }}
+            mt: "23px" }}
             anchorEl={anchorRow}
             anchorOrigin={{
               vertical: "top",
@@ -72,7 +74,6 @@ const FitnessLogContainer = ({ exercises, setExercisesArray }) => {
     return (
       <Box
         sx={{
-          mt: "30px",
           width: "100%",
           borderRadius: "20px",
         }}

@@ -7,7 +7,7 @@ import dayjs from "dayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 
-const DatePickerContainer = ({ selectedDate, setSelectedDate }) => {
+const DatePickerContainer = ({ selectedDate, setSelectedDate, widthMd }) => {
   const { screenWidth } = useContext(UserContext);
 
 // useEffect(() => {
@@ -23,13 +23,13 @@ const DatePickerContainer = ({ selectedDate, setSelectedDate }) => {
           value={selectedDate}
           onChange={(newValue) => setSelectedDate(newValue)}
           sx={{
-            width: {xs: "100%", md: "150px"},
+            width: {xs: "100%", md: widthMd },
           }}
         />
       ) : (
         <DatePicker
           sx={{
-            width: {xs: "100%", md: "150px"},
+            width: {xs: "100%", md: widthMd}
           }}
           label="Pick a date"
           value={selectedDate}

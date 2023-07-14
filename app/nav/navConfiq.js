@@ -37,16 +37,16 @@ export const navItems = [
       ],
     },
     {
-      text: 'Health Log',
+      text: 'Weight Log',
       icon: <LocalHospitalRoundedIcon />, 
       link: '/health', 
-      subItems: [
-        { text: 'Symptoms checker', link: '/health/symptoms' },
-      ],
+      // subItems: [
+      //   { text: 'Symptoms checker', link: '/health/symptoms' },
+      // ],
     },
-    {
-      text: 'News',
-      icon: <NewspaperRoundedIcon />, 
-      link: '/news'
-    },
+    // {
+    //   text: 'News',
+    //   icon: <NewspaperRoundedIcon />, 
+    //   link: '/news'
+    // },
   ];

@@ -129,6 +129,7 @@ const LogExercise = () => {
           <DataPickerContainer
             selectedDate={selectedDate}
             setSelectedDate={setSelectedDate}
+            widthMd='150px'
           />
         </Box>
         <Button

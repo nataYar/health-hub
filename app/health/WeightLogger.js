@@ -100,6 +100,7 @@ const WeightLogger = () => {
         <DatePickerContainer
           selectedDate={selectedDate}
           setSelectedDate={setSelectedDate}
+          widthMd="100%"
         />
 
         <Button variant="contained" type="submit">
