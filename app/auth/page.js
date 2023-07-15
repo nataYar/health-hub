@@ -1,7 +1,6 @@
 'use client'
 import { useEffect, useContext } from "react";
 import { useRouter } from "next/navigation";
-import Wrapper from '@/components/Wrapper';
 import { UserContext  } from '../context/userProvider';
 import { Amplify } from 'aws-amplify';
 import { withAuthenticator } from '@aws-amplify/ui-react';
@@ -11,10 +10,26 @@ import { Container, Button } from "@mui/material";
 Amplify.configure(awsExports);
 
 
+const customTheme = {
+  button: {
+    backgroundColor: 'red',
+    color: 'white',
+    borderRadius: '8px',
+  },
+  container: {
+    width: '100%',
+    maxWidth: '500px',
+    margin: '0 auto',
+  },
+};
+
+
 function AuthContainer({ signOut, user }) {
   const { myUser, updateUser } = useContext(UserContext);
   const router = useRouter();
 
+
+  
 
   useEffect(() => {
     user.username  ? 
@@ -44,4 +59,4 @@ function AuthContainer({ signOut, user }) {
 }
 
 
-export default withAuthenticator(AuthContainer);
+export default withAuthenticator(AuthContainer, false, [], null, customTheme);
