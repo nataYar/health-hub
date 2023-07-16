@@ -1,5 +1,5 @@
 "use client";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { UserContext } from "../context/userProvider";
 import { alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
@@ -15,11 +15,30 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import AuthButton from "./authButton";
+import { Auth } from 'aws-amplify';
+import { guestUser } from "../context/guestUser";
+
 
 const TopNav = ({ drawerWidth, handleDrawerToggle }) => {
-  const { myUser } = useContext(UserContext);
+  const { myUser, updateUser } = useContext(UserContext);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const settings = ["Profile"];
+
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('myUser');
+
+    if (storedUser) {
+      updateUser(JSON.parse(storedUser));
+    } else {
+      updateUser(guestUser);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('myUser', JSON.stringify(myUser));
+  }, [myUser]);
+
 
   const buttonStyles = {
     p: 0,
@@ -34,7 +53,7 @@ const TopNav = ({ drawerWidth, handleDrawerToggle }) => {
     color: '#fff',
   };
 
-  const initials = myUser ? myUser[0].toUpperCase() : <Avatar sx={{ height:"48px", width:"48px"}}/>;
+  const initials = myUser && myUser.nickname  ? myUser.nickname[0].toUpperCase() : <Avatar sx={{ height:"48px", width:"48px"}}/>;
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -50,6 +69,7 @@ const TopNav = ({ drawerWidth, handleDrawerToggle }) => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
 
   return (
     <AppBar

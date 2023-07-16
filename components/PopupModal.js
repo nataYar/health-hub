@@ -15,6 +15,9 @@ const PopupModal = ({ text, open, onClose }) => {
 
   return open ? (
     <Dialog
+    style={{
+      borderRadius:"12px",
+    }}
       open={open}
       onClose={onClose}
       sx={{
@@ -25,11 +28,12 @@ const PopupModal = ({ text, open, onClose }) => {
         zIndex: '100',
         display: 'flex',
         flexDirection: 'column',
-
+        borderRadius:"12px",
         padding: '20px',
+        
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'primary.main',
+        backgroundColor: 'transparent',
       }}
     >
       <DialogContent>

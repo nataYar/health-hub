@@ -8,9 +8,9 @@ const UserContext = createContext();
 // Create the UserContextProvider component
 const UserProvider = ({ children }) => {
   const [myUser, setMyUser] = useState(null);
-  const [testUser, setTestUser] = useState("Eikichi Onizuka");
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
  
+
   useEffect(() => {
     const handleResize = () => {
       setScreenWidth(window.innerWidth);
@@ -38,8 +38,6 @@ const UserProvider = ({ children }) => {
   const contextValue = {
     myUser,
     updateUser,
-    testUser,
-    setTestUser, 
     screenWidth
   };
 

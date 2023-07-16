@@ -1,15 +1,48 @@
-import { Box, ButtonBase } from "@mui/material";
+"use client";
+import { useState, useContext, useEffect } from "react";
+import { UserContext } from "../context/userProvider";
+import { Box, ButtonBase} from "@mui/material";
 import { useRouter } from "next/navigation";
-
+import { Auth } from "aws-amplify";
+import { guestUser } from "../context/guestUser";
 const AuthButton = () => {
+  const { myUser, updateUser } = useContext(UserContext);
+
   const router = useRouter();
 
-  const handleLoginClick = () => {
-    router.push("/auth");
+  async function signOut() {
+    try {
+      await Auth.signOut({ global: true });
+    } catch (error) {
+      console.log("error signing out: ", error);
+    }
+  }
+
+  async function signOut() {
+    try {
+      router.push("/auth") 
+      updateUser(guestUser)
+      await Auth.signOut();
+
+      // console.log(myUser)
+    } catch (error) {
+      console.log('error signing out: ', error);
+    }
+  }
+
+
+  const handleClick = () => {
+    myUser.id == 'userId123' ?
+     router.push("/auth") 
+    // console.log('log in')
+     :
+    //  console.log('log out') 
+     signOut();
   };
+
   return (
     <ButtonBase
-      onClick={handleLoginClick}
+      onClick={handleClick}
       sx={{
         justifySelf: "right",
         alignItems: "center",
@@ -41,7 +74,7 @@ const AuthButton = () => {
           },
         }}
       >
-        Log in
+        {  myUser && myUser.id !== 'userId123' ?  "Sign out" : "Log in" }
       </Box>
     </ButtonBase>
   );
