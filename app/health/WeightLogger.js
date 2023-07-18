@@ -6,15 +6,12 @@ import DatePickerContainer from "../../components/DatePickerContainer";
 import { Stack, TextField, Button, Typography } from "@mui/material";
 import PopupModal from "../../components/PopupModal";
 import { DataStore } from "aws-amplify";
-
 import { Log } from '../models/index';
-
 import dayjs from "dayjs";
-
 
 const WeightLogger = () => {
   const [weightEntry, setWeightEntry] = useState({
-    weight: "",
+    weight: null,
     date: "",
   });
 
@@ -25,11 +22,11 @@ const WeightLogger = () => {
   const [selectedDate, setSelectedDate] = useState(null);
 
 
-  useEffect(() => {
-    fetchWeightLogs()
-    const subscription = DataStore.observe(Log).subscribe(() => fetchWeightLogs())
-    return () => subscription.unsubscribe()
-  })
+  // useEffect(() => {
+  //   fetchWeightLogs()
+  //   const subscription = DataStore.observe(Log).subscribe(() => fetchWeightLogs())
+  //   return () => subscription.unsubscribe()
+  // })
 
   useEffect(() => {
     selectedDate
@@ -45,22 +42,25 @@ const WeightLogger = () => {
   };
 
   const handleWeightChange = (event) => {
-    const weightValue = event.target.value;
+    const weightValue = parseFloat(event.target.value);
     setWeightEntry((prevEntry) => ({
       ...prevEntry,
       weight: weightValue,
     }));
   };
 
-  const fetchWeightLogs = async() => {
-    const weightLogs = await DataStore.query(Log)
-    setWeightsLogs(weightLogs)
-  }
+
+  // const fetchWeightLogs = async() => {
+  //   const weightLogs = await DataStore.query(Log)
+  //   setWeightsLogs(weightLogs)
+  // }
 
 
   const passWeightData = async () => {
     // add create Log/weight function here !
-    await DataStore.save(new Log({ ...weightEntry}))
+    await DataStore.save(new Log({
+      carbs
+    }))
 
     console.log(weightEntry);
     // setIsModalOpen(true);
@@ -73,7 +73,7 @@ const WeightLogger = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    weightEntry.weight && weightEntry.date
+    weightEntry.weight !==  null  && weightEntry.date
       ? passWeightData()
       : alert("Please log weight and date");
   };
@@ -112,7 +112,7 @@ const WeightLogger = () => {
         <TextField
           type="number"
           label="Weight in lb"
-          value={weightEntry.weight}
+          value={weightEntry.weight == null ? "" : weightEntry.weight}
           onChange={handleWeightChange}
           sx={{
             width: "100%",
