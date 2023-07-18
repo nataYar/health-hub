@@ -5,21 +5,35 @@ import React, { useState, useEffect, useContext } from "react";
 import DatePickerContainer from "../../components/DatePickerContainer";
 import { Stack, TextField, Button, Typography } from "@mui/material";
 import PopupModal from "../../components/PopupModal";
+import { DataStore } from "aws-amplify";
+
+import { Log } from '../models/index';
+
 import dayjs from "dayjs";
+
 
 const WeightLogger = () => {
   const [weightEntry, setWeightEntry] = useState({
     weight: "",
     date: "",
   });
+
+  const [weightsLogs,setWeightsLogs] = useState([])
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [selectedDate, setSelectedDate] = useState(null);
 
+
+  useEffect(() => {
+    fetchWeightLogs()
+    const subscription = DataStore.observe(Log).subscribe(() => fetchWeightLogs())
+    return () => subscription.unsubscribe()
+  })
+
   useEffect(() => {
     selectedDate
-      ? // console.log(selectedDate.format('YYYY-MM-DD'))
-        setWeightEntry((prevEntry) => ({
+      ? setWeightEntry((prevEntry) => ({
           ...prevEntry,
           date: selectedDate.format("YYYY-MM-DD"),
         }))
@@ -38,9 +52,18 @@ const WeightLogger = () => {
     }));
   };
 
-  const passWeightData = () => {
+  const fetchWeightLogs = async() => {
+    const weightLogs = await DataStore.query(Log)
+    setWeightsLogs(weightLogs)
+  }
+
+
+  const passWeightData = async () => {
+    // add create Log/weight function here !
+    await DataStore.save(new Log({ ...weightEntry}))
+
     console.log(weightEntry);
-    setIsModalOpen(true);
+    // setIsModalOpen(true);
     setWeightEntry({
       weight: "",
       date: "",
@@ -50,8 +73,7 @@ const WeightLogger = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    weightEntry.weight &&
-    weightEntry.date
+    weightEntry.weight && weightEntry.date
       ? passWeightData()
       : alert("Please log weight and date");
   };

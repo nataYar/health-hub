@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import AuthButton from "./authButton";
-import { Auth } from 'aws-amplify';
+import { useRouter } from "next/navigation";
 import { guestUser } from "../context/guestUser";
 
 
@@ -23,6 +23,7 @@ const TopNav = ({ drawerWidth, handleDrawerToggle }) => {
   const { myUser, updateUser } = useContext(UserContext);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const settings = ["Profile"];
+  const router = useRouter();
 
 
   useEffect(() => {
@@ -65,6 +66,11 @@ const TopNav = ({ drawerWidth, handleDrawerToggle }) => {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
+
+  const goToProfile = () => {
+    handleCloseUserMenu ();
+    router.push("/profile");
+  }
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
@@ -139,7 +145,7 @@ const TopNav = ({ drawerWidth, handleDrawerToggle }) => {
             onClose={handleCloseUserMenu}
           >
             {settings.map((setting) => (
-              <MenuItem key={setting} onClick={handleCloseUserMenu}>
+              <MenuItem key={setting} onClick={goToProfile}>
                 <Typography textAlign="center">{setting}</Typography>
               </MenuItem>
             ))}

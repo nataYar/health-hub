@@ -8,12 +8,15 @@ import WeightWidget from "./Widgets/WeightWidget";
 import ExerciseWidget from "./Widgets/ExerciseWidget";
 import { UserContext } from "../../context/userProvider";
 
+
 export default function Dashboard() {
   const { myUser, updateUser } = useContext(UserContext);
 
   useEffect(() => {
     console.log(myUser)
   }, [myUser])
+
+
 
   return (
     <Box

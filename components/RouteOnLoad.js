@@ -4,7 +4,7 @@ import { UserContext } from '../app/context/userProvider';
 import { useRouter } from 'next/navigation';
 
 const RouteOnLoad = () => {
-  const { myUser, updateUser } = useContext(UserContext);
+  const { myUser } = useContext(UserContext);
   const router = useRouter();
 
   useEffect(() => {
