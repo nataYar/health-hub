@@ -1,0 +1,21 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-healthhub20-staging-35110-authRole",
+      "UnauthRoleArn": "arn:aws:iam::614634849392:role/amplify-healthhub20-staging-35110-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::614634849392:role/amplify-healthhub20-staging-35110-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-healthhub20-staging-35110-deployment",
+      "UnauthRoleName": "amplify-healthhub20-staging-35110-unauthRole",
+      "StackName": "amplify-healthhub20-staging-35110",
+      "StackId": "arn:aws:cloudformation:us-east-1:614634849392:stack/amplify-healthhub20-staging-35110/7ff43d10-25e7-11ee-a2bc-125b42ece115",
+      "AmplifyAppId": "d3cki944m0cp7q"
+    },
+    "categories": {
+      "auth": {
+        "healthhub203540ac1a": {},
+        "healthHub20": {}
+      }
+    }
+  }
+}

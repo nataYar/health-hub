@@ -127,7 +127,7 @@ const Nav = (props) => {
           }}
           sx={{
             //xs - extra small screens
-            display: { xs: "block", sm: "none" },
+            display: { xs: "block", md: "none" },
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,

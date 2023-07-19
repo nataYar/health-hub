@@ -2,14 +2,18 @@
 
 // import { UserContext } from "../context/userProvider";
 import React, { useState, useEffect, useContext } from "react";
+import { UserContext } from "../context/userProvider";
 import DatePickerContainer from "../../components/DatePickerContainer";
 import { Stack, TextField, Button, Typography } from "@mui/material";
 import PopupModal from "../../components/PopupModal";
-import { DataStore } from "aws-amplify";
-import { Log } from '../models/index';
 import dayjs from "dayjs";
+import { nanoid } from 'nanoid';
+
+import { DataStore } from "aws-amplify";
+import { User } from '../models/index';
 
 const WeightLogger = () => {
+  const { myUser, updateUser } = useContext(UserContext);
   const [weightEntry, setWeightEntry] = useState({
     weight: null,
     date: "",
@@ -50,17 +54,31 @@ const WeightLogger = () => {
   };
 
 
-  // const fetchWeightLogs = async() => {
-  //   const weightLogs = await DataStore.query(Log)
-  //   setWeightsLogs(weightLogs)
-  // }
+  const fetchWeightLogs = async() => {
+    const weightLogs = await DataStore.query(Log)
+    setWeightsLogs(weightLogs)
+  }
 
 
   const passWeightData = async () => {
-    // add create Log/weight function here !
-    await DataStore.save(new Log({
-      carbs
-    }))
+    const randomId = nanoid();
+
+    await DataStore.save(new User({
+      id: randomId,
+      nickname: myUser.nickname,
+      email: myUser.email,
+      Logs: [] // Assuming you want to initialize the Logs array as empty for the new User
+    }));
+
+    // await DataStore.save(new Log({
+    //   id:randomId,
+    //   userID: myUser.id, 
+    //   date: weightEntry.date,
+    //   weight: parseFloat(weightEntry.weight),
+    //   calories: 34,
+    //   fats: 56,
+    //   carbs: 89
+    // }));
 
     console.log(weightEntry);
     // setIsModalOpen(true);
