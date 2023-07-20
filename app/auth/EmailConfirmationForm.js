@@ -4,8 +4,9 @@ import { UserContext } from "../context/userProvider";
 import { Auth } from "aws-amplify";
 import { useRouter } from "next/navigation";
 import { Button, Paper, Box, Typography, TextField } from "@mui/material";
+import { createUserFn } from "./CreateUserFn";
 
-function EmailConfirmationForm({ email }) {
+function EmailConfirmationForm({ nickname, email }) {
   const { myUser, updateUser } = useContext(UserContext);
   const router = useRouter();
   const [confirmationCode, setConfirmationCode] = useState("");
@@ -16,19 +17,14 @@ function EmailConfirmationForm({ email }) {
 
   const handleConfirmationSubmit = async (event) => {
     event.preventDefault();
-
     try {
       await Auth.confirmSignUp(email, confirmationCode);
       const currentUser = await Auth.currentAuthenticatedUser();
-
-      console.log("Email confirmed successfully");
-      console.log("Current User:", currentUser);
-
-      updateUser(currentUser.attributes);
-      console.log("User attributes updated successfully");
+      console.log(currentUser);
+      // updateUser(currentUser.attributes);
+      // createUserFn(nickname, email);
     } catch (error) {
-        await Auth.deleteUser();
-        console.log('user was deleted')
+        console.log(error)
     }
   };
 

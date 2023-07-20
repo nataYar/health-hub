@@ -26,19 +26,19 @@ const TopNav = ({ drawerWidth, handleDrawerToggle }) => {
   const router = useRouter();
 
 
-  useEffect(() => {
-    const storedUser = localStorage.getItem('myUser');
+  // useEffect(() => {
+  //   const storedUser = localStorage.getItem('myUser');
 
-    if (storedUser) {
-      updateUser(JSON.parse(storedUser));
-    } else {
-      updateUser(guestUser);
-    }
-  }, []);
+  //   if (storedUser) {
+  //     updateUser(JSON.parse(storedUser));
+  //   } else {
+  //     updateUser(guestUser);
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    localStorage.setItem('myUser', JSON.stringify(myUser));
-  }, [myUser]);
+  // useEffect(() => {
+  //   localStorage.setItem('myUser', JSON.stringify(myUser));
+  // }, [myUser]);
 
 
   const buttonStyles = {

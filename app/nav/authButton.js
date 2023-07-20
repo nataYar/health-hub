@@ -5,6 +5,7 @@ import { Box, ButtonBase} from "@mui/material";
 import { useRouter } from "next/navigation";
 import { Auth } from "aws-amplify";
 import { guestUser } from "../context/guestUser";
+
 const AuthButton = () => {
   const { myUser, updateUser } = useContext(UserContext);
 
@@ -23,21 +24,13 @@ const AuthButton = () => {
       router.push("/auth") 
       updateUser(guestUser)
       await Auth.signOut();
-
-      // console.log(myUser)
     } catch (error) {
       console.log('error signing out: ', error);
     }
   }
 
-
   const handleClick = () => {
-    myUser.id == 'userId123' ?
      router.push("/auth") 
-    // console.log('log in')
-     :
-    //  console.log('log out') 
-     signOut();
   };
 
   return (

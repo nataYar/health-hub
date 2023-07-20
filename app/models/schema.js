@@ -78,15 +78,6 @@ export const schema = {
                             {
                                 "allow": "public",
                                 "operations": [
-                                    "read"
-                                ]
-                            },
-                            {
-                                "provider": "userPools",
-                                "ownerField": "owner",
-                                "allow": "owner",
-                                "identityClaim": "cognito:username",
-                                "operations": [
                                     "create",
                                     "update",
                                     "delete",
@@ -108,13 +99,6 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "userID": {
-                    "name": "userID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
                 "date": {
                     "name": "date",
                     "isArray": false,
@@ -124,13 +108,6 @@ export const schema = {
                 },
                 "calories": {
                     "name": "calories",
-                    "isArray": false,
-                    "type": "Int",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "fats": {
-                    "name": "fats",
                     "isArray": false,
                     "type": "Int",
                     "isRequired": false,
@@ -148,6 +125,13 @@ export const schema = {
                     "isArray": false,
                     "type": "Float",
                     "isRequired": false,
+                    "attributes": []
+                },
+                "userID": {
+                    "name": "userID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
                     "attributes": []
                 },
                 "Exercises": {
@@ -206,15 +190,6 @@ export const schema = {
                             {
                                 "allow": "public",
                                 "operations": [
-                                    "read"
-                                ]
-                            },
-                            {
-                                "provider": "userPools",
-                                "ownerField": "owner",
-                                "allow": "owner",
-                                "identityClaim": "cognito:username",
-                                "operations": [
                                     "create",
                                     "update",
                                     "delete",
@@ -240,7 +215,7 @@ export const schema = {
                     "name": "nickname",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "email": {
@@ -297,15 +272,6 @@ export const schema = {
                             {
                                 "allow": "public",
                                 "operations": [
-                                    "read"
-                                ]
-                            },
-                            {
-                                "provider": "userPools",
-                                "ownerField": "owner",
-                                "allow": "owner",
-                                "identityClaim": "cognito:username",
-                                "operations": [
                                     "create",
                                     "update",
                                     "delete",
@@ -321,5 +287,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "195b6552c7d428404c82a12a808e80a5"
+    "version": "4824968a5a45ce80a700b1a5c0f4d21a"
 };

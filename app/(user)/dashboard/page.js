@@ -13,6 +13,7 @@ export default function Dashboard() {
   const { myUser, updateUser } = useContext(UserContext);
 
   useEffect(() => {
+    console.log("myUser")
     console.log(myUser)
   }, [myUser])
 

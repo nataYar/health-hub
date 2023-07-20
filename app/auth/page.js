@@ -7,8 +7,8 @@ import awsExports from "../aws-exports";
 import { Card, Paper } from "@mui/material";
 import EmailConfirmationForm from "./EmailConfirmationForm";
 import PopupModal from "../../components/PopupModal";
-
 import { Auth } from "aws-amplify";
+
 Auth.configure(awsExports);
 
 function AuthContainer() {
@@ -96,7 +96,7 @@ function AuthContainer() {
       sx={{ p: "12px", width: { xs: "100%", md: "280px" } }}
     >
       {requiresEmailConfirmation ? (
-        <EmailConfirmationForm userEmail={userEmail} />
+        <EmailConfirmationForm email={userEmail} nickname={nickname} />
       ) : (
         <form
           onSubmit={handleSubmit}

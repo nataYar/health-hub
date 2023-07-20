@@ -46,12 +46,11 @@ type EagerLog = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly userID: string;
   readonly date?: string | null;
   readonly calories?: number | null;
-  readonly fats?: number | null;
   readonly carbs?: number | null;
   readonly weight?: number | null;
+  readonly userID: string;
   readonly Exercises?: (Exercise | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -63,12 +62,11 @@ type LazyLog = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly userID: string;
   readonly date?: string | null;
   readonly calories?: number | null;
-  readonly fats?: number | null;
   readonly carbs?: number | null;
   readonly weight?: number | null;
+  readonly userID: string;
   readonly Exercises: AsyncCollection<Exercise>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -86,7 +84,7 @@ type EagerUser = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly nickname: string;
+  readonly nickname?: string | null;
   readonly email?: string | null;
   readonly Logs?: (Log | null)[] | null;
   readonly createdAt?: string | null;
@@ -99,7 +97,7 @@ type LazyUser = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly nickname: string;
+  readonly nickname?: string | null;
   readonly email?: string | null;
   readonly Logs: AsyncCollection<Log>;
   readonly createdAt?: string | null;
