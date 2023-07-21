@@ -7,9 +7,14 @@ const UserContext = createContext();
 
 // Create the UserContextProvider component
 const UserProvider = ({ children }) => {
-  const [myUser, setMyUser] = useState(null);
+  const [myUser, setMyUser] = useState({
+    id: '', 
+    nickname: '',
+    email: '',
+    Logs: [],
+  });
+
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
- 
 
   useEffect(() => {
     const handleResize = () => {

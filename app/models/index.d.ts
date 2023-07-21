@@ -52,6 +52,8 @@ type EagerLog = {
   readonly weight?: number | null;
   readonly userID: string;
   readonly Exercises?: (Exercise | null)[] | null;
+  readonly fats?: number | null;
+  readonly protein?: number | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -68,6 +70,8 @@ type LazyLog = {
   readonly weight?: number | null;
   readonly userID: string;
   readonly Exercises: AsyncCollection<Exercise>;
+  readonly fats?: number | null;
+  readonly protein?: number | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

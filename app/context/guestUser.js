@@ -29,26 +29,6 @@ export const guestUser = {
           },
         ],
       },
-    //   nextday
-      {
-        id: 'logId456',
-        userID: 'userId123',
-        date: '2023-07-14',
-        calories: 2300,
-        fats: 70,
-        carbs: 130,
-        protein: 76,
-        weight: 186,
-        Exercises: [
-          {
-            id: 'exerciseId3',
-            exercise: 'Cycling',
-            date: '2023-07-14',
-            duration: 60,
-            logID: 'logId456',
-          },
-        ],
-      },
     ],
   };
   

@@ -150,6 +150,20 @@ export const schema = {
                         ]
                     }
                 },
+                "fats": {
+                    "name": "fats",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "protein": {
+                    "name": "protein",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -287,5 +301,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "4824968a5a45ce80a700b1a5c0f4d21a"
+    "version": "3390a6a135b6d10323020c5db19f8a71"
 };

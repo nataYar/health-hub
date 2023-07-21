@@ -13,17 +13,9 @@ const AuthButton = () => {
 
   async function signOut() {
     try {
-      await Auth.signOut({ global: true });
-    } catch (error) {
-      console.log("error signing out: ", error);
-    }
-  }
-
-  async function signOut() {
-    try {
-      router.push("/auth") 
-      updateUser(guestUser)
       await Auth.signOut();
+      // updateUser(guestUser)
+      router.push("/auth") 
     } catch (error) {
       console.log('error signing out: ', error);
     }

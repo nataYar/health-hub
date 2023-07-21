@@ -8,6 +8,7 @@ import { Card, Paper } from "@mui/material";
 import EmailConfirmationForm from "./EmailConfirmationForm";
 import PopupModal from "../../components/PopupModal";
 import { Auth } from "aws-amplify";
+import { getUserFn } from "../utils/userFn";
 
 Auth.configure(awsExports);
 
@@ -34,13 +35,11 @@ function AuthContainer() {
       console.log("Please fill in all required fields");
       return;
     }
-
     // Check if the password matches the confirmed password
     if (password !== confirmPassword) {
       console.log("Passwords do not match");
       return;
     }
-
     try {
       const { user } = await Auth.signUp({
         username: userEmail,
@@ -57,7 +56,6 @@ function AuthContainer() {
 
       setRequiresEmailConfirmation(true);
       setEmail(user.username);
-      console.log(user);
     } catch (error) {
       console.log("error signing up:", error);
     }
@@ -66,12 +64,12 @@ function AuthContainer() {
   const handleSignIn = async () => {
     try {
       const user = await Auth.signIn(userEmail, password);
-      // console.log(user.attributes)
-      const { sub, nickname } = user.attributes;
+      const registeredUser = await getUserFn(user.attributes.email)
+      const { email, nickname, id } = registeredUser;
       updateUser({
-        id: sub,
-        nickname,
-        email: userEmail,
+        id: id,
+        nickname: nickname,
+        email: email,
       });
 
       router.push("./dashboard");
@@ -108,7 +106,7 @@ function AuthContainer() {
           }}
         >
           <TextField
-            label="userEmail"
+            label="Email"
             type="userEmail"
             value={userEmail}
             onChange={(e) => setEmail(e.target.value)}

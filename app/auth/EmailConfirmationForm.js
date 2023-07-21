@@ -4,7 +4,8 @@ import { UserContext } from "../context/userProvider";
 import { Auth } from "aws-amplify";
 import { useRouter } from "next/navigation";
 import { Button, Paper, Box, Typography, TextField } from "@mui/material";
-import { createUserFn } from "./CreateUserFn";
+import { createUserFn } from "../utils/userFn";
+import { Hub } from 'aws-amplify';
 
 function EmailConfirmationForm({ nickname, email }) {
   const { myUser, updateUser } = useContext(UserContext);
@@ -18,21 +19,39 @@ function EmailConfirmationForm({ nickname, email }) {
   const handleConfirmationSubmit = async (event) => {
     event.preventDefault();
     try {
-      await Auth.confirmSignUp(email, confirmationCode);
-      const currentUser = await Auth.currentAuthenticatedUser();
-      console.log(currentUser);
-      // updateUser(currentUser.attributes);
-      // createUserFn(nickname, email);
+      const data = await Auth.confirmSignUp(email, confirmationCode);
+      const newUser = await createUserFn(nickname, email); 
+      listenToAutoSignInEvent(newUser)
     } catch (error) {
-        console.log(error)
+      console.log(error);
     }
   };
+  
 
+  function listenToAutoSignInEvent(newUser) {
+    Hub.listen('auth', ({ payload }) => {
+      const { event } = payload;
+      if (event === 'autoSignIn') {
+        const user = payload.data;
+        //CREATE QUERY TO GET ALL LOGS AND EXERCISES, 
+        // STORE THEM IN MYUSER
+        updateUser({
+          nickname: newUser.nickname,
+          email: newUser.email,
+          id: newUser.id
+        });
+        router.push("/dashboard");
+      } else if (event === 'autoSignIn_failure') {
+        // redirect to sign in page
+        console.log('autoSignIn failure')
+      }
+    })
+  }
 
   useEffect(() => {
-    if (myUser) {
-      router.push("/dashboard");
-    }
+
+     console.log(myUser)
+    
   }, [myUser]);
 
 

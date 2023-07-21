@@ -10,7 +10,8 @@ import dayjs from "dayjs";
 import { nanoid } from 'nanoid';
 
 import { DataStore } from "aws-amplify";
-import { User } from '../models/index';
+import { manageLogFn } from "../utils/userFn";
+
 
 const WeightLogger = () => {
   const { myUser, updateUser } = useContext(UserContext);
@@ -18,11 +19,8 @@ const WeightLogger = () => {
     weight: null,
     date: "",
   });
-
   const [weightsLogs,setWeightsLogs] = useState([])
-
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const [selectedDate, setSelectedDate] = useState(null);
 
 
@@ -53,35 +51,9 @@ const WeightLogger = () => {
     }));
   };
 
-
-  const fetchWeightLogs = async() => {
-    const weightLogs = await DataStore.query(Log)
-    setWeightsLogs(weightLogs)
-  }
-
-
   const passWeightData = async () => {
-    const randomId = nanoid();
-
-    await DataStore.save(new User({
-      id: randomId,
-      nickname: myUser.nickname,
-      email: myUser.email,
-      Logs: [] // Assuming you want to initialize the Logs array as empty for the new User
-    }));
-
-    // await DataStore.save(new Log({
-    //   id:randomId,
-    //   userID: myUser.id, 
-    //   date: weightEntry.date,
-    //   weight: parseFloat(weightEntry.weight),
-    //   calories: 34,
-    //   fats: 56,
-    //   carbs: 89
-    // }));
-
-    console.log(weightEntry);
-    // setIsModalOpen(true);
+    manageLogFn(myUser.id, weightEntry.date, 'weight', weightEntry.weight) 
+    setIsModalOpen(true);
     setWeightEntry({
       weight: "",
       date: "",
