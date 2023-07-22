@@ -1,15 +1,11 @@
 "use client";
 
-// import { UserContext } from "../context/userProvider";
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "../context/userProvider";
 import DatePickerContainer from "../../components/DatePickerContainer";
 import { Stack, TextField, Button, Typography } from "@mui/material";
 import PopupModal from "../../components/PopupModal";
 import dayjs from "dayjs";
-import { nanoid } from 'nanoid';
-
-import { DataStore } from "aws-amplify";
 import { manageLogFn } from "../utils/userFn";
 
 
@@ -22,13 +18,6 @@ const WeightLogger = () => {
   const [weightsLogs,setWeightsLogs] = useState([])
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
-
-
-  // useEffect(() => {
-  //   fetchWeightLogs()
-  //   const subscription = DataStore.observe(Log).subscribe(() => fetchWeightLogs())
-  //   return () => subscription.unsubscribe()
-  // })
 
   useEffect(() => {
     selectedDate
@@ -54,6 +43,7 @@ const WeightLogger = () => {
   const passWeightData = async () => {
     manageLogFn(myUser.id, weightEntry.date, 'weight', weightEntry.weight) 
     setIsModalOpen(true);
+    setSelectedDate(null)
     setWeightEntry({
       weight: "",
       date: "",

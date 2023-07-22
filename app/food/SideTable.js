@@ -22,16 +22,7 @@ const flexPy = {
   py: "1px",
 };
 
-
 const SideTable = ({ data }) => {
-  const returnNutritionValue = () => {
-    Object.keys(data.totalDaily).forEach((key) => {
-      const innerObj = data.totalDaily[key];
-      // Access properties of the inner object
-      return(innerObj.label, innerObj.quantity);
-    })
-  }
-
   return (
     <Box
       component={Paper}
@@ -44,7 +35,11 @@ const SideTable = ({ data }) => {
         color: "neutral.800",
       }}
     >
-      <Typography sx={{ color: "#111927", mb:'12px' }} textAlign="center" variant="h5">
+      <Typography
+        sx={{ color: "#111927", mb: "12px" }}
+        textAlign="center"
+        variant="h5"
+      >
         Nutrition Facts
       </Typography>
       <Divider sx={{ borderWidth: "1px" }} />
@@ -63,36 +58,39 @@ const SideTable = ({ data }) => {
         % Daily Value*
       </Typography>
       <List>
-      {data
-  ? Object.keys(data.totalDaily).map((key) => {
-      const pObj = data.totalDaily[key]; //percentage
-      const pObjQ = Math.round(pObj.quantity)
+        {data
+          ? Object.keys(data.totalDaily).map((key) => {
+              const pObj = data.totalDaily[key]; //percentage
+              const pObjQ = Math.round(pObj.quantity);
 
-      const nObj = data.totalNutrients[key]; //nutrients mg
-      const nObjQ = Math.round(nObj.quantity)
-     
-      return (
-        
-         <ListItem key={key} sx={flex}>
-          <Stack direction='row' alignItems='baseline' useFlexGap>
-          <Typography variant="subtitle1" sx={{fontSize:'8'}}>
-            <strong>{pObj.label} </strong> 
-            
-           
-          </Typography>
-          <Typography variant="subtitle2" sx={{ ml:'5px', color: "neutral.400"}}> {nObjQ}{nObj.unit}</Typography>
-          </Stack>
-          
+              const nObj = data.totalNutrients[key]; //nutrients mg
+              const nObjQ = Math.round(nObj.quantity);
 
-          <Typography variant="subtitle1" align="right">
-            <strong>{pObjQ} {pObj.unit}</strong>
-          </Typography>
-         
-        </ListItem>
-        
-      );
-    })
-  : null}
+              return (
+                <ListItem key={key} sx={flex}>
+                  <Stack direction="row" alignItems="baseline" useFlexGap>
+                    <Typography variant="subtitle1" sx={{ fontSize: "8" }}>
+                      <strong>{pObj.label} </strong>
+                    </Typography>
+                    <Typography
+                      variant="subtitle2"
+                      sx={{ ml: "5px", color: "neutral.400" }}
+                    >
+                      {" "}
+                      {nObjQ}
+                      {nObj.unit}
+                    </Typography>
+                  </Stack>
+
+                  <Typography variant="subtitle1" align="right">
+                    <strong>
+                      {pObjQ} {pObj.unit}
+                    </strong>
+                  </Typography>
+                </ListItem>
+              );
+            })
+          : null}
       </List>
     </Box>
   );

@@ -26,7 +26,6 @@ const SearchBar = ({ data, searchedTerm, setSearchedTerm, searchRecipe }) => {
       }}
     >
       <Box
-       
         sx={{
           width: "100%",
           mb: "15px",
@@ -57,7 +56,7 @@ const SearchBar = ({ data, searchedTerm, setSearchedTerm, searchRecipe }) => {
           <Button
             variant="contained"
             onClick={clearInput}
-            sx={{ width: "auto", backgroundColor: "neutral.400" }}
+            sx={{ width: "auto", backgroundColor: "neutral.200", color:"neutral.800" }}
           >
             Clear input
           </Button>

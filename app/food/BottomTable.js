@@ -1,5 +1,6 @@
 "use client";
 import {
+  Button,
   Paper,
   Table,
   TableBody,
@@ -7,35 +8,30 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Tooltip,
   Box,
-  Menu, MenuItem
+  Typography,
 } from "@mui/material";
-import MoreHorizRoundedIcon from "@mui/icons-material/MoreHorizRounded";
 import { useEffect, useState } from "react";
+import DatePickerContainer from "@/components/DatePickerContainer";
+import CloseIcon from "@mui/icons-material/Close";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 
-const BottomTable = ({ data }) => {
-  const [log, setLog] = useState([]);
-  const [anchorRow, setAnchorRow] = useState(null);
+import "../styles/foodPage.css";
 
-  useEffect(() => {
-    if (data) {
-      data.ingredients.map((el) => {
-        el.parsed.map((ingr) => {
-          setLog((prevState) => [
-            ...prevState,
-            {
-              weight: ingr.weight,
-              food: ingr.food,
-              qty: ingr.quantity,
-              unit: ingr.measure,
-              calories: Math.round(ingr.nutrients.ENERC_KCAL.quantity),
-            },
-          ]);
-        });
-      });
+const BottomTable = ({ foodItems, selectedDate, setSelectedDate, widthMd }) => {
+  const [chosenItems, setChosenItems] = useState(new Set());
+  const [clickedRows, setClickedRows] = useState(new Set());
+
+  // Function to handle click event on TableRow
+  const handleSelection = (ind) => {
+    const updatedClickedRows = new Set(clickedRows);
+    if (updatedClickedRows.has(ind)) {
+      updatedClickedRows.delete(ind);
+    } else {
+      updatedClickedRows.add(ind);
     }
-  }, [data]);
+    setClickedRows(updatedClickedRows);
+  };
 
   const handleDeleteItem = (index) => {
     setLog((prevState) => {
@@ -43,61 +39,74 @@ const BottomTable = ({ data }) => {
       updatedLog.splice(index, 1);
       return updatedLog;
     });
-    handleCloseRowMenu()
   };
 
-
-  const handleOpenRowMenu = (event) => {
-    setAnchorRow(event.currentTarget);
-  };
-
-  const handleCloseRowMenu = () => {
-    setAnchorRow(null);
-  };
-
-  const settingsRow = (ind) => {
-    return (
-      <TableCell sx={{ width: '10px'}}>
-        <Tooltip title="Open settings">
-         <MoreHorizRoundedIcon 
-          sx={{ color: "neutral.400"}}
-         onClick={handleOpenRowMenu}
-          size="small"/>
-        </Tooltip>
-
-        <Menu
-          sx={{ 
-          mt: "45px" }}
-          anchorEl={anchorRow}
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: "right",
-          }}
-          keepMounted
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "right",
-          }}
-          open={Boolean(anchorRow)}
-          onClose={handleCloseRowMenu}
-        >
-            <MenuItem sx={{ backgroundColor: "white"}}  onClick={(ind) => handleDeleteItem(ind)}>
-              Delete
-            </MenuItem>
-        </Menu>
-      </TableCell>
-    );
-  };
+  // useEffect(() => {
+  //   if (foodItems) {
+  //     foodItems.ingredients.map((el) => {
+  //       el.parsed.map((ingr) => {
+  //         setLog((prevState) => [
+  //           ...prevState,
+  //           {
+  //             weight: ingr.weight,
+  //             food: ingr.food,
+  //             qty: ingr.quantity,
+  //             unit: ingr.measure,
+  //             calories: Math.round(ingr.nutrients.ENERC_KCAL.quantity),
+  //           },
+  //         ]);
+  //       });
+  //     });
+  //   }
+  // }, [foodItems]);
 
   return (
     <Box
-    component={Paper}
+      component={Paper}
       sx={{
         my: "30px",
         width: "100%",
         borderRadius: "20px",
       }}
     >
+      <Box
+        sx={{
+          width: "100%",
+          height: "auto",
+          p: "16px",
+        }}
+      >
+        <DatePickerContainer
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+          widthMd="160px"
+        />
+          <Button
+            variant="contained"
+            // onClick={clearInput}
+            sx={{
+              width: "auto",
+              backgroundColor: "primary.main",
+              marginLeft: {xs:"0", md: "8px"},
+              marginTop: {xs:"16px", md: "0px"},
+            }}
+          >
+            Log all
+          </Button>
+          <Button
+            variant="contained"
+            // onClick={clearInput}
+            sx={{
+              width: "auto",
+              backgroundColor: "primary.main",
+              marginLeft: "8px",
+              marginTop: {xs:"16px", md: "0px"},
+            }}
+          >
+            Log selected
+          </Button>
+      </Box>
+
       <TableContainer
         sx={{
           width: "100%",
@@ -109,7 +118,6 @@ const BottomTable = ({ data }) => {
         <Table
           sx={{
             backgroundColor: "white",
-
           }}
         >
           <TableHead
@@ -143,25 +151,36 @@ const BottomTable = ({ data }) => {
               </TableCell>
             </TableRow>
           </TableHead>
-          
-          <TableBody>
-            {log
-              ? log.map((el, ind) => (
-                
-                    <TableRow key={ind}>
-                      <TableCell>{el.qty}</TableCell>
-                      <TableCell>{el.unit}</TableCell>
-                      <TableCell>{el.food}</TableCell>
-                      <TableCell>{el.calories}</TableCell>
-                      <TableCell>{el.weight}</TableCell>
-                      {settingsRow(ind)}
-                    </TableRow>
-                 
-                ))
-              : 
 
-                null
-          }
+          <TableBody>
+            {foodItems
+              ? foodItems.map((el, ind) => (
+                  <TableRow
+                    className={
+                      clickedRows.has(ind)
+                        ? "tableCell tableCell_selected"
+                        : "tableCell"
+                    }
+                    key={ind}
+                    onClick={() => handleSelection(ind)}
+                  >
+                    <TableCell>{el.qty}</TableCell>
+                    <TableCell>{el.unit}</TableCell>
+                    <TableCell>{el.food}</TableCell>
+                    <TableCell>{el.calories}</TableCell>
+                    <TableCell>{el.weight}</TableCell>
+                    <TableCell
+                      sx={{
+                        borderBottomColor: "none",
+                      }}
+                      id="tableIcon"
+                      onClick={(ind) => handleDeleteItem(ind)}
+                    >
+                      <MoreVertIcon />
+                    </TableCell>
+                  </TableRow>
+                ))
+              : null}
           </TableBody>
         </Table>
       </TableContainer>

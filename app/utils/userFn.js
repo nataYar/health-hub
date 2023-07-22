@@ -30,29 +30,31 @@ export const manageLogFn = async (userId, date, field, value) => {
   try {
     console.log(userId, date, field, value)
     const logsByDate = await DataStore.query(Log, (log) => log.date.eq(date));
+    console.log(logsByDate)
 
-    // const foundLog = await DataStore.query(Log, (log) => 
-    // log.date.eq(date).and(log.userID.eq(userId))
-    // );
-    console.log(logsFilteredByDateAndId )
+    // check if the Log exists
+    const logByUser = logsByDate.filter(log => log.userID
+      === userId)
+      console.log(logByUser.length)
 
-    // if (foundLog.length === 0) {
-    //   console.log("Log not found.");
-    //   const newLog = await DataStore.save(
-    //     new Log({
-    //       date: date,
-    //       field: value,
-    //     })
-    //   );
-    //   return newLog;
-    // } else {
-    //   const updatedLog = await DataStore.save(
-    //     Log.copyOf(foundLog, (updated) => {
-    //       updated[field] = newTitle;
-    //     })
-    //   );
-    //   return updatedLog;
-    // }
+    if (logByUser.length > 0) {
+        // if exists, update the field
+      await DataStore.save(
+        Log.copyOf(logByUser[0], updated => {
+          updated[field] = value
+        })
+      );
+    } else {
+        // if doesn't exist, create the Log
+        await DataStore.save(
+          new Log({
+          "date": date,
+          [field]: value,
+          "userID": userId,
+          "Exercises": [],
+        })
+      );
+    }
   } catch (error) {
     console.log("Error saving new user:", error);
     console.log(error);

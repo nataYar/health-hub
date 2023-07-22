@@ -1,0 +1,39 @@
+.tableCell:hover {
+    background-color: #E5E7EB;
+    cursor: pointer;
+}
+.tableCell {
+    height: 40px;
+    position: relative;
+}
+
+.tableCell_selected {
+    background-color: #E5E7EB;
+    cursor: pointer;
+}
+
+.cursorPointer{
+    cursor: pointer;
+}
+
+
+#tableIcon {
+    /* position: absolute;
+    top: 0;
+    right: 0; */
+    width: 25px;
+    height: 25px;
+    padding: 0;
+    /* transform: translateY(50%); */
+    color: #D2D6DB;
+    border-bottom-color: white !important;
+    /* display: none; */
+}
+
+
+
+.tableCell:hover #tableIcon{
+    /* display: block; */
+    color: white;
+    border-bottom-color: #E5E7EB !important;
+}

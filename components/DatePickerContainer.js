@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext, useEffect, useState} from "react";
+import { useContext, useState} from "react";
 import { UserContext } from "../app/context/userProvider";
 import dayjs from "dayjs";
 
@@ -8,11 +8,8 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 
 const DatePickerContainer = ({ selectedDate, setSelectedDate, widthMd }) => {
+  // const [selectedDate, setSelectedDate] = useState(null);
   const { screenWidth } = useContext(UserContext);
-
-// useEffect(() => {
-//   console.log(selectedDate)
-//     }, [selectedDate])
 
   return (
     <>
@@ -23,6 +20,7 @@ const DatePickerContainer = ({ selectedDate, setSelectedDate, widthMd }) => {
           value={selectedDate}
           onChange={(newValue) => setSelectedDate(newValue)}
           sx={{
+            
             width: {xs: "100%", md: widthMd },
           }}
         />
