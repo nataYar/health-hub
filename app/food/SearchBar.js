@@ -1,7 +1,7 @@
 import { Box, Grid, TextField, Button, Paper } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
-const SearchBar = ({ data, searchedTerm, setSearchedTerm, searchRecipe }) => {
+const SearchBar = ({ searchedTerm, setSearchedTerm, searchRecipe }) => {
  
   const handleSearch = () => {
     searchRecipe(searchedTerm);
@@ -15,6 +15,7 @@ const SearchBar = ({ data, searchedTerm, setSearchedTerm, searchRecipe }) => {
   const clearInput = () => {
     setSearchedTerm("");
   };
+
 
   return (
     <Box
@@ -55,8 +56,13 @@ const SearchBar = ({ data, searchedTerm, setSearchedTerm, searchRecipe }) => {
         <Grid item>
           <Button
             variant="contained"
+            disabled={!searchedTerm}
             onClick={clearInput}
-            sx={{ width: "auto", backgroundColor: "neutral.200", color:"neutral.800" }}
+            sx={{ width: "auto", 
+            backgroundColor: "neutral.200",
+            boxShadow:"none",
+             color:"neutral.800"
+           }}
           >
             Clear input
           </Button>
@@ -64,6 +70,7 @@ const SearchBar = ({ data, searchedTerm, setSearchedTerm, searchRecipe }) => {
         <Grid item>
           <Button
             variant="contained"
+            disabled={!searchedTerm}
             onClick={handleSearch}
             startIcon={<SearchIcon />}
             sx={{ width: "auto" }}

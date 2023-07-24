@@ -17,6 +17,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "duration": {
+                    "name": "duration",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "date": {
                     "name": "date",
                     "isArray": false,
@@ -24,15 +31,8 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "duration": {
-                    "name": "duration",
-                    "isArray": false,
-                    "type": "Int",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "logID": {
-                    "name": "logID",
+                "userID": {
+                    "name": "userID",
                     "isArray": false,
                     "type": "ID",
                     "isRequired": true,
@@ -65,9 +65,9 @@ export const schema = {
                 {
                     "type": "key",
                     "properties": {
-                        "name": "byLog",
+                        "name": "byUser",
                         "fields": [
-                            "logID"
+                            "userID"
                         ]
                     }
                 },
@@ -133,22 +133,6 @@ export const schema = {
                     "type": "ID",
                     "isRequired": true,
                     "attributes": []
-                },
-                "Exercises": {
-                    "name": "Exercises",
-                    "isArray": true,
-                    "type": {
-                        "model": "Exercise"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "logID"
-                        ]
-                    }
                 },
                 "fats": {
                     "name": "fats",
@@ -255,6 +239,22 @@ export const schema = {
                         ]
                     }
                 },
+                "Exercises": {
+                    "name": "Exercises",
+                    "isArray": true,
+                    "type": {
+                        "model": "Exercise"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "userID"
+                        ]
+                    }
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -301,5 +301,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "3390a6a135b6d10323020c5db19f8a71"
+    "version": "f95e8ace16643a54cbe59c4e218c46d9"
 };

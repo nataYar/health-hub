@@ -3,59 +3,36 @@ import { useState, useEffect, useContext } from "react";
 import SearchBar from "./SearchBar";
 import BottomTable from "./BottomTable";
 import SideTable from "./SideTable";
-import { fetchFoodData, fetchNutritionData } from "../utils/foodData";
+import { fetchNutritionData } from "../utils/foodData";
+import { manageLogFn } from "../utils/userFn";
 import { Stack } from "@mui/material";
 import { UserContext } from "../context/userProvider";
 import PopupModal from "@/components/PopupModal";
+import dayjs from "dayjs";
 
 const Food = () => {
   const { myUser, updateUser } = useContext(UserContext);
   const [searchedTerm, setSearchedTerm] = useState("");
   const [data, setData] = useState("");
-  const [selectedDate, setSelectedDate] = useState(null);
-
+  const [selectedDate, setSelectedDate] = useState(dayjs());
+  const [date, setDate] = useState(null);
   const [foodItems, setFoodItems] = useState([]);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const mockupData = [
-    {
-      calories: 2580,
-      carbs: 200,
-      fats: 181,
-      food: "chicken",
-      protein: 223,
-      qty: 1,
-      unit: "whole",
-      weight: 1200,
-    },
-    {
-      calories: 580,
-      carbs: 20450,
-      fats: 1381,
-      food: "chiken",
-      protein: 83,
-      qty: 2,
-      unit: "whole",
-      weight: 1200,
-    },
-  ];
 
   useEffect(() => {
     if (data) {
+      console.log(data)
       const nutrients = data.totalNutrients;
-
       const carbs = nutrients.CHOCDF?.quantity || 0;
       const fats = nutrients.FAT?.quantity || 0;
       const protein = nutrients.PROCNT?.quantity || 0;
-      console.log(carbs, fats, protein);
 
       data.ingredients.map((el) => {
         el.parsed.map((ingr) => {
           setFoodItems((prevState) => [
             ...prevState,
-            {
-              weight: ingr.weight,
+            { 
+              weight: Math.round(ingr.weight),
               food: ingr.food,
               qty: ingr.quantity,
               unit: ingr.measure,
@@ -69,6 +46,10 @@ const Food = () => {
       });
     }
   }, [data]);
+
+  useEffect(() => {
+    selectedDate ? setDate(selectedDate.format("YYYY-MM-DD")) : null;
+  }, [selectedDate]);
 
   const searchRecipe = async (searchQuery) => {
     try {
@@ -85,20 +66,28 @@ const Food = () => {
     setIsModalOpen(false);
   };
 
-  // const handleSubmit = () => {
-  //   weightEntry.weight !==  null  && weightEntry.date
-  //     ? passWeightData()
-  //     : alert("Please log weight and date");
-  // };
-
-  const passcaloriesData = async () => {
-    // manageLogFn(myUser.id, weightEntry.date, 'weight', weightEntry.weight)
-    setIsModalOpen(true);
-    setSelectedDate(null);
-    // setWeightEntry({
-    //   weight: "",
-    //   date: "",
-    // });
+  const logData =  () => {
+    if (
+      myUser.id &&
+      date &&
+      foodItems
+    ) {
+      const sumOfCalories = foodItems.reduce((totalCalories, item) => totalCalories + item.calories, 0);
+      const sumOfProteins = foodItems.reduce((totalProtein, item) => totalProtein + item.protein, 0);
+      const sumOfFats = foodItems.reduce((totalFats, item) => totalFats + item.fats, 0);
+      const sumOfCarbs = foodItems.reduce((totalCarbs, item) => totalCarbs + item.carbs, 0);
+      manageLogFn(
+        myUser.id,
+        date,
+        sumOfCalories ,
+        sumOfFats,
+        sumOfProteins,
+        sumOfCarbs
+      );
+      setIsModalOpen(true);
+      setSelectedDate(null);
+      setFoodItems([]);
+    }
   };
 
   return (
@@ -124,17 +113,24 @@ const Food = () => {
           setSearchedTerm={setSearchedTerm}
           searchRecipe={searchRecipe}
         />
+        {/* {data ? 
         <BottomTable
-          // foodItems={foodItems}
-          foodItems={mockupData}
+         foodItems={foodItems}
           selectedDate={selectedDate}
           setSelectedDate={setSelectedDate}
-         
-        />
-        {/* {data ? <BottomTable data={data} /> : null} */}
+          handleLogData={logData}
+           /> 
+           : null} */}
+            <BottomTable
+          foodItems={foodItems}
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+          handleLogData={logData}
+           /> 
       </Stack>
-      <SideTable data={data} />
-      {/* {data ? <SideTable data={data} /> : null} */}
+      {/* <SideTable data={data} /> */}
+      {data ? 
+      <SideTable data={data} /> : null}
       <PopupModal
         text="food data logged!"
         open={isModalOpen}

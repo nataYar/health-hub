@@ -13,9 +13,9 @@ type EagerExercise = {
   };
   readonly id: string;
   readonly exercise?: string | null;
+  readonly duration?: string | null;
   readonly date?: string | null;
-  readonly duration?: number | null;
-  readonly logID: string;
+  readonly userID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -27,9 +27,9 @@ type LazyExercise = {
   };
   readonly id: string;
   readonly exercise?: string | null;
+  readonly duration?: string | null;
   readonly date?: string | null;
-  readonly duration?: number | null;
-  readonly logID: string;
+  readonly userID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -51,7 +51,6 @@ type EagerLog = {
   readonly carbs?: number | null;
   readonly weight?: number | null;
   readonly userID: string;
-  readonly Exercises?: (Exercise | null)[] | null;
   readonly fats?: number | null;
   readonly protein?: number | null;
   readonly createdAt?: string | null;
@@ -69,7 +68,6 @@ type LazyLog = {
   readonly carbs?: number | null;
   readonly weight?: number | null;
   readonly userID: string;
-  readonly Exercises: AsyncCollection<Exercise>;
   readonly fats?: number | null;
   readonly protein?: number | null;
   readonly createdAt?: string | null;
@@ -91,6 +89,7 @@ type EagerUser = {
   readonly nickname?: string | null;
   readonly email?: string | null;
   readonly Logs?: (Log | null)[] | null;
+  readonly Exercises?: (Exercise | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -104,6 +103,7 @@ type LazyUser = {
   readonly nickname?: string | null;
   readonly email?: string | null;
   readonly Logs: AsyncCollection<Log>;
+  readonly Exercises: AsyncCollection<Exercise>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

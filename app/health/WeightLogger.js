@@ -6,7 +6,7 @@ import DatePickerContainer from "../../components/DatePickerContainer";
 import { Stack, TextField, Button, Typography } from "@mui/material";
 import PopupModal from "../../components/PopupModal";
 import dayjs from "dayjs";
-import { manageLogFn } from "../utils/userFn";
+import { manageWeightLogFn } from "../utils/userFn";
 
 
 const WeightLogger = () => {
@@ -17,7 +17,7 @@ const WeightLogger = () => {
   });
   const [weightsLogs,setWeightsLogs] = useState([])
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(dayjs());
 
   useEffect(() => {
     selectedDate
@@ -41,7 +41,7 @@ const WeightLogger = () => {
   };
 
   const passWeightData = async () => {
-    manageLogFn(myUser.id, weightEntry.date, 'weight', weightEntry.weight) 
+    manageWeightLogFn(myUser.id, weightEntry.date, 'weight', weightEntry.weight) 
     setIsModalOpen(true);
     setSelectedDate(null)
     setWeightEntry({
@@ -61,6 +61,7 @@ const WeightLogger = () => {
   return (
     <Stack
       direction="column"
+      alignItems="flex-start"
       height="auto"
       padding="20px"
       borderRadius="20px"
@@ -85,7 +86,7 @@ const WeightLogger = () => {
           height: "250px",
           display: "flex",
           flexFlow: "column nowrap",
-          alignItems: "center",
+          alignItems: "flex-start",
           justifyContent: "space-between",
         }}
       >
@@ -105,7 +106,11 @@ const WeightLogger = () => {
           widthMd="100%"
         />
 
-        <Button variant="contained" type="submit">
+        <Button 
+        variant="contained" 
+        type="submit"
+        disabled={!weightEntry.date || !weightEntry.weight}
+        >
           Log Weight
         </Button>
       </form>

@@ -1,9 +1,9 @@
 type Exercise @model @auth(rules: [{allow: public}]) {
   id: ID!
   exercise: String
+  duration: String
   date: AWSDate
-  duration: Int
-  logID: ID! @index(name: "byLog")
+  userID: ID! @index(name: "byUser")
 }
 
 type Log @model @auth(rules: [{allow: public}]) {
@@ -13,7 +13,6 @@ type Log @model @auth(rules: [{allow: public}]) {
   carbs: Int
   weight: Float
   userID: ID! @index(name: "byUser")
-  Exercises: [Exercise] @hasMany(indexName: "byLog", fields: ["id"])
   fats: Int
   protein: Int
 }
@@ -23,5 +22,6 @@ type User @model @auth(rules: [{allow: public}]) {
   nickname: String
   email: AWSEmail
   Logs: [Log] @hasMany(indexName: "byUser", fields: ["id"])
+  Exercises: [Exercise] @hasMany(indexName: "byUser", fields: ["id"])
 }
  

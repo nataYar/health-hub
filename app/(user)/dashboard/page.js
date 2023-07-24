@@ -7,7 +7,6 @@ import CaloryWidget from "./Widgets/CaloryWidget";
 import WeightWidget from "./Widgets/WeightWidget";
 import ExerciseWidget from "./Widgets/ExerciseWidget";
 import { UserContext } from "../../context/userProvider";
-import { Auth } from "aws-amplify";
 
 export default function Dashboard() {
   const { myUser, updateUser } = useContext(UserContext);
