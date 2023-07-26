@@ -1,6 +1,9 @@
 'use client'
 
 import { createContext, useState, useEffect } from 'react';
+import { DataStore } from "@aws-amplify/datastore";
+import { Exercise, Log } from "../models";
+
 
 // Create the user context
 const UserContext = createContext();
@@ -13,8 +16,43 @@ const UserProvider = ({ children }) => {
     email: '',
     Logs: [],
   });
-
+  const [userLogs, setUserLogs] = useState([])
+  const [userExercises, setUserExercises] = useState([])
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    if(myUser.id.length > 0) {
+      const subscription = DataStore.observeQuery(Log, (p) =>
+      p.userID.eq(myUser.id)
+    ).subscribe((snapshot) => {
+      const { items } = snapshot;
+
+      // Convert the date strings to Date objects for correct sorting
+      const sortedItems = items.sort(
+        (a, b) => new Date(a.date) - new Date(b.date)
+      );
+      setUserLogs(sortedItems);
+    });
+    return () => subscription.unsubscribe();
+    }
+  }, [myUser]);
+
+  useEffect(() => {
+    if(myUser.id.length > 0) {
+      const subscription = DataStore.observeQuery(Exercise, (p) =>
+      p.userID.eq(myUser.id)
+    ).subscribe((snapshot) => {
+      const { items } = snapshot;
+
+      // Convert the date strings to Date objects for correct sorting
+      const sortedItems = items.sort(
+        (a, b) => new Date(a.date) - new Date(b.date)
+      );
+      setUserExercises(sortedItems);
+    });
+    return () => subscription.unsubscribe();
+    }
+  }, [myUser]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -43,7 +81,9 @@ const UserProvider = ({ children }) => {
   const contextValue = {
     myUser,
     updateUser,
-    screenWidth
+    screenWidth,
+    userLogs,
+    userExercises
   };
 
   return <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>;

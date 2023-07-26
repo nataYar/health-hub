@@ -16,36 +16,14 @@ import FitnessLogContainer from "./FitnessLogContainer";
 import { exercisesData } from "./exercisesData";
 import { saveExerciseFn } from "../utils/userFn";
 import { UserContext } from "../context/userProvider";
-import { DataStore } from "@aws-amplify/datastore";
-import { Exercise } from "../models";
 import dayjs from "dayjs";
 
 const LogExercise = () => {
-  const { myUser, updateUser } = useContext(UserContext);
+  const { myUser, userExercises} = useContext(UserContext);
   const [selectedDate, setSelectedDate] = useState(dayjs());
   const [exercise, setExercise] = useState("");
   const [customExercise, setCustomExercise] = useState("");
   const [duration, setDuration] = useState("");
-  const [exercisesArray, setExercisesArray] = useState([]);
-
-  useEffect(() => {
-    const subscription = DataStore.observeQuery(Exercise, (p) =>
-      p.userID.eq(myUser.id)
-    ).subscribe((snapshot) => {
-      const { items } = snapshot;
-
-      // Convert the date strings to Date objects for correct sorting
-      const sortedItems = items.sort(
-        (a, b) => new Date(a.date) - new Date(b.date)
-      );
-      setExercisesArray(sortedItems);
-    });
-    return () => subscription.unsubscribe();
-  }, []);
-
-  // useEffect(() => {
-  //   console.log(exercisesArray)
-  // }, [exercisesArray]);
 
   const handleLogExercise = () => {
     const ex = exercise !== "Custom" ? exercise : customExercise;
@@ -176,8 +154,7 @@ const LogExercise = () => {
         }}
       >
         <FitnessLogContainer
-          exercises={exercisesArray}
-          setExercisesArray={setExercisesArray}
+          exercises={userExercises}
         />
       </Box>
     </>

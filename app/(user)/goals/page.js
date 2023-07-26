@@ -2,74 +2,102 @@
 
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "../../context/userProvider";
-import { Stack, TextField, Button, Typography } from "@mui/material";
+import { Stack, TextField, Button, Typography, Paper } from "@mui/material";
 import PopupModal from "../../../components/PopupModal";
-import { DataStore } from "@aws-amplify/datastore";
-import { Log } from "../../models";
+// import { DataStore } from "@aws-amplify/datastore";
+// import { Log } from "../../models";
 import { saveGoals } from "../../utils/userFn";
+import dayjs from "dayjs";
+// import { getLogFn } from "../../utils/userFn";
 
 const Goals = () => {
-    const { myUser, updateUser } = useContext(UserContext);
+    const { myUser, userLogs } = useContext(UserContext);
+    const [currentDate, setCurrentDate] = useState(dayjs().format("YYYY-MM-DD"));
     const [goals, setGoals] = useState({
         caloriesGoal: null,
+        weightGoal: null,
     });
+    const [currentCaloriesGoal, setCurrentCaloriesGoal] = useState(null)
+    const [currentWeightGoal, selCurrentWeightGoal] = useState(null)
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+    useEffect(() => {
+      console.log("currentCaloriesGoal" + currentCaloriesGoal)
+      console.log("currentWeightGoal" + currentWeightGoal)
+    }, [userLogs]);
+
+    useEffect(() => {
+      const lastLoggedWeightGoal = () => {
+        for (let i = userLogs.length - 1; i >= 0; i--) {
+          const log = userLogs[i];
+          if (log.weightGoal !== null ) {
+            return log.weightGoal;
+          }
+        }
+        return null; // Return null if all logs have null weights
+      };
+      const lastW = lastLoggedWeightGoal () 
+      lastW ? selCurrentWeightGoal(lastW) : null
+    }, [userLogs]);
+
+    useEffect(() => {
+      const lastLoggedCaloriesGoal = () => {
+        for (let i = userLogs.length - 1; i >= 0; i--) {
+          const log = userLogs[i];
+          if (log.caloriesGoal !== null ) {
+            return log.caloriesGoal;
+          }
+        }
+        return null; // Return null if all logs have null weights
+      };
+      const lastC = lastLoggedCaloriesGoal() 
+      lastC ? setCurrentCaloriesGoal(lastC) : null
+    }, [userLogs]);
 
     const handleCloseModal = () => {
       setIsModalOpen(false);
     };
 
     const passGoalsData = async () => {
-      saveGoals(myUser.id, goals.caloriesGoal) 
+      saveGoals(myUser.id, goals.caloriesGoal, goals.weightGoal, currentDate) 
       setIsModalOpen(true);
       setGoals({
-        caloriesGoal: "",
+        caloriesGoal: null,
+        weightGoal: null,
       });
     };
   
     const handleSubmit = (event) => {
       event.preventDefault();
   
-      goals.caloriesGoal !==  null
+      goals.caloriesGoal !==  null && goals.weightGoal !==  null 
         ? passGoalsData()
         : alert("Please log weight and date");
     };
   
-    const handleGoalChange = (event) => {
-        const value = parseFloat(event.target.value);
-        setGoals((prevEntry) => ({
-          ...prevEntry,
-          caloriesGoal: value,
-        }));
+    const handleGoalChange = (event, type) => {
+      switch (type) {
+        case 'weight':
+          const wVal= parseFloat(event.target.value);
+          setGoals((prevEntry) => ({
+            ...prevEntry,
+            weightGoal: wVal,
+          }));
+          break;
+
+        case 'calories':
+          const cVal= parseFloat(event.target.value);
+          setGoals((prevEntry) => ({
+            ...prevEntry,
+            caloriesGoal: cVal,
+          }));
+          break;
+      
+        default:
+          break;
+      }
       };
 
-
-      useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const log = await DataStore.query(Log, el => el.userID.eq(myUser.id));
-            // const userLog = log.filter(el => el.userID === myUser.id)
-            console.log(log)
-            // setGoals({ caloriesGoal: userLog.caloriesGoal });
-          } catch (error) {
-            console.error("Error fetching exercises:", error);
-          }
-        };
-        fetchData();
-        // const subscription = DataStore.observe(Log).subscribe((el) => {
-        //   if (!el || !el.element) {
-        //     return;
-        //   }
-    
-        //   const updatedLog= el.element;
-        //   console.log(updatedLog)
-
-        //   setGoals({ caloriesGoal: log});
-        // });
-        // return () => {
-        //   subscription.unsubscribe();
-        // }
-      }, []);
 
     return (
       <Stack
@@ -79,23 +107,18 @@ const Goals = () => {
         padding="20px"
         borderRadius="20px"
         backgroundColor="white"
+        component={Paper}
         sx={{
-          width: { xs: "90%", md: "35%" },
+          width: { xs: "90%", md: "40%" },
         }}
       >
         <Typography
           variant="h5"
-          sx={{
-            mb: "20px",
+          sx={{ mb:"20px",
             textAlign: "center",
           }}
         >
-          My current goal
-          {
-            goals.caloriesGoal ?  
-           <Typography variant="h2">goals.caloriesGoal </Typography>
-            : null
-          }
+          My current goals
         </Typography>
         <form
           onSubmit={handleSubmit}
@@ -112,7 +135,18 @@ const Goals = () => {
             type="number"
             label="Calories daily"
             value={goals.caloriesGoal == null ? "" : goals.caloriesGoal}
-            onChange={handleGoalChange}
+            onChange={(e) => handleGoalChange(e, 'calories')}
+            sx={{
+              width: "100%",
+              mb:"10px"
+            }}
+          />
+
+          <TextField
+            type="number"
+            label="Desired weight"
+            value={goals.weightGoal == null ? "" : goals.weightGoal}
+            onChange={(e) => handleGoalChange(e, 'weight')}
             sx={{
               width: "100%",
               mb:"10px"

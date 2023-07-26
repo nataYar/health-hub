@@ -11,17 +11,13 @@ import PopupModal from "@/components/PopupModal";
 import dayjs from "dayjs";
 
 const Food = () => {
-  const { myUser, updateUser } = useContext(UserContext);
+  const { myUser } = useContext(UserContext);
   const [searchedTerm, setSearchedTerm] = useState("");
   const [data, setData] = useState(null);
   const [selectedDate, setSelectedDate] = useState(dayjs());
   const [date, setDate] = useState(null);
   const [foodItems, setFoodItems] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  useEffect(() => {
-    console.log(foodItems);
-  }, [foodItems]);
 
   useEffect(() => {
     if (data) {
@@ -32,19 +28,18 @@ const Food = () => {
 
       data.ingredients.map((el) => {
         el.parsed.map((ingr) => {
-          setFoodItems(
-            (prevState) => [
+          setFoodItems((prevState) => [
             ...prevState,
             {
-                weight: Math.round(ingr.weight),
-                food: ingr.food,
-                qty: ingr.quantity,
-                unit: ingr.measure,
-                calories: Math.floor(ingr.nutrients.ENERC_KCAL.quantity),
-                carbs: Math.floor(carbs),
-                fats: Math.floor(fats),
-                protein: Math.floor(protein),
-              },
+              weight: Math.round(ingr.weight),
+              food: ingr.food,
+              qty: ingr.quantity,
+              unit: ingr.measure,
+              calories: Math.floor(ingr.nutrients.ENERC_KCAL.quantity),
+              carbs: Math.floor(carbs),
+              fats: Math.floor(fats),
+              protein: Math.floor(protein),
+            },
           ]);
         });
       });
@@ -57,7 +52,7 @@ const Food = () => {
 
   const searchRecipe = async (searchQuery) => {
     try {
-      setFoodItems([])
+      setFoodItems([]);
       const response = await fetchNutritionData(searchQuery);
       if (response !== undefined) {
         setData(response);
@@ -104,31 +99,6 @@ const Food = () => {
     }
   };
 
-  const mockupFoodItems = [
-    {
-      qty: 1,
-      unit: "cup",
-      food: "Oats",
-      calories: 150,
-      weight: 120,
-    },
-    {
-      qty: 2,
-      unit: "slices",
-      food: "Bread",
-      calories: 100,
-      weight: 60,
-    },
-    {
-      qty: 1,
-      unit: "piece",
-      food: "Apple",
-      calories: 80,
-      weight: 180,
-    },
-    // Add more sample objects as needed
-  ];
-
   return (
     <Stack
       sx={{
@@ -160,14 +130,7 @@ const Food = () => {
             handleLogData={logData}
           />
         ) : null}
-        {/* <BottomTable
-          foodItems={foodItems}
-          selectedDate={selectedDate}
-          setSelectedDate={setSelectedDate}
-          handleLogData={logData}
-        />  */}
       </Stack>
-      {/* <SideTable data={data} /> */}
       {data ? <SideTable data={data} /> : null}
       <PopupModal
         text="food data logged!"

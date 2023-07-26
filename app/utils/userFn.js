@@ -139,8 +139,9 @@ export const deleteExerciseFn = async (logID) => {
   DataStore.delete(modelToDelete);
 };
 
-export const saveGoals = async (userId, val) => {
+export const saveGoals = async (userId, caloriesGoal, weightGoal, date) => {
   try {
+    console.log(userId, caloriesGoal, weightGoal)
     const logs = await DataStore.query(Log, (log) => log.userID.eq(userId));
     const lastLog = logs[logs.length - 1];
 
@@ -148,15 +149,19 @@ export const saveGoals = async (userId, val) => {
       // if exists, update the field
       await DataStore.save(
         Log.copyOf(lastLog, (updated) => {
-          updated.caloriesGoal = val;
+          updated.caloriesGoal = caloriesGoal;
+          updated.weightGoal = weightGoal;
+          updated.date= date
         })
       );
     } else {
       // if doesn't exist, create the Log
       await DataStore.save(
         new Log({
-          caloriesGoal: val,
+          caloriesGoal: caloriesGoal,
+          weightGoal: weightGoal,
           userID: userId,
+          date: date,
         })
       );
     }

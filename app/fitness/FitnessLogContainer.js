@@ -12,14 +12,12 @@ import {
   MenuItem,
 } from "@mui/material";
 import MoreHorizRoundedIcon from "@mui/icons-material/MoreHorizRounded";
-import { UserContext } from "../context/userProvider";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { deleteExerciseFn } from "../utils/userFn";
 
-const FitnessLogContainer = ({ exercises, setExercisesArray }) => {
-  const { myUser, updateUser } = useContext(UserContext);
+const FitnessLogContainer = ({ exercises }) => {
   const [anchorRow, setAnchorRow] = useState(null);
-const [selectedRowId, setSelectedRowId] = useState(null)
+  const [selectedRowId, setSelectedRowId] = useState(null)
 
   const handleDeleteItem = () => {
     deleteExerciseFn(selectedRowId)

@@ -155,6 +155,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "weightGoal": {
+                    "name": "weightGoal",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -308,5 +315,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "8c13f9230dcdfbef24525732e17817f3"
+    "version": "b0dee55ee1e18e0fb1d0ba1845a8e8c3"
 };

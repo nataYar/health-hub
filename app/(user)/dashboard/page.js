@@ -7,37 +7,32 @@ import CaloryWidget from "./Widgets/CaloryWidget";
 import WeightWidget from "./Widgets/WeightWidget";
 import ExerciseWidget from "./Widgets/ExerciseWidget";
 import { UserContext } from "../../context/userProvider";
-import { DataStore } from "@aws-amplify/datastore";
-import { Exercise } from "../../models";
-import { getLogFn, getExerciseFn } from "../../utils/userFn";
 import dayjs from "dayjs";
 
 export default function Dashboard() {
-  const { myUser, updateUser } = useContext(UserContext);
-  const [logsData, setLogsData] = useState([]);
+  const { userLogs} = useContext(UserContext);
+  // const [userLogs, setLogsData] = useState([]);
   const [exercisesData, setExercisesArray] = useState([]);
-  const [currentDate, setCurrentDate] = useState(dayjs().format("YYYY-MM-DD"));
-
+  const currentDate = dayjs().format("YYYY-MM-DD");
   const [weightData, setWeightData] = useState({ 
     lastWeight: null, 
-    firstWeight: null });
-
+    firstWeight: null});
 
   useEffect(() => {
-    console.log(exercisesData)
-    console.log(logsData)
-    console.log(currentDate)
+    // console.log(exercisesData)
+    // console.log(userLogs)
+    // console.log(currentDate)
 
     const lastLoggedWeight = () => {
-      for (let i = logsData.length - 1; i >= 0; i--) {
-        const log = logsData[i];
+      for (let i = userLogs.length - 1; i >= 0; i--) {
+        const log = userLogs[i];
         if (log.weight !== null) {
           return log.weight;
         }
       }
       return null; // Return null if all logs have null weights
     };
-    const firstLoggedWeight = logsData.reduce((firstWeight, log) => {
+    const firstLoggedWeight = userLogs.reduce((firstWeight, log) => {
       if (firstWeight === null && log.weight !== null) {
         return log.weight;
       }
@@ -46,55 +41,7 @@ export default function Dashboard() {
     }, null);
     const lastWeight = lastLoggedWeight();
     setWeightData({ lastWeight: lastWeight , firstWeight: firstLoggedWeight });
-  }, [logsData, exercisesData])
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const initialExercises = await getExerciseFn(myUser.id)
-        initialExercises.sort((a, b) => a.date.localeCompare(b.date));
-        setExercisesArray(initialExercises);
-        const initialLogs = await getLogFn(myUser.id)
-        initialLogs.sort((a, b) => a.date.localeCompare(b.date));
-        setLogsData(initialLogs);
-      } catch (error) {
-        console.error("Error fetching exercises:", error);
-      }
-    };
-
-    fetchData();
-    const subscriptionEx = DataStore.observe(Exercise).subscribe((exercise) => {
-      if (!exercise || !exercise.element) {
-        return;
-      }
-
-      const updatedExercise = exercise.element;
-      setExercisesArray((prevExercisesArray) => {
-        // Find the index of the updated exercise in the array
-        const index = prevExercisesArray.findIndex(
-          (exercise) => exercise.id === updatedExercise.id
-        );
-
-        // Create a new array with the updated exercise
-        const updatedArray = [...prevExercisesArray];
-        if (index !== -1) {
-          updatedArray[index] = updatedExercise;
-        } else {
-          // If it's a new exercise, add it to the array
-          updatedArray.push(updatedExercise);
-        }
-
-        // Sort the updatedArray by date
-        updatedArray.sort((a, b) => a.date.localeCompare(b.date));
-
-        return updatedArray;
-      });
-    });
-    return () => {
-      subscriptionEx.unsubscribe();
-      // subscriptionLog.unsubscribe();
-    }
-  }, []);
+  }, [userLogs, exercisesData])
 
   return (
     <Box

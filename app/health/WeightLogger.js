@@ -10,12 +10,11 @@ import { saveLogFieldFn } from "../utils/userFn";
 
 
 const WeightLogger = () => {
-  const { myUser, updateUser } = useContext(UserContext);
+  const { myUser } = useContext(UserContext);
   const [weightEntry, setWeightEntry] = useState({
     weight: null,
     date: "",
   });
-  const [weightsLogs,setWeightsLogs] = useState([])
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(dayjs());
 
