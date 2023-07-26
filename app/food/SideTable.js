@@ -23,6 +23,7 @@ const flexPy = {
 };
 
 const SideTable = ({ data }) => {
+
   return (
     <Box
       component={Paper}
@@ -43,9 +44,19 @@ const SideTable = ({ data }) => {
         Nutrition Facts
       </Typography>
       <Divider sx={{ borderWidth: "1px" }} />
-      <Typography variant="subtitle2" sx={{ textAlign: "left", my: "10px" }}>
-        Amount Per Serving
+      <Typography variant="subtitle2" sx={{ textAlign: "left", mt: "10px" }}>
+        Amount Per Serving for
       </Typography>
+      {data
+        ? data.ingredients.map((el, ind) => (
+          <Typography key={ind}variant="subtitle2" sx={{ 
+            color: "neutral.400",
+            textAlign: "left", my: "5px" }}>
+          {el.text}
+          </Typography>
+          )
+        )
+        : null}
       <Stack direction="row" justifyContent="space-between">
         <Typography variant="h5">Calories</Typography>
         <Typography variant="h5">{data.calories}</Typography>

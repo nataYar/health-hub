@@ -16,7 +16,7 @@ import FitnessLogContainer from "./FitnessLogContainer";
 import { exercisesData } from "./exercisesData";
 import { saveExerciseFn } from "../utils/userFn";
 import { UserContext } from "../context/userProvider";
-import { DataStore, SortDirection } from "@aws-amplify/datastore";
+import { DataStore } from "@aws-amplify/datastore";
 import { Exercise } from "../models";
 import dayjs from "dayjs";
 
@@ -29,114 +29,27 @@ const LogExercise = () => {
   const [exercisesArray, setExercisesArray] = useState([]);
 
   useEffect(() => {
-    const fetchExercises = async () => {
-      try {
-        const initialExercises = await DataStore.query(
-          Exercise,
-          (p) => p.and((p) => [p.userID.eq(myUser.id)]),
-          {
-            sort: (s) => s.date(SortDirection.ASCENDING),
-          }
-        );
-        setExercisesArray(initialExercises);
-      } catch (error) {
-        console.error("Error fetching exercises:", error);
-      }
-    };
+    const subscription = DataStore.observeQuery(Exercise, (p) =>
+      p.userID.eq(myUser.id)
+    ).subscribe((snapshot) => {
+      const { items } = snapshot;
 
-    fetchExercises();
-    const subscription = DataStore.observe(Exercise).subscribe((msg) => {
-      if (!msg || !msg.element) {
-        return;
-      }
-
-      const updatedExercise = msg.element;
-      setExercisesArray((prevExercisesArray) => {
-        // Find the index of the updated exercise in the array
-        const index = prevExercisesArray.findIndex(
-          (exercise) => exercise.id === updatedExercise.id
-        );
-
-        // Create a new array with the updated exercise
-        const updatedArray = [...prevExercisesArray];
-        if (index !== -1) {
-          updatedArray[index] = updatedExercise;
-        } else {
-          // If it's a new exercise, add it to the array
-          updatedArray.push(updatedExercise);
-        }
-
-        // Sort the updatedArray by date
-        updatedArray.sort((a, b) => a.date.localeCompare(b.date));
-
-        return updatedArray;
-      });
+      // Convert the date strings to Date objects for correct sorting
+      const sortedItems = items.sort(
+        (a, b) => new Date(a.date) - new Date(b.date)
+      );
+      setExercisesArray(sortedItems);
     });
-
     return () => subscription.unsubscribe();
   }, []);
 
   // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const subscription = await DataStore.observeQuery(
-  //       Exercise, exercise => exercise.userID.eq(myUser.id)
-  //       )
-  //       .subscribe(snapshot => {
-  //           if (!snapshot || !snapshot.models) {
-  //             return; // Return if snapshot or models is undefined or null
-  //           }
-  //           console.log(snapshot)
-  //           const modelsArray = Object.values(snapshot.models);
-  //           console.log(modelsArray)
-  //           setExercisesArray((prevExercisesArray) => [...prevExercisesArray, ...modelsArray]);
-  //         })
-  //   }
-  //  fetchData()
-  // }, []);
-
-  //   useEffect(() => {
-  //     const fetchExercises = async () => {
-  //       try {
-  //         const initialExercises = await DataStore.query(Exercise, (exercise) =>
-  //           exercise.userID.eq(myUser.id)
-  //         );
-  //         setExercisesArray(initialExercises);
-
-  //         // Subscribe for real-time updates
-  //         const subscription = DataStore.observe(Exercise).subscribe((msg) => {
-  //           if (msg.opType === "UPDATE") {
-  //             setExercisesArray((prevExercisesArray) =>
-  //               prevExercisesArray.map((exercise) =>
-  //                 exercise.id === msg.element.id ? msg.element : exercise
-  //               )
-  //             );
-  //           } else if (msg.opType === "DELETE") {
-  //             setExercisesArray((prevExercisesArray) =>
-  //               prevExercisesArray.filter((exercise) => exercise.id !== msg.element.id)
-  //             );
-  //           }
-  //         });
-
-  //         return () => subscription.unsubscribe();
-  //       } catch (error) {
-  //         console.error("Error fetching exercises:", error);
-  //       }
-  //     };
-
-  //     fetchExercises();
-
-  // }, []);
+  //   console.log(exercisesArray)
+  // }, [exercisesArray]);
 
   const handleLogExercise = () => {
     const ex = exercise !== "Custom" ? exercise : customExercise;
-    console.log(myUser.id, ex, duration, selectedDate.format("YYYY-MM-DD"));
     saveExerciseFn(myUser.id, ex, duration, selectedDate.format("YYYY-MM-DD"));
-    // const el = {
-    //   exercise: ex,
-    //   duration: duration,
-    //   date: selectedDate.format("YYYY-MM-DD"),
-    // };
-    // setExercisesArray((prevExercisesArray) => [...prevExercisesArray, el]);
     clearInput(); // Clear input fields after logging exercise
   };
 

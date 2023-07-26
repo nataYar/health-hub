@@ -90,35 +90,6 @@ export default function Dashboard() {
         return updatedArray;
       });
     });
-
-    // const subscriptionLog = DataStore.observe(Log).subscribe((exercise) => {
-    //   if (!exercise || !exercise.element) {
-    //     return;
-    //   }
-
-    //   const updatedExercise = exercise.element;
-    //   setExercisesArray((prevExercisesArray) => {
-    //     // Find the index of the updated exercise in the array
-    //     const index = prevExercisesArray.findIndex(
-    //       (exercise) => exercise.id === updatedExercise.id
-    //     );
-
-    //     // Create a new array with the updated exercise
-    //     const updatedArray = [...prevExercisesArray];
-    //     if (index !== -1) {
-    //       updatedArray[index] = updatedExercise;
-    //     } else {
-    //       // If it's a new exercise, add it to the array
-    //       updatedArray.push(updatedExercise);
-    //     }
-
-    //     // Sort the updatedArray by date
-    //     updatedArray.sort((a, b) => a.date.localeCompare(b.date));
-
-    //     return updatedArray;
-    //   });
-    // });
-
     return () => {
       subscriptionEx.unsubscribe();
       // subscriptionLog.unsubscribe();

@@ -13,11 +13,15 @@ import dayjs from "dayjs";
 const Food = () => {
   const { myUser, updateUser } = useContext(UserContext);
   const [searchedTerm, setSearchedTerm] = useState("");
-  const [data, setData] = useState("");
+  const [data, setData] = useState(null);
   const [selectedDate, setSelectedDate] = useState(dayjs());
   const [date, setDate] = useState(null);
   const [foodItems, setFoodItems] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    console.log(foodItems);
+  }, [foodItems]);
 
   useEffect(() => {
     if (data) {
@@ -28,18 +32,19 @@ const Food = () => {
 
       data.ingredients.map((el) => {
         el.parsed.map((ingr) => {
-          setFoodItems((prevState) => [
+          setFoodItems(
+            (prevState) => [
             ...prevState,
             {
-              weight: Math.round(ingr.weight),
-              food: ingr.food,
-              qty: ingr.quantity,
-              unit: ingr.measure,
-              calories: Math.round(ingr.nutrients.ENERC_KCAL.quantity),
-              carbs: Math.round(carbs),
-              fats: Math.round(fats),
-              protein: Math.round(protein),
-            },
+                weight: Math.round(ingr.weight),
+                food: ingr.food,
+                qty: ingr.quantity,
+                unit: ingr.measure,
+                calories: Math.floor(ingr.nutrients.ENERC_KCAL.quantity),
+                carbs: Math.floor(carbs),
+                fats: Math.floor(fats),
+                protein: Math.floor(protein),
+              },
           ]);
         });
       });
@@ -52,13 +57,14 @@ const Food = () => {
 
   const searchRecipe = async (searchQuery) => {
     try {
+      setFoodItems([])
       const response = await fetchNutritionData(searchQuery);
       if (response !== undefined) {
         setData(response);
       }
     } catch (error) {
       console.error("Error while fetching recipe data:", error);
-      alert('Error occured, try again')
+      alert("Error occured, try again");
     }
   };
 
@@ -98,7 +104,6 @@ const Food = () => {
     }
   };
 
-
   const mockupFoodItems = [
     {
       qty: 1,
@@ -124,7 +129,6 @@ const Food = () => {
     // Add more sample objects as needed
   ];
 
-
   return (
     <Stack
       sx={{
@@ -148,20 +152,20 @@ const Food = () => {
           setSearchedTerm={setSearchedTerm}
           searchRecipe={searchRecipe}
         />
-        {/* {data ? 
-        <BottomTable
-         foodItems={foodItems}
+        {data ? (
+          <BottomTable
+            foodItems={foodItems}
+            selectedDate={selectedDate}
+            setSelectedDate={setSelectedDate}
+            handleLogData={logData}
+          />
+        ) : null}
+        {/* <BottomTable
+          foodItems={foodItems}
           selectedDate={selectedDate}
           setSelectedDate={setSelectedDate}
           handleLogData={logData}
-           /> 
-           : null} */}
-        <BottomTable
-          foodItems={mockupFoodItems}
-          selectedDate={selectedDate}
-          setSelectedDate={setSelectedDate}
-          handleLogData={logData}
-        />
+        />  */}
       </Stack>
       {/* <SideTable data={data} /> */}
       {data ? <SideTable data={data} /> : null}

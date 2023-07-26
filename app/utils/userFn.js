@@ -76,14 +76,14 @@ export const saveLogFn = async (
         if (caloriesVal !== undefined && updated.calories !== caloriesVal) {
           updated.calories = updated.calories + caloriesVal;
         }
-        if (proteinVal !== undefined && updated.protein !== proteinVal) {
-          updated.protein = proteinVal;
+        if (proteinVal !== undefined ) {
+          updated.protein =  updated.protein + proteinVal;
         }
-        if (fatsVal !== undefined && updated.fats !== fatsVal) {
-          updated.fats = fatsVal;
+        if (fatsVal !== undefined) {
+          updated.fats =  updated.fats + fatsVal;
         }
-        if (carbsVal !== undefined && updated.carbs !== carbsVal) {
-          updated.carbs = carbsVal;
+        if (carbsVal !== undefined ) {
+          updated.carbs =  updated.carbs +carbsVal;
         }
       }));
     } else {
@@ -134,15 +134,9 @@ export const getExerciseFn = async (userId) => {
   return exerciseByUser;
 };
 
-export const deleteExerciseFn = async (userId, date) => {
-  const logsByDate = await DataStore.query(Log, (log) => log.date.eq(date));
-  // check if the Log exists
-  const logByUser = logsByDate.filter((log) => log.userID === userId);
-  if (logByUser.length > 0) {
-    Log.copyOf(logByUser[0], (updated) => {
-      updated.calories = null;
-    });
-  }
+export const deleteExerciseFn = async (logID) => {
+  const modelToDelete = await DataStore.query(Exercise, logID);
+  DataStore.delete(modelToDelete);
 };
 
 export const saveGoals = async (userId, val) => {
