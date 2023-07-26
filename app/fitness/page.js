@@ -14,7 +14,7 @@ import {
 import DataPickerContainer from "../../components/DatePickerContainer";
 import FitnessLogContainer from "./FitnessLogContainer";
 import { exercisesData } from "./exercisesData";
-import { createExerciseFn } from "../utils/userFn";
+import { saveExerciseFn } from "../utils/userFn";
 import { UserContext } from "../context/userProvider";
 import { DataStore, SortDirection } from "@aws-amplify/datastore";
 import { Exercise } from "../models";
@@ -28,50 +28,35 @@ const LogExercise = () => {
   const [duration, setDuration] = useState("");
   const [exercisesArray, setExercisesArray] = useState([]);
 
-  useEffect(()=> {
-    console.log(exercisesArray)
-  }, exercisesArray)
-
-  p => p.and(p => [
-    p.title.beginsWith("post"),
-    p.rating.gt(10)
-  ]), {
-    sort: s => s.date(SortDirection.ASCENDING)
-  }
-
-
   useEffect(() => {
     const fetchExercises = async () => {
       try {
         const initialExercises = await DataStore.query(
           Exercise,
-        p => p.and(p => [
-          p.userID.eq(myUser.id)
-        ]), 
-        {
-          sort: s => s.date(SortDirection.ASCENDING)
-        }
-        )
-        console.log(initialExercises);
+          (p) => p.and((p) => [p.userID.eq(myUser.id)]),
+          {
+            sort: (s) => s.date(SortDirection.ASCENDING),
+          }
+        );
         setExercisesArray(initialExercises);
       } catch (error) {
         console.error("Error fetching exercises:", error);
       }
     };
-  
+
     fetchExercises();
     const subscription = DataStore.observe(Exercise).subscribe((msg) => {
       if (!msg || !msg.element) {
         return;
       }
-  
+
       const updatedExercise = msg.element;
       setExercisesArray((prevExercisesArray) => {
         // Find the index of the updated exercise in the array
         const index = prevExercisesArray.findIndex(
           (exercise) => exercise.id === updatedExercise.id
         );
-  
+
         // Create a new array with the updated exercise
         const updatedArray = [...prevExercisesArray];
         if (index !== -1) {
@@ -80,22 +65,20 @@ const LogExercise = () => {
           // If it's a new exercise, add it to the array
           updatedArray.push(updatedExercise);
         }
-  
+
         // Sort the updatedArray by date
         updatedArray.sort((a, b) => a.date.localeCompare(b.date));
-  
+
         return updatedArray;
       });
     });
-  
-    return () => subscription.unsubscribe();
 
-    }, [])
-  
+    return () => subscription.unsubscribe();
+  }, []);
 
   // useEffect(() => {
   //   const fetchData = async () => {
-  //     const subscription = await DataStore.observeQuery( 
+  //     const subscription = await DataStore.observeQuery(
   //       Exercise, exercise => exercise.userID.eq(myUser.id)
   //       )
   //       .subscribe(snapshot => {
@@ -111,7 +94,6 @@ const LogExercise = () => {
   //  fetchData()
   // }, []);
 
-
   //   useEffect(() => {
   //     const fetchExercises = async () => {
   //       try {
@@ -119,7 +101,7 @@ const LogExercise = () => {
   //           exercise.userID.eq(myUser.id)
   //         );
   //         setExercisesArray(initialExercises);
-  
+
   //         // Subscribe for real-time updates
   //         const subscription = DataStore.observe(Exercise).subscribe((msg) => {
   //           if (msg.opType === "UPDATE") {
@@ -134,22 +116,21 @@ const LogExercise = () => {
   //             );
   //           }
   //         });
-  
+
   //         return () => subscription.unsubscribe();
   //       } catch (error) {
   //         console.error("Error fetching exercises:", error);
   //       }
   //     };
-  
+
   //     fetchExercises();
 
   // }, []);
 
-
   const handleLogExercise = () => {
     const ex = exercise !== "Custom" ? exercise : customExercise;
-    console.log(myUser.id, ex, duration, selectedDate.format("YYYY-MM-DD"))
-    createExerciseFn(myUser.id, ex, duration, selectedDate.format("YYYY-MM-DD"))
+    console.log(myUser.id, ex, duration, selectedDate.format("YYYY-MM-DD"));
+    saveExerciseFn(myUser.id, ex, duration, selectedDate.format("YYYY-MM-DD"));
     // const el = {
     //   exercise: ex,
     //   duration: duration,
@@ -186,7 +167,7 @@ const LogExercise = () => {
         sx={{
           width: "70%",
           mb: "15px",
-          mx:"auto",
+          mx: "auto",
           p: "32px 24px",
           color: "neutral.800",
           borderRadius: "20px",
@@ -238,7 +219,7 @@ const LogExercise = () => {
           ) : null}
 
           <TextField
-            type="number" 
+            type="number"
             label="Duration in min"
             value={duration}
             inputProps={{
@@ -256,7 +237,7 @@ const LogExercise = () => {
           <DataPickerContainer
             selectedDate={selectedDate}
             setSelectedDate={setSelectedDate}
-            widthMd='150px'
+            widthMd="150px"
           />
         </Box>
         <Button
@@ -275,15 +256,16 @@ const LogExercise = () => {
         sx={{
           width: "70%",
           mb: "15px",
-          mx:"auto",
+          mx: "auto",
           p: "32px 24px",
           color: "neutral.800",
           borderRadius: "20px",
         }}
       >
-        <FitnessLogContainer 
-        exercises={exercisesArray} 
-        setExercisesArray={setExercisesArray} />
+        <FitnessLogContainer
+          exercises={exercisesArray}
+          setExercisesArray={setExercisesArray}
+        />
       </Box>
     </>
   );

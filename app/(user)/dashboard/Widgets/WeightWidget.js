@@ -7,7 +7,8 @@ import ArrowDownwardOutlinedIcon from "@mui/icons-material/ArrowDownwardOutlined
 
 import ArrowUpwardOutlinedIcon from "@mui/icons-material/ArrowUpwardOutlined";
 
-const WeightWidget = () => {
+const WeightWidget = ({ weightData }) => {
+  const {lastWeight, firstWeight} = weightData;
   const [currentWeight, setCurrentWeight] = useState("1978");
   const [prevWeight, setPrevWeight] = useState("189");
 
@@ -28,7 +29,7 @@ const WeightWidget = () => {
               mr: 1,
             }}
           >
-            {currentWeight}
+            {lastWeight}
           </Typography>
         </Grid>
         <Grid item>
@@ -64,7 +65,7 @@ const WeightWidget = () => {
           </Grid>
         </Grid>
         <Grid item sx={{ mb: 1.25 }}>
-          {prevWeight > currentWeight ? (
+          {firstWeight > lastWeight ? (
             <Stack direction="row" alignItems='center' p='0'>
               <Avatar
                 variant="rounded"
@@ -83,7 +84,7 @@ const WeightWidget = () => {
                 color: "extraColors.green",
                 mr:'10px'
               }} >
-                {prevWeight - currentWeight} pounds</Typography>
+                {firstWeight - lastWeight} pounds</Typography>
            
               <Typography variant="body2"
                sx={{
@@ -111,7 +112,7 @@ const WeightWidget = () => {
                 color: "extraColors.red",
                 mr:'10px'
               }} >
-                { currentWeight - prevWeight} pounds</Typography>
+                { lastWeight - firstWeight} pounds</Typography>
            
               <Typography variant="body2"
                sx={{

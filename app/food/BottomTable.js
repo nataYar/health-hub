@@ -3,17 +3,21 @@ import {
   Button,
   Paper,
   Table,
+  Tooltip,
   TableBody,
   TableCell,
   TableRow,
   TableContainer,
   TableHead,
+  Menu, 
+  MenuItem,
+  Typography,
   Box
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import DatePickerContainer from "@/components/DatePickerContainer";
-import CloseIcon from "@mui/icons-material/Close";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
+// import CloseIcon from "@mui/icons-material/Close";
+// import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 import "../styles/foodPage.css";
 
@@ -33,7 +37,6 @@ const BottomTable = ({ foodItems, selectedDate, setSelectedDate, handleLogData }
   //   setClickedRows(updatedClickedRows);
   // };
 
-
   // const handleDeleteItem = (index) => {
   //   setLog((prevState) => {
   //     const updatedLog = [...prevState];
@@ -49,6 +52,7 @@ const BottomTable = ({ foodItems, selectedDate, setSelectedDate, handleLogData }
   // const handleOpenRowSettings = (event) => {
   //   setAnchorRow(event.currentTarget);
   // };
+
   // useEffect(() => {
   //   if (foodItems) {
   //     foodItems.ingredients.map((el) => {
@@ -71,8 +75,6 @@ const BottomTable = ({ foodItems, selectedDate, setSelectedDate, handleLogData }
   const aggToLog = () => {
     handleLogData()
   }
-
-
 
   return (
     <Box

@@ -1,6 +1,5 @@
 "use client";
 import {
-  Paper,
   Table,
   TableBody,
   TableCell,
@@ -12,12 +11,18 @@ import {
   Menu, MenuItem
 } from "@mui/material";
 import MoreHorizRoundedIcon from "@mui/icons-material/MoreHorizRounded";
-import { useState } from "react";
+import { UserContext } from "../context/userProvider";
+import { useState, useContext } from "react";
+import { deleteExerciseFn } from "../utils/userFn";
 
 const FitnessLogContainer = ({ exercises, setExercisesArray }) => {
-    const [anchorRow, setAnchorRow] = useState(null);
-  
-    const handleDeleteItem = (index) => {
+  const { myUser, updateUser } = useContext(UserContext);
+  const [anchorRow, setAnchorRow] = useState(null);
+
+
+  const handleDeleteItem = (index, date) => {
+    console.log(index, date)
+      deleteExerciseFn(myUser.id, date)
       setExercisesArray((prevState) => {
         const updatedLog = [...prevState];
         updatedLog.splice(index, 1);
@@ -35,7 +40,7 @@ const FitnessLogContainer = ({ exercises, setExercisesArray }) => {
       setAnchorRow(null);
     };
   
-    const settingsRow = (ind) => {
+    const settingsRow = (ind, date) => {
       return (
         <TableCell 
         sx={{ width: '10px'}}
@@ -63,7 +68,7 @@ const FitnessLogContainer = ({ exercises, setExercisesArray }) => {
             open={Boolean(anchorRow)}
             onClose={handleCloseRowMenu}
           >
-              <MenuItem sx={{ backgroundColor: "white"}}  onClick={(ind) => handleDeleteItem(ind)}>
+              <MenuItem sx={{ backgroundColor: "white"}}  onClick={(ind, date) => handleDeleteItem(ind, date)}>
                 Delete
               </MenuItem>
           </Menu>
@@ -126,9 +131,8 @@ const FitnessLogContainer = ({ exercises, setExercisesArray }) => {
                         <TableCell>{el.exercise}</TableCell>
                         <TableCell>{el.duration}</TableCell>
                         <TableCell>{el.date}</TableCell>
-                        {settingsRow(ind)}
+                        {settingsRow(ind, el.date)}
                       </TableRow>
-                   
                   ))
                 : 
                   null

@@ -53,6 +53,7 @@ type EagerLog = {
   readonly userID: string;
   readonly fats?: number | null;
   readonly protein?: number | null;
+  readonly caloriesGoal?: number | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -70,6 +71,7 @@ type LazyLog = {
   readonly userID: string;
   readonly fats?: number | null;
   readonly protein?: number | null;
+  readonly caloriesGoal?: number | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

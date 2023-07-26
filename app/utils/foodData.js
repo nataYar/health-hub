@@ -27,7 +27,7 @@ export const fetchFoodData = async (searchQuery) => {
 export const fetchNutritionData = async (searchQuery) => {
   try {
     const ingr = searchQuery.includes("\n")
-    ? searchQuery.split("\n")
+    ? searchQuery.trim().split("\n")
         .map(str => str.trim().replace(/(^,)|(,$)/g, ''))
     : [searchQuery];
     const url = `https://api.edamam.com/api/nutrition-details?app_id=${nutritionApiId}&app_key=${nutritionApiKey}`;
@@ -43,7 +43,6 @@ export const fetchNutritionData = async (searchQuery) => {
 
     if (response.status === 200) {
       const data = await response.json();
-      console.log(data)
       return data;
     } else {
       // Handle non-200 status code

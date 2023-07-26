@@ -12,9 +12,9 @@ export const topNavItems = [
     link: '/dashboard' 
   },
   {
-    text: ' Favorites',
+    text: 'Goals',
     icon: <StarRoundedIcon/>,
-    link: '/favorites' 
+    link: '/goals' 
   }
 ]
 

@@ -18,16 +18,15 @@
 
 
 #tableIcon {
+    cursor: pointer;
     width: 25px;
     height: 25px;
     padding: 0;
-    color: #D2D6DB;
+    color: #c2c2c2;
     border-bottom-color: white !important;
-    display: none;
 }
 
 .tableCell:hover #tableIcon{
-    /* display: block; */
     color: white;
     border-bottom-color: #E5E7EB !important;
 }

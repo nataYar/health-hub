@@ -6,7 +6,7 @@ import DatePickerContainer from "../../components/DatePickerContainer";
 import { Stack, TextField, Button, Typography } from "@mui/material";
 import PopupModal from "../../components/PopupModal";
 import dayjs from "dayjs";
-import { manageWeightLogFn } from "../utils/userFn";
+import { saveLogFieldFn } from "../utils/userFn";
 
 
 const WeightLogger = () => {
@@ -41,7 +41,7 @@ const WeightLogger = () => {
   };
 
   const passWeightData = async () => {
-    manageWeightLogFn(myUser.id, weightEntry.date, 'weight', weightEntry.weight) 
+    saveLogFieldFn(myUser.id, weightEntry.date, 'weight', weightEntry.weight) 
     setIsModalOpen(true);
     setSelectedDate(null)
     setWeightEntry({

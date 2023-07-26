@@ -4,7 +4,7 @@ import SearchBar from "./SearchBar";
 import BottomTable from "./BottomTable";
 import SideTable from "./SideTable";
 import { fetchNutritionData } from "../utils/foodData";
-import { manageLogFn } from "../utils/userFn";
+import { saveLogFn } from "../utils/userFn";
 import { Stack } from "@mui/material";
 import { UserContext } from "../context/userProvider";
 import PopupModal from "@/components/PopupModal";
@@ -21,7 +21,6 @@ const Food = () => {
 
   useEffect(() => {
     if (data) {
-      console.log(data)
       const nutrients = data.totalNutrients;
       const carbs = nutrients.CHOCDF?.quantity || 0;
       const fats = nutrients.FAT?.quantity || 0;
@@ -31,7 +30,7 @@ const Food = () => {
         el.parsed.map((ingr) => {
           setFoodItems((prevState) => [
             ...prevState,
-            { 
+            {
               weight: Math.round(ingr.weight),
               food: ingr.food,
               qty: ingr.quantity,
@@ -59,6 +58,7 @@ const Food = () => {
       }
     } catch (error) {
       console.error("Error while fetching recipe data:", error);
+      alert('Error occured, try again')
     }
   };
 
@@ -66,29 +66,64 @@ const Food = () => {
     setIsModalOpen(false);
   };
 
-  const logData =  () => {
-    if (
-      myUser.id &&
-      date &&
-      foodItems
-    ) {
-      const sumOfCalories = foodItems.reduce((totalCalories, item) => totalCalories + item.calories, 0);
-      const sumOfProteins = foodItems.reduce((totalProtein, item) => totalProtein + item.protein, 0);
-      const sumOfFats = foodItems.reduce((totalFats, item) => totalFats + item.fats, 0);
-      const sumOfCarbs = foodItems.reduce((totalCarbs, item) => totalCarbs + item.carbs, 0);
-      manageLogFn(
+  const logData = () => {
+    if (myUser.id && date && foodItems) {
+      const sumOfCalories = foodItems.reduce(
+        (totalCalories, item) => totalCalories + item.calories,
+        0
+      );
+      const sumOfProteins = foodItems.reduce(
+        (totalProtein, item) => totalProtein + item.protein,
+        0
+      );
+      const sumOfFats = foodItems.reduce(
+        (totalFats, item) => totalFats + item.fats,
+        0
+      );
+      const sumOfCarbs = foodItems.reduce(
+        (totalCarbs, item) => totalCarbs + item.carbs,
+        0
+      );
+      saveLogFn(
         myUser.id,
         date,
-        sumOfCalories ,
-        sumOfFats,
+        sumOfCalories,
         sumOfProteins,
+        sumOfFats,
         sumOfCarbs
       );
       setIsModalOpen(true);
-      setSelectedDate(null);
+      setSelectedDate(dayjs());
       setFoodItems([]);
     }
   };
+
+
+  const mockupFoodItems = [
+    {
+      qty: 1,
+      unit: "cup",
+      food: "Oats",
+      calories: 150,
+      weight: 120,
+    },
+    {
+      qty: 2,
+      unit: "slices",
+      food: "Bread",
+      calories: 100,
+      weight: 60,
+    },
+    {
+      qty: 1,
+      unit: "piece",
+      food: "Apple",
+      calories: 80,
+      weight: 180,
+    },
+    // Add more sample objects as needed
+  ];
+
 
   return (
     <Stack
@@ -121,16 +156,15 @@ const Food = () => {
           handleLogData={logData}
            /> 
            : null} */}
-            <BottomTable
-          foodItems={foodItems}
+        <BottomTable
+          foodItems={mockupFoodItems}
           selectedDate={selectedDate}
           setSelectedDate={setSelectedDate}
           handleLogData={logData}
-           /> 
+        />
       </Stack>
       {/* <SideTable data={data} /> */}
-      {data ? 
-      <SideTable data={data} /> : null}
+      {data ? <SideTable data={data} /> : null}
       <PopupModal
         text="food data logged!"
         open={isModalOpen}
