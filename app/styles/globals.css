@@ -12,6 +12,8 @@ html,
 body {
   max-width: 100vw;
   min-height: 100vh;
+  height: auto;
+  overflow-y: scroll;
   position: relative;
 }
 

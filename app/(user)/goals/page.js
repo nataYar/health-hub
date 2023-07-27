@@ -2,104 +2,107 @@
 
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "../../context/userProvider";
-import { Stack, TextField, Button, Typography, Paper } from "@mui/material";
+import { Stack, TextField, Button, Typography, Paper, useTheme } from "@mui/material";
 import PopupModal from "../../../components/PopupModal";
-// import { DataStore } from "@aws-amplify/datastore";
-// import { Log } from "../../models";
 import { saveGoals } from "../../utils/userFn";
 import dayjs from "dayjs";
-// import { getLogFn } from "../../utils/userFn";
+import { neutral } from "@/app/theme/colors";
+
 
 const Goals = () => {
-    const { myUser, userLogs } = useContext(UserContext);
-    const [currentDate, setCurrentDate] = useState(dayjs().format("YYYY-MM-DD"));
-    const [goals, setGoals] = useState({
-        caloriesGoal: null,
-        weightGoal: null,
+  const theme = useTheme();
+  const { myUser, currentCaloriesGoal, currentWeightGoal } = useContext(UserContext);
+  const [goals, setGoals] = useState({
+    caloriesGoal: null,
+    weightGoal: null,
+  });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const currentDate = dayjs().format("YYYY-MM-DD")
+  
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const passGoalsData = async () => {
+    saveGoals(myUser.id, goals.caloriesGoal, goals.weightGoal, currentDate);
+    setIsModalOpen(true);
+    setGoals({
+      caloriesGoal: null,
+      weightGoal: null,
     });
-    const [currentCaloriesGoal, setCurrentCaloriesGoal] = useState(null)
-    const [currentWeightGoal, selCurrentWeightGoal] = useState(null)
-    const [isModalOpen, setIsModalOpen] = useState(false);
+  };
 
-    useEffect(() => {
-      console.log("currentCaloriesGoal" + currentCaloriesGoal)
-      console.log("currentWeightGoal" + currentWeightGoal)
-    }, [userLogs]);
+  const handleSubmit = (event) => {
+    event.preventDefault();
 
-    useEffect(() => {
-      const lastLoggedWeightGoal = () => {
-        for (let i = userLogs.length - 1; i >= 0; i--) {
-          const log = userLogs[i];
-          if (log.weightGoal !== null ) {
-            return log.weightGoal;
-          }
-        }
-        return null; // Return null if all logs have null weights
-      };
-      const lastW = lastLoggedWeightGoal () 
-      lastW ? selCurrentWeightGoal(lastW) : null
-    }, [userLogs]);
+    goals.caloriesGoal !== null && goals.weightGoal !== null
+      ? passGoalsData()
+      : alert("Please log weight and date");
+  };
 
-    useEffect(() => {
-      const lastLoggedCaloriesGoal = () => {
-        for (let i = userLogs.length - 1; i >= 0; i--) {
-          const log = userLogs[i];
-          if (log.caloriesGoal !== null ) {
-            return log.caloriesGoal;
-          }
-        }
-        return null; // Return null if all logs have null weights
-      };
-      const lastC = lastLoggedCaloriesGoal() 
-      lastC ? setCurrentCaloriesGoal(lastC) : null
-    }, [userLogs]);
+  const handleGoalChange = (event, type) => {
+    switch (type) {
+      case "weight":
+        const wVal = parseFloat(event.target.value);
+        setGoals((prevEntry) => ({
+          ...prevEntry,
+          weightGoal: wVal,
+        }));
+        break;
 
-    const handleCloseModal = () => {
-      setIsModalOpen(false);
-    };
+      case "calories":
+        const cVal = parseFloat(event.target.value);
+        setGoals((prevEntry) => ({
+          ...prevEntry,
+          caloriesGoal: cVal,
+        }));
+        break;
 
-    const passGoalsData = async () => {
-      saveGoals(myUser.id, goals.caloriesGoal, goals.weightGoal, currentDate) 
-      setIsModalOpen(true);
-      setGoals({
-        caloriesGoal: null,
-        weightGoal: null,
-      });
-    };
-  
-    const handleSubmit = (event) => {
-      event.preventDefault();
-  
-      goals.caloriesGoal !==  null && goals.weightGoal !==  null 
-        ? passGoalsData()
-        : alert("Please log weight and date");
-    };
-  
-    const handleGoalChange = (event, type) => {
-      switch (type) {
-        case 'weight':
-          const wVal= parseFloat(event.target.value);
-          setGoals((prevEntry) => ({
-            ...prevEntry,
-            weightGoal: wVal,
-          }));
-          break;
+      default:
+        break;
+    }
+  };
 
-        case 'calories':
-          const cVal= parseFloat(event.target.value);
-          setGoals((prevEntry) => ({
-            ...prevEntry,
-            caloriesGoal: cVal,
-          }));
-          break;
-      
-        default:
-          break;
-      }
-      };
+  return (
+    <>
+      <Stack
+        direction="column"
+        alignItems="flex-start"
+        height="auto"
+        padding="20px"
+        borderRadius="20px"
+        backgroundColor="white"
+        component={Paper}
+        sx={{
+          width: { xs: "90%", md: "40%" },
+          mb: "20px",
+        }}
+      >
+        <Typography
+          variant="h5" gutterBottom
+          sx={{ mb: "20px", textAlign: "center" }}
+        >
+          My current goals
+        </Typography>
+        {currentCaloriesGoal ? (
+          <Typography variant="subtitle1" sx={{ color: neutral[600] }}>
+             <span style={{ color: theme.palette.primary.main, fontSize:"20px" }}>{currentCaloriesGoal}</span> calories
+          </Typography>
+        ) : null}
+        {currentWeightGoal ? (
+          <Typography variant="subtitle1" sx={{ color: neutral[600] }}>
+            <span style={{ color: theme.palette.primary.main, fontSize:"20px"  }}>{currentWeightGoal} </span>weight
+          </Typography>
+        ) : null}
 
+        <PopupModal
+          text="Goal logged!"
+          open={isModalOpen}
+          onClose={handleCloseModal}
+        />
+      </Stack>
 
-    return (
       <Stack
         direction="column"
         alignItems="flex-start"
@@ -112,14 +115,14 @@ const Goals = () => {
           width: { xs: "90%", md: "40%" },
         }}
       >
-        <Typography
-          variant="h5"
-          sx={{ mb:"20px",
-            textAlign: "center",
-          }}
-        >
-          My current goals
-        </Typography>
+         <Typography
+        variant="h5" gutterBottom
+        sx={{ mb:"20px",
+          textAlign: "center",
+        }}
+      >
+        Log new goals
+      </Typography>
         <form
           onSubmit={handleSubmit}
           style={{
@@ -135,10 +138,10 @@ const Goals = () => {
             type="number"
             label="Calories daily"
             value={goals.caloriesGoal == null ? "" : goals.caloriesGoal}
-            onChange={(e) => handleGoalChange(e, 'calories')}
+            onChange={(e) => handleGoalChange(e, "calories")}
             sx={{
               width: "100%",
-              mb:"10px"
+              mb: "10px",
             }}
           />
 
@@ -146,17 +149,17 @@ const Goals = () => {
             type="number"
             label="Desired weight"
             value={goals.weightGoal == null ? "" : goals.weightGoal}
-            onChange={(e) => handleGoalChange(e, 'weight')}
+            onChange={(e) => handleGoalChange(e, "weight")}
             sx={{
               width: "100%",
-              mb:"10px"
+              mb: "10px",
             }}
           />
-  
-          <Button 
-          variant="contained" 
-          type="submit"
-          disabled={!goals.caloriesGoal}
+
+          <Button
+            variant="contained"
+            type="submit"
+            disabled={!goals.caloriesGoal}
           >
             Log goal
           </Button>
@@ -167,7 +170,8 @@ const Goals = () => {
           onClose={handleCloseModal}
         />
       </Stack>
-    );
-  };
+    </>
+  );
+};
 
-export default Goals
+export default Goals;

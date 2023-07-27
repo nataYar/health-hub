@@ -6,12 +6,19 @@ import {
 } from "@mui/material";
 
 import ProgressBar from "./ProgressBar";
-
 import RamenDiningRoundedIcon from "@mui/icons-material/RamenDiningRounded";
+import { extraColors } from '@/app/theme/colors';
 
-const CaloryWidget = () => {
+const CaloryWidget = ({ currentCaloriesGoal, caloriesToday } ) => {
+  console.log(currentCaloriesGoal, caloriesToday )
+  
+  let percentConsumed;
+  if (currentCaloriesGoal && caloriesToday) {
+    percentConsumed = (caloriesToday / currentCaloriesGoal) * 100;
+  }
+
   return (
-    <Card sx={{ p: "12px",  width: { xs: "100%", md: "280px" },  height: "140px"  }}>
+    <Card sx={{ p: "12px",  width: { xs: "100%", md: "280px" },  height: "170px"  }}>
       <Grid
         container
         direction="row"
@@ -27,7 +34,10 @@ const CaloryWidget = () => {
               mr: 1,
             }}
           >
-            50
+            {
+            currentCaloriesGoal && caloriesToday ?
+            currentCaloriesGoal-caloriesToday : null
+          }
           </Typography>
         </Grid>
         <Grid item>
@@ -66,8 +76,18 @@ const CaloryWidget = () => {
           </Grid>
         </Grid>
         <Grid item sx={{ mb: 1.25 }}>
-        <ProgressBar percentage="80" />
-            </Grid>
+        <ProgressBar percentage={percentConsumed} />
+          </Grid>
+          <Typography
+            variant="body2"
+              sx={{
+                fontWeight: 500,
+                color: "neutral.500",
+                mb: 0.75,
+              }}
+            >
+              <span style={{ color: extraColors.green }}>{caloriesToday}</span> out of <span style={{ color: extraColors.green }}>{currentCaloriesGoal}</span>
+            </Typography>
       </Grid>
     </Card>
   );

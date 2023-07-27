@@ -5,9 +5,10 @@ const Wrapper = ({ children }) => {
   return (
     <Stack
     direction='column'
-
       sx={{
-        padding: { xs: "90px 20px 20px 20px", md: "100px 30px 0px 270px" },
+        padding: { 
+          xs: "90px 20px 20px 20px", 
+          md: "120px 30px 0px 300px" },
         display: "flex",
         flexFlow: 'column wrap',
         alignItems: {xs: 'center', sm: 'flex-start'},

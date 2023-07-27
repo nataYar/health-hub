@@ -10,19 +10,23 @@ import { UserContext } from "../../context/userProvider";
 import dayjs from "dayjs";
 
 export default function Dashboard() {
-  const { userLogs} = useContext(UserContext);
-  // const [userLogs, setLogsData] = useState([]);
+  const { userLogs, userExercises, currentCaloriesGoal, currentWeightGoal } = useContext(UserContext);
   const [exercisesData, setExercisesArray] = useState([]);
+  const [weightData, setWeightData] = useState({
+    lastWeight: null,
+    firstWeight: null,
+  });
   const currentDate = dayjs().format("YYYY-MM-DD");
-  const [weightData, setWeightData] = useState({ 
-    lastWeight: null, 
-    firstWeight: null});
+  const [exercisesDuration, setExercisesDuration] = useState({
+    today: null,
+    average: null,
+  });
+  const [caloriesToday, setCaloriesToday] = useState(0)
 
   useEffect(() => {
     // console.log(exercisesData)
     // console.log(userLogs)
     // console.log(currentDate)
-
     const lastLoggedWeight = () => {
       for (let i = userLogs.length - 1; i >= 0; i--) {
         const log = userLogs[i];
@@ -40,8 +44,18 @@ export default function Dashboard() {
       return firstWeight;
     }, null);
     const lastWeight = lastLoggedWeight();
-    setWeightData({ lastWeight: lastWeight , firstWeight: firstLoggedWeight });
-  }, [userLogs, exercisesData])
+    setWeightData({ lastWeight: lastWeight, firstWeight: firstLoggedWeight });
+
+    // CALORIES consumed today
+    const logToday = userLogs.filter(day => day.date === currentDate)
+    if (logToday.length > 0) {
+      // Check if logToday array is not empty before accessing its properties
+      setCaloriesToday(logToday[0].calories)
+      console.log(logToday[0].calories);
+    } else {
+      console.log("No calories logged today.");
+    }
+  }, [userLogs]);
 
   return (
     <Box
@@ -71,8 +85,10 @@ export default function Dashboard() {
           mb: "20px",
         }}
       >
-        <CaloryWidget />
-        <WeightWidget weightData={weightData}/>
+        <CaloryWidget currentCaloriesGoal={currentCaloriesGoal} 
+        caloriesToday={caloriesToday}
+        />
+        <WeightWidget weightData={weightData} />
         <ExerciseWidget />
       </Box>
 

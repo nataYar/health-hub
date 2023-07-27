@@ -20,6 +20,37 @@ const UserProvider = ({ children }) => {
   const [userExercises, setUserExercises] = useState([])
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
+  const [currentCaloriesGoal, setCurrentCaloriesGoal] = useState(null);
+  const [currentWeightGoal, selCurrentWeightGoal] = useState(null);
+
+  useEffect(() => {
+    const lastLoggedWeightGoal = () => {
+      for (let i = userLogs.length - 1; i >= 0; i--) {
+        const log = userLogs[i];
+        if (log.weightGoal !== null) {
+          return log.weightGoal;
+        }
+      }
+      return null; // Return null if all logs have null weights
+    };
+    const lastW = lastLoggedWeightGoal();
+    lastW ? selCurrentWeightGoal(lastW) : null;
+  }, [userLogs]);
+
+  useEffect(() => {
+    const lastLoggedCaloriesGoal = () => {
+      for (let i = userLogs.length - 1; i >= 0; i--) {
+        const log = userLogs[i];
+        if (log.caloriesGoal !== null) {
+          return log.caloriesGoal;
+        }
+      }
+      return null; // Return null if all logs have null weights
+    };
+    const lastC = lastLoggedCaloriesGoal();
+    lastC ? setCurrentCaloriesGoal(lastC) : null;
+  }, [userLogs]);
+
   useEffect(() => {
     if(myUser.id.length > 0) {
       const subscription = DataStore.observeQuery(Log, (p) =>
@@ -83,7 +114,9 @@ const UserProvider = ({ children }) => {
     updateUser,
     screenWidth,
     userLogs,
-    userExercises
+    userExercises,
+    currentWeightGoal,
+    currentCaloriesGoal
   };
 
   return <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>;
