@@ -10,15 +10,27 @@ import RamenDiningRoundedIcon from "@mui/icons-material/RamenDiningRounded";
 import { extraColors } from '@/app/theme/colors';
 
 const CaloryWidget = ({ currentCaloriesGoal, caloriesToday } ) => {
-  console.log(currentCaloriesGoal, caloriesToday )
-  
   let percentConsumed;
   if (currentCaloriesGoal && caloriesToday) {
     percentConsumed = (caloriesToday / currentCaloriesGoal) * 100;
   }
 
+   // Function to determine the value to be rendered
+   const getCaloriesText = () => {
+    if (currentCaloriesGoal && caloriesToday) {
+      return currentCaloriesGoal - caloriesToday;
+    } else if (!currentCaloriesGoal && caloriesToday) {
+      return <>Consumed {caloriesToday}</>;
+    } else if (currentCaloriesGoal && !caloriesToday) {
+      return <>{currentCaloriesGoal}</>;
+    } else if (!currentCaloriesGoal && !caloriesToday) {
+      return <>'add consumed food to display calories'</>;
+    }
+  };
+
+
   return (
-    <Card sx={{ p: "12px",  width: { xs: "100%", md: "280px" },  height: "170px"  }}>
+    <Card sx={{ p: "12px",  width: { xs: "100%", md: "280px" },  height: "155px"  }}>
       <Grid
         container
         direction="row"
@@ -34,10 +46,11 @@ const CaloryWidget = ({ currentCaloriesGoal, caloriesToday } ) => {
               mr: 1,
             }}
           >
-            {
+              {getCaloriesText()}
+          {/* {
             currentCaloriesGoal && caloriesToday ?
             currentCaloriesGoal-caloriesToday : null
-          }
+          } */}
           </Typography>
         </Grid>
         <Grid item>
@@ -65,13 +78,13 @@ const CaloryWidget = ({ currentCaloriesGoal, caloriesToday } ) => {
             variant="body2"
               sx={{
                 fontWeight: 500,
-                color: "neutral.500",
+                color: "neutral.900",
                 mb: 0.75,
               }}
             >
-              Remaining calories 
-              <br/>
-              for today
+              Remaining calories for today
+              {/* <br/> */}
+              
             </Typography>
           </Grid>
         </Grid>
@@ -81,12 +94,11 @@ const CaloryWidget = ({ currentCaloriesGoal, caloriesToday } ) => {
           <Typography
             variant="body2"
               sx={{
-                fontWeight: 500,
                 color: "neutral.500",
                 mb: 0.75,
               }}
             >
-              <span style={{ color: extraColors.green }}>{caloriesToday}</span> out of <span style={{ color: extraColors.green }}>{currentCaloriesGoal}</span>
+              <span style={{ fontSize:"16px",color: extraColors.green }}>{caloriesToday ? caloriesToday : 0}</span> out of <span style={{ fontSize:"16px", color: extraColors.green }}>{currentCaloriesGoal}</span>
             </Typography>
       </Grid>
     </Card>

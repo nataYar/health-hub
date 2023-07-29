@@ -1,7 +1,7 @@
 "use client";
-import { useState, useContext} from "react";
-// import { UserContext } from "../../../context/userProvider";
+import { useEffect } from "react";
 import { Stack, Typography, useTheme } from "@mui/material";
+import dayjs from "dayjs";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -13,112 +13,81 @@ import {
 
 ChartJS.register(
   LineElement,
-  CategoryScale, //x axis
-  LinearScale, // y axis
+  CategoryScale,
+  LinearScale, 
   PointElement
 );
 
-const LineChart = () => {
-  // const { screenWidth } = useContext(UserContext);
+const LineChart = ({ logs }) => {
   const theme = useTheme();
-  
+  let labelArray ;
+  let weightArray;
+  let maxWeight;
+  let minWeight;
+  // Create an array to store weight values
+  if(logs){
+    labelArray = logs.map((log) => dayjs(log.date).format('MMMM D'));
+    weightArray = logs.map((log) => log.weight);
+    minWeight = Math.min(...weightArray);
+    maxWeight = Math.max(...weightArray);
+  }
+
+
 
   const weightData = {
-    labels: [
-      "January",
-      "February",
-      "January",
-      "February",
-      "January",
-      "February",
-      "January",
-      "February",
-      "January",
-      "February",
-      "January",
-      "February",
-      "January",
-      "February",
-      "January",
-      "February",
-      "January",
-      "February",
-
-      "January",
-      "February",
-      "January",
-      "February",
-      "January",
-      "February",
-      "January",
-      "February",
-      "January",
-      "February",
-      "January",
-      "February",
-      "January",
-      "February",
-
-    ],
+    labels: labelArray, //feed it data
     datasets: [
       {
         label: "Weight",
-        lineTension: 0.1,
-        backgroundColor: "#FFF",
+        tension: 0.4,
+        backgroundColor: "transparent",
         borderColor: theme.palette.primary.main,
-        borderCapStyle: "butt",
-        borderDash: [],
-        borderDashOffset: 0.0,
-        borderJoinStyle: "miter",
-        pointBorderColor: "#C3C4F9",
-        pointBackgroundColor: "#fff",
         pointBorderWidth: 1,
         pointHoverRadius: 5,
-        pointHoverBackgroundColor: "#312E81",
-        pointHoverBorderColor: "#312E81",
-        pointHoverBorderWidth: 2,
-        pointRadius: 1,
         pointHitRadius: 10,
-        data: [65, 59, 80],
+        data: weightArray, //feed it data
       },
     ],
   };
+ 
 
-  const weightValues = weightData.datasets[0].data;
-  const minWeight = Math.min(...weightValues);
-  const maxWeight = Math.max(...weightValues);
-  
   const options = {
     responsive: true,
     plugins: {
       legend: {
-        display: false, // Set display to false to hide the chart legend
+        display: false,
+      },
+    },
+    scales: {
+      y: {
+        ticks: {
+          stepSize: 1,
+        },
       },
     },
   };
 
-  
   return (
     <Stack
-    direction='column'
-    justifyContent='space-between'
+      direction="column"
+      justifyContent="space-between"
       sx={{
-         width: {
-          xs: '100%',
-          sm: '48%',
-          md: '500px',
-          lg: '500px'
-        } ,
+        width: {
+          xs: "100%",
+          sm: "48%",
+          md: "500px",
+          lg: "500px",
+        },
         height: {
-          xs: 'auto',
-          md: '400px',
+          xs: "auto",
+          md: "400px",
         },
         padding: "20px",
         backgroundColor: "white",
         borderRadius: "20px",
       }}
     >
-<Typography
+      <Typography
         variant="h5"
         sx={{
           mb: "20px",
@@ -126,9 +95,13 @@ const LineChart = () => {
       >
         Weight
       </Typography>
-      <Line options={options} 
-      redraw={true} 
-      data={weightData} width={'auto'} height={"165px"} />
+      <Line
+        options={options}
+        redraw={true}
+        data={weightData}
+        width={"auto"}
+        height={"165px"}
+      />
 
       <Typography variant="h5" sx={{ mt: "20px" }}>
         <span

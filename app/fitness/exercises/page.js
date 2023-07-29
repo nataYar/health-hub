@@ -11,53 +11,37 @@ import {
 import Exercises from "./Exercises";
 import ExercisesNextPagination from "./ExercisesNextPagination"
 
-const RenderExercises = () => {
-  const exerciseCount = 200;
-
-  const renderExercises = () => {
-    const exercises = [];
-
-    for (let i = 0; i < exerciseCount; i++) {
-      exercises.push(<Exercises key={i} />);
-    }
-
-    return exercises;
-  };
-
-  return <div>{renderExercises()}</div>;
-};
-
-
 const Exercise = () => {
   const [bodyParts, setBodyParts] = useState([]);
   const [bodyPart, setBodyPart] = useState('all');
   const [exercises, setExercises] = useState([])
 
-  // useEffect(() => {
-  //   const fetchExercisesData = async () => {
-  //     const bodyPartsData = await fetchData('https://exercisedb.p.rapidapi.com/exercises/bodyPartList', exerciseOptions);
+  useEffect(() => {
+    const fetchExercisesData = async () => {
+      const bodyPartsData = await fetchData('https://exercisedb.p.rapidapi.com/exercises/bodyPartList', exerciseOptions);
 
-  //     setBodyParts(['all', ...bodyPartsData]);
-  //   };
+      setBodyParts(['all', ...bodyPartsData]);
+    };
 
-  //   fetchExercisesData();
-  // }, []);
-
+    fetchExercisesData();
+  }, []);
+useEffect(()=>{
+  console.log(bodyParts),
+  console.log(exercises)
+}, bodyParts)
   return (
 
-      <Stack>
         <Box sx={{ width: "100%" }}>
-          {/* <HorizontalBar
+          <HorizontalBar
             data={bodyParts}
             bodyPart={bodyPart}
             bodyParts={bodyParts}
             setBodyPart={setBodyPart}
           />
-          <Exercises bodyPart={"bodyPart"} exercises={exercises} setExercises={setExercises}/> */}
-         <Exercises />
+          <Exercises bodyPart={bodyPart} exercises={exercises} setExercises={setExercises}/>
          {/* <ExercisesNextPagination /> */}
         </Box>
-      </Stack>
+
 
   );
 };

@@ -15,7 +15,7 @@ const ProgressBar = ({ percentage }) => {
     >
       <Box
         sx={{
-          width: `${percentage}%`,
+          width: `${percentage ? percentage : 0}%`,
           height: '100%',
           backgroundColor: 'extraColors.green',
         }}

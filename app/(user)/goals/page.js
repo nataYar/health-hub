@@ -5,9 +5,8 @@ import { UserContext } from "../../context/userProvider";
 import { Stack, TextField, Button, Typography, Paper, useTheme } from "@mui/material";
 import PopupModal from "../../../components/PopupModal";
 import { saveGoals } from "../../utils/userFn";
-import dayjs from "dayjs";
 import { neutral } from "@/app/theme/colors";
-
+import dayjs from "dayjs";
 
 const Goals = () => {
   const theme = useTheme();
@@ -87,7 +86,7 @@ const Goals = () => {
         </Typography>
         {currentCaloriesGoal ? (
           <Typography variant="subtitle1" sx={{ color: neutral[600] }}>
-             <span style={{ color: theme.palette.primary.main, fontSize:"20px" }}>{currentCaloriesGoal}</span> calories
+             <span style={{ color: theme.palette.primary.main, fontSize:"20px" }}>{currentCaloriesGoal}</span> calories daily
           </Typography>
         ) : null}
         {currentWeightGoal ? (

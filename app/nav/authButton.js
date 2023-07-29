@@ -39,9 +39,6 @@ const AuthButton = () => {
         py: "6px",
         mr: "16px",
         width: "contain",
-        "&:hover": {
-          backgroundColor: "primary.main",
-        },
       }}
     >
       <Box
@@ -54,9 +51,7 @@ const AuthButton = () => {
           fontWeight: 600,
           lineHeight: "24px",
           whiteSpace: "nowrap",
-          "&:hover": {
-            color: "white",
-          },
+         
         }}
       >
         {  myUser && myUser.id !== 'userId123' ?  "Sign out" : "Log in" }

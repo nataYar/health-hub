@@ -1,5 +1,6 @@
-"use client";
-import { useEffect, useState, useContext, useCallback } from "react";
+"use client"
+
+import { useState, useContext  } from "react";
 import {
   Box,
   Button,
@@ -62,6 +63,7 @@ const LogExercise = () => {
           p: "32px 24px",
           color: "neutral.800",
           borderRadius: "20px",
+          overflow:"visible"
         }}
       >
         <Typography variant="h5" gutterBottom>
@@ -128,7 +130,7 @@ const LogExercise = () => {
           <DataPickerContainer
             selectedDate={selectedDate}
             setSelectedDate={setSelectedDate}
-            widthMd="150px"
+            widthMd="160px"
           />
         </Box>
         <Button

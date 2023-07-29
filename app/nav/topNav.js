@@ -16,7 +16,6 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import AuthButton from "./authButton";
 import { useRouter } from "next/navigation";
-import { guestUser } from "../context/guestUser";
 
 
 const TopNav = ({ drawerWidth, handleDrawerToggle }) => {
@@ -32,9 +31,6 @@ const TopNav = ({ drawerWidth, handleDrawerToggle }) => {
     if (storedUser) {
       updateUser(JSON.parse(storedUser));
     } 
-    // else {
-    //   updateUser(guestUser);
-    // }
   }, []);
 
   useEffect(() => {

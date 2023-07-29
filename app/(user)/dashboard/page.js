@@ -11,22 +11,19 @@ import dayjs from "dayjs";
 
 export default function Dashboard() {
   const { userLogs, userExercises, currentCaloriesGoal, currentWeightGoal } = useContext(UserContext);
-  const [exercisesData, setExercisesArray] = useState([]);
   const [weightData, setWeightData] = useState({
     lastWeight: null,
     firstWeight: null,
   });
-  const currentDate = dayjs().format("YYYY-MM-DD");
-  const [exercisesDuration, setExercisesDuration] = useState({
-    today: null,
-    average: null,
-  });
-  const [caloriesToday, setCaloriesToday] = useState(0)
 
+  const [exercisesDuration, setExercisesDuration] = useState({
+    duration: null, 
+    average: null
+  });
+
+  const [caloriesToday, setCaloriesToday] = useState(0)
+  const currentDate = dayjs().format("YYYY-MM-DD");
   useEffect(() => {
-    // console.log(exercisesData)
-    // console.log(userLogs)
-    // console.log(currentDate)
     const lastLoggedWeight = () => {
       for (let i = userLogs.length - 1; i >= 0; i--) {
         const log = userLogs[i];
@@ -46,12 +43,23 @@ export default function Dashboard() {
     const lastWeight = lastLoggedWeight();
     setWeightData({ lastWeight: lastWeight, firstWeight: firstLoggedWeight });
 
+    // MINUTES
+    const totalDuration = userExercises.reduce((acc, exercise) => acc + parseInt(exercise.duration), 0);
+    const averageDuration = totalDuration / userExercises.length;
+
+    const exToday = userExercises.filter(day => day.date === currentDate)
+    if (exToday.length > 0) {
+      // Check if logToday array is not empty before accessing its properties
+      setExercisesDuration({duration: exToday[0].duration, average: averageDuration})
+    } else {
+      console.log("No exercises logged today.");
+    }
+
     // CALORIES consumed today
     const logToday = userLogs.filter(day => day.date === currentDate)
     if (logToday.length > 0) {
       // Check if logToday array is not empty before accessing its properties
       setCaloriesToday(logToday[0].calories)
-      console.log(logToday[0].calories);
     } else {
       console.log("No calories logged today.");
     }
@@ -60,10 +68,18 @@ export default function Dashboard() {
   return (
     <Box
       sx={{
-        width: { sm: "100%", lg: "85%" },
-        mx: "auto",
+        width: { sm: "100%", lg: "90%" },
+        // padding: { 
+        //   xs: "90px 20px 20px 20px", 
+        //   md: "120px 30px 30px 300px" },
         color: "neutral.800",
         borderRadius: "20px",
+        height:"auto",
+        // overflowY:"scroll",
+        display: "flex",
+        flexDirection: "column", // Add this to make the container flex column
+        flexGrow: 1, // Allow the container to grow to take available space
+        boxSizing: "border-box", 
       }}
     >
       <Box
@@ -88,8 +104,9 @@ export default function Dashboard() {
         <CaloryWidget currentCaloriesGoal={currentCaloriesGoal} 
         caloriesToday={caloriesToday}
         />
-        <WeightWidget weightData={weightData} />
-        <ExerciseWidget />
+        <ExerciseWidget exercisesDuration={exercisesDuration}/>
+        <WeightWidget weightData={weightData} currentWeightGoal={currentWeightGoal }/>
+        
       </Box>
 
       <Box
@@ -98,10 +115,10 @@ export default function Dashboard() {
         flexWrap="wrap"
         justifyContent="space-between"
         alignItems="flex-start"
-        sx={{ gap: "25px", width: "100%", height: "auto" }}
+        sx={{ gap: "25px", width: "100%"}}
       >
-        <LineChart />
-        <DonutChart />
+        <LineChart logs={userLogs}/>
+        <DonutChart logs={userLogs} currentDate={currentDate} />
       </Box>
     </Box>
   );

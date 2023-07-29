@@ -1,19 +1,19 @@
-'use client'
+"use client";
 import { useState } from "react";
-import { Card, Typography, Avatar, Grid, Box, Stack } from "@mui/material";
+import { Card, Typography, Avatar, Grid, Divider, Stack } from "@mui/material";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
-import { extraColors } from "@/app/theme/colors";
+import { extraColors, neutral } from "@/app/theme/colors";
 import ArrowDownwardOutlinedIcon from "@mui/icons-material/ArrowDownwardOutlined";
 
 import ArrowUpwardOutlinedIcon from "@mui/icons-material/ArrowUpwardOutlined";
 
-const WeightWidget = ({ weightData }) => {
-  const {lastWeight, firstWeight} = weightData;
-  const [currentWeight, setCurrentWeight] = useState("1978");
-  const [prevWeight, setPrevWeight] = useState("189");
+const WeightWidget = ({ weightData, currentWeightGoal }) => {
+  const { lastWeight, firstWeight } = weightData;
 
   return (
-    <Card sx={{ p: "12px",  width: { xs: "100%", md: "280px" },  height: "140px" }}>
+    <Card
+      sx={{ p: "12px", width: { xs: "100%", md: "280px" }, height: "155px" }}
+    >
       <Grid
         container
         direction="row"
@@ -56,70 +56,92 @@ const WeightWidget = ({ weightData }) => {
               variant="body2"
               sx={{
                 fontWeight: 500,
-                color: "neutral.500",
-                mb: 0.75,
+                color: "neutral.900",
               }}
             >
               Current weight
             </Typography>
           </Grid>
         </Grid>
-        <Grid item sx={{ mb: 1.25 }}>
+
+        <Grid item sx={{}}>
+          <Divider />
+          <Grid container justifyContent="space-between" width="100%">
+            
+              {lastWeight > currentWeightGoal ? (
+                <Typography
+                  variant="body2"
+                  sx={{
+                    color: "neutral.500",
+                  }}
+                >
+                  <span style={{ fontSize:"16px", color: "#6366F1" }}>
+                    {lastWeight - currentWeightGoal}{" "}
+                  </span>{" "}
+                  pounds untill weight goal
+                </Typography>
+              ) : null}
+          </Grid>
+        </Grid>
+
+        <Grid item sx={{ mb: 1.25, }}>
           {firstWeight > lastWeight ? (
-            <Stack direction="row" alignItems='center' p='0'>
+            <Stack direction="row" alignItems="center" p="0">
               <Avatar
                 variant="rounded"
                 sx={{
                   backgroundColor: "white",
                   color: "extraColors.green",
                   borderRadius: "50%",
-                  height:  "20px",
-                  width:'auto'
+                  height: "20px",
+                  width: "auto",
                 }}
               >
-                <ArrowDownwardOutlinedIcon sx={{ mr: "10px", height:'100%', width:'100%' }} />
+                <ArrowDownwardOutlinedIcon
+                  sx={{ mr: "5px", height: "100%", width: "100%" }}
+                />
               </Avatar>
-              <Typography variant="body1" 
-               sx={{
-                color: "extraColors.green",
-                mr:'10px'
-              }} >
-                {firstWeight - lastWeight} pounds</Typography>
-           
-              <Typography variant="body2"
-               sx={{
-                color: "neutral.500",
-                mr:'10px'
-              }}
-              >Since start</Typography>
+              <Typography
+                variant="body2"
+                sx={{
+                  color: "extraColors.green",
+                  mr: "10px",
+                  fontSize:"16px",
+                }}
+              >
+                {firstWeight - lastWeight}
+                <span style={{ fontSize:"14px" , color: neutral[500]}}> pounds </span>
+                <span style={{ fontSize:"14px", color: neutral[500]}}>  since start </span>
+              </Typography>
             </Stack>
           ) : (
-            <Stack direction="row" alignItems='center' p='0'>
+            <Stack direction="row" alignItems="center" p="0">
               <Avatar
                 variant="rounded"
                 sx={{
                   backgroundColor: "white",
                   color: "extraColors.red",
                   borderRadius: "50%",
-                  height:  "20px",
-                  width:'auto'
+                  height: "20px",
+                  width: "auto",
                 }}
               >
-                <ArrowUpwardOutlinedIcon sx={{ mr: "10px", height:'100%', width:'100%' }} />
+                <ArrowUpwardOutlinedIcon
+                  sx={{ mr: "5px", height: "100%", width: "100%" }}
+                />
               </Avatar>
-              <Typography variant="body1" 
-               sx={{
-                color: "extraColors.red",
-                mr:'10px'
-              }} >
-                { lastWeight - firstWeight} pounds</Typography>
-           
-              <Typography variant="body2"
-               sx={{
-                color: "neutral.500",
-                mr:'10px'
-              }}
-              >Since start</Typography>
+              <Typography
+                variant="body2"
+                sx={{
+                  color: "extraColors.red",
+                  mr: "10px",
+                  fontSize:"16px",
+                }}
+              >
+                {lastWeight - firstWeight}
+                <span style={{ fontSize:"14px",color: neutral[500] }}> pounds </span>
+                <span style={{ fontSize:"14px", color: neutral[500]}}>  since start </span>
+              </Typography>
             </Stack>
           )}
         </Grid>

@@ -1,130 +1,92 @@
-'use client'
-import { useState } from "react";
-import { Card, Typography, Avatar, Grid, Box, Stack } from "@mui/material";
+"use client";
+import { Card, Typography, Avatar, Grid, Divider } from "@mui/material";
+import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
+import { neutral } from "@/app/theme/colors";
 
-import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
-import ArrowDownwardOutlinedIcon from "@mui/icons-material/ArrowDownwardOutlined";
-import ArrowUpwardOutlinedIcon from "@mui/icons-material/ArrowUpwardOutlined";
+const ExerciseWidget = ({ exercisesDuration }) => {
+  const { duration, average } = exercisesDuration;
 
-const ExerciseWidget = () => {
   return (
-    <Card sx={{ p: "12px", height: "140px",
-    width: { xs: "100%", md: "280px" }, }}>
-    <Grid
-      container
-      direction="row"
-      justifyContent="space-between"
-      alignItems="baseline"
-      width="100%"
+    <Card
+      sx={{ p: "12px", height: "155px", width: { xs: "100%", md: "280px" } }}
     >
-      <Grid item>
-        <Typography
-          sx={{
-            fontSize: "2.125rem",
-            fontWeight: 500,
-            mr: 1,
-          }}
-        >
-          {/* {currentWeight} */}
-          25 <span style={{fontWeight: 500,
-          fontSize:'14px',
-          color: "#6C737F"}}> min</span>
-        </Typography>
-      </Grid>
-      <Grid item>
-        <Avatar
-          variant="rounded"
-          sx={{
-            backgroundColor: "white",
-            color: "primary.main",
-            mt: 1,
-            borderRadius: "50%",
-            height: "auto",
-            width: " auto",
-          }}
-        >
-          <FitnessCenterIcon sx={{ height: "30px", width: " 30px" }} />
-        </Avatar>
-      </Grid>
-    </Grid>
+      <Grid
+        container
+        direction="row"
+        justifyContent="space-between"
+        alignItems="baseline"
+        width="100%"
+      >
 
-    <Grid container direction="column">
-      <Grid item sx={{ mb: 1.25 }}>
-        <Grid container justifyContent="space-between" width="100%">
+        <Grid item>
+          <Typography
+            sx={{
+              fontSize: "2.125rem",
+              fontWeight: 500,
+              mr: 1,
+            }}
+          >
+            {duration}
+            <span
+              style={{
+                fontSize: "14px",
+                color: neutral[500],
+              }}
+            >
+               {duration ? " min" : null}
+            </span>
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Avatar
+            variant="rounded"
+            sx={{
+              backgroundColor: "white",
+              color: "primary.main",
+              mt: 1,
+              borderRadius: "50%",
+              height: "auto",
+              width: " auto",
+            }}
+          >
+            <FitnessCenterIcon sx={{ height: "30px", width: " 30px" }} />
+          </Avatar>
+        </Grid>
+      </Grid>
+
+      <Grid container direction="column">
+        <Grid item sx={{ mb: 1.25 }}>
+          <Grid container justifyContent="space-between" width="100%">
+            <Typography
+              variant="body2"
+              sx={{
+                fontWeight: 500,
+                color: "neutral.900",
+                mb: 0.75,
+              }}
+            >
+              Daily exercises
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid item sx={{ mb: 1.25 }}>
+        <Divider />
           <Typography
             variant="body2"
             sx={{
-              fontWeight: 500,
-              color: "neutral.500",
+              color: neutral[500],
               mb: 0.75,
             }}
           >
-            Daily activity
+            <span style={{ fontSize: "16px", color: "#6366F1" }}>
+              {average} min{" "}
+            </span>{" "}
+            - average time
           </Typography>
         </Grid>
       </Grid>
-      <Grid item sx={{ mb: 1.25 }}>
-        {/* {prevWeight > currentWeight ? (
-          <Stack direction="row" alignItems='center' p='0'>
-            <Avatar
-              variant="rounded"
-              sx={{
-                backgroundColor: "white",
-                color: "primary.main",
-                borderRadius: "50%",
-                height:  "20px",
-                width:'auto'
-              }}
-            >
-              <ArrowDownwardOutlinedIcon sx={{ mr: "10px", height:'100%', width:'100%' }} />
-            </Avatar>
-            <Typography variant="body1" 
-             sx={{
-              color: "primary.main",
-              mr:'10px'
-            }} >
-              {prevWeight - currentWeight} pounds</Typography>
-         
-            <Typography variant="body2"
-             sx={{
-              color: "neutral.500",
-              mr:'10px'
-            }}
-            >Since start</Typography>
-          </Stack>
-        ) : (
-          <Stack direction="row" alignItems='center' p='0'>
-            <Avatar
-              variant="rounded"
-              sx={{
-                backgroundColor: "white",
-                color: "primary.main",
-                borderRadius: "50%",
-                height:  "20px",
-                width:'auto'
-              }}
-            >
-              <ArrowUpwardOutlinedIcon sx={{ mr: "10px", height:'100%', width:'100%' }} />
-            </Avatar>
-            <Typography variant="body1" 
-             sx={{
-              color: "primary.main",
-              mr:'10px'
-            }} >
-              { currentWeight - prevWeight} pounds</Typography>
-         
-            <Typography variant="body2"
-             sx={{
-              color: "neutral.500",
-              mr:'10px'
-            }}
-            >Since start</Typography>
-          </Stack>
-        )} */}
-      </Grid>
-    </Grid>
-  </Card>
-  )
-}
+    </Card>
+  );
+};
 
-export default ExerciseWidget
+export default ExerciseWidget;

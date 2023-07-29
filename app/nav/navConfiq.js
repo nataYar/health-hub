@@ -24,7 +24,7 @@ export const navItems = [
       icon: <RamenDiningRoundedIcon />,
       link: '/food', 
       subItems: [
-        { text: 'Recipes', link: '/food/recipes' },
+        { text: 'Search Recipes', link: '/food/recipes' },
       ],
     },
     {
@@ -32,7 +32,7 @@ export const navItems = [
       icon: <FitnessCenterRoundedIcon />,
       link: '/fitness', 
       subItems: [
-        { text: 'Exercises', link: '/fitness/exercises' },
+        { text: 'Search Exercises', link: '/fitness/exercises' },
        
       ],
     },
@@ -40,13 +40,5 @@ export const navItems = [
       text: 'Weight Log',
       icon: <LocalHospitalRoundedIcon />, 
       link: '/health', 
-      // subItems: [
-      //   { text: 'Symptoms checker', link: '/health/symptoms' },
-      // ],
     },
-    // {
-    //   text: 'News',
-    //   icon: <NewspaperRoundedIcon />, 
-    //   link: '/news'
-    // },
   ];

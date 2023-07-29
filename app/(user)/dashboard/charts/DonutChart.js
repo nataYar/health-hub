@@ -1,26 +1,55 @@
 "use client";
+import { useEffect, useState } from "react";
 import { Stack, Typography, useTheme } from "@mui/material";
 import { extraColors } from "../../../theme/colors";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-
 import { Doughnut } from "react-chartjs-2";
+import dayjs from "dayjs";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const DonutChart = () => {
+const DonutChart = ({ logs, currentDate }) => {
+  const [nutrients, setNutrients] = useState({ carbs: null, fals: null, protein: null })
+  const [displayedDate, setDate] = useState('')
+  const [intro, setIntro] = useState("");
   const theme = useTheme();
 
-  const nutrients = {
-    carbs: 50,
-    protein: 20,
-    fat: 10,
-  };
+  useEffect(() => {
+    if (logs) {
+      // Create an array to store weight values
+      const log = logs.filter(el => el.date === currentDate);
+      if (log.length > 0) {
+        const el = log[0];
+        setNutrients({
+          carbs: el.carbs !== null ? el.carbs : 0,
+          fats: el.fats !== null ? el.fats : 0,
+          protein: el.protein !== null ? el.protein : 0
+        });
+        setDate(dayjs(currentDate).format('MMMM D'))
+      } else if (log.length == 0) {
+        for (let i = logs.length - 1; i >= 0; i--) {
+          const logEntry = logs[i];
+          if (logEntry.carbs !== null || logEntry.fats !== null || logEntry.protein !== null) {
+            console.log(logEntry.date)
+            setNutrients({
+              carbs: logEntry.carbs,
+              fats: logEntry.fats,
+              protein: logEntry.protein
+            });
+            setIntro('last log')
+            setDate(dayjs(logEntry.date).format('MMMM D'))
+            break;
+          }
+        }
+      }
+    }
+  }, [logs]);
 
   const data = {
     labels: ["Carbs", "Protein", "Fat"],
     datasets: [
       {
-        data: [nutrients.carbs, nutrients.protein, nutrients.fat],
+        data: [nutrients.carbs, nutrients.protein , nutrients.fats],
         backgroundColor: [
           extraColors.orange,
           extraColors.green,
@@ -48,7 +77,6 @@ const DonutChart = () => {
         height: {
           xs: "auto",
           sm: "450px",
-          md: "400px",
         },
         padding: "20px",
         backgroundColor: "white",
@@ -59,10 +87,27 @@ const DonutChart = () => {
       <Stack
         direction="row"
         width="100%"
-        justifyContent="center"
+        justifyContent="space-between"
         marginTop="20px"
+        alignItems="flex-start"
       >
-        <Typography variant="h5">
+
+        <Typography variant="h5" textAlign="left">
+          <span
+            style={{
+              color: theme.palette.neutral[400],
+              fontWeight: "normal",
+              fontSize: "12px",
+            }}
+          >
+            {intro}
+            
+          </span>
+          <br/>
+          {displayedDate}
+        </Typography>
+
+        <Typography variant="h5" textAlign="left">
           <span
             style={{
               color: theme.palette.neutral[400],
@@ -72,9 +117,10 @@ const DonutChart = () => {
           >
             carbs:{" "}
           </span>
+          <br/>
           {nutrients.carbs}
         </Typography>
-        <Typography variant="h5" sx={{ ml: "20px" }}>
+        <Typography variant="h5" textAlign="left">
           <span
             style={{
               color: theme.palette.neutral[400],
@@ -84,9 +130,10 @@ const DonutChart = () => {
           >
             protein:{" "}
           </span>
+          <br/>
           {nutrients.protein}
         </Typography>
-        <Typography variant="h5" sx={{ ml: "20px" }}>
+        <Typography variant="h5" textAlign="left">
           <span
             style={{
               color: theme.palette.neutral[400],
@@ -95,8 +142,10 @@ const DonutChart = () => {
             }}
           >
             fat:{" "}
+
           </span>
-          {nutrients.fat}
+          <br/>
+          {nutrients.fats}
         </Typography>
       </Stack>
     </Stack>
