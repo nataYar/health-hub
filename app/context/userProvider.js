@@ -18,7 +18,10 @@ const UserProvider = ({ children }) => {
   });
   const [userLogs, setUserLogs] = useState([])
   const [userExercises, setUserExercises] = useState([])
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [screenWidth, setScreenWidth] = useState(
+    typeof window !== 'undefined' ? window.innerWidth : 0
+  );
+  
 
   const [currentCaloriesGoal, setCurrentCaloriesGoal] = useState(null);
   const [currentWeightGoal, selCurrentWeightGoal] = useState(null);
