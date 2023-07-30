@@ -3,14 +3,14 @@ import { useState, useContext } from "react";
 import { useRouter } from "next/navigation";
 import { UserContext } from "../context/userProvider";
 import { TextField, Button } from "@mui/material";
-import awsExports from "../aws-exports";
+import awsmobile from "../aws-exports";
 import { Card, Paper } from "@mui/material";
 import EmailConfirmationForm from "./EmailConfirmationForm";
 import PopupModal from "../../components/PopupModal";
 import { Auth } from "aws-amplify";
 import { getUserFn } from "../utils/userFn";
 
-Auth.configure(awsExports);
+Auth.configure(awsmobile);
 
 function AuthContainer() {
   const { myUser, updateUser } = useContext(UserContext);

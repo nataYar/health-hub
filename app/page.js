@@ -1,4 +1,4 @@
-import RouteOnLoad from "@/components/RouteOnLoad";
+import RouteOnLoad from "../components/RouteOnLoad";
 
 export default function Home() {
   return (
