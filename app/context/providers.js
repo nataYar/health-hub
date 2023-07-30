@@ -7,8 +7,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { CssBaseline } from "@mui/material";
 import { Amplify } from 'aws-amplify'
-import awsmobile from "../aws-exports";
-Amplify.configure(awsmobile);
+import awsExports from "../aws-exports";
+Amplify.configure(awsExports);
 
 export function Providers({ children }) {
   const theme = createTheme();

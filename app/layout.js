@@ -1,10 +1,8 @@
 
 import Nav from './nav/nav';
 import { Providers } from './context/providers';
-
+import Wrapper from "../components/Wrapper";
 import './styles/globals.css';
-import Wrapper from '@/components/Wrapper';
-
 
 export const metadata = {
   title: 'Health Hub',
