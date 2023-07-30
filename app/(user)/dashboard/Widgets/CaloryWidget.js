@@ -24,7 +24,7 @@ const CaloryWidget = ({ currentCaloriesGoal, caloriesToday } ) => {
     } else if (currentCaloriesGoal && !caloriesToday) {
       return <>{currentCaloriesGoal}</>;
     } else if (!currentCaloriesGoal && !caloriesToday) {
-      return <>'add consumed food to display calories'</>;
+      return <span>Add consumed food to display calories</span>;
     }
   };
 
