@@ -5,8 +5,7 @@
 ./app/utils/.env.local
 
 node_modules
-.app/aws-exports.js
-aws-exports.js
+
 awsconfiguration.json
 amplifyconfiguration.json
 amplifyconfiguration.dart
@@ -15,8 +14,6 @@ amplify-gradle-config.json
 amplifytools.xcconfig
 .secret-*
 **.sample
-
-.next/cache/webpack/client-development/13.pack
 
 #amplify-do-not-edit-begin
 amplify/\#current-cloud-backend

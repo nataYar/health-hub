@@ -4,12 +4,10 @@ import { useState, useEffect } from "react";
 import HorizontalBar from "./HorizontalBar";
 import { exerciseOptions, fetchData } from "@/app/utils/exerciseData";
 import {
-  Stack,
   Box,
-  Typography,
 } from "@mui/material";
 import Exercises from "./Exercises";
-import ExercisesNextPagination from "./ExercisesNextPagination"
+
 
 const Exercise = () => {
   const [bodyParts, setBodyParts] = useState([]);
