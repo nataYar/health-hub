@@ -1,7 +1,7 @@
 
 import Nav from './nav/nav';
 import { Providers } from './context/providers';
-import Wrapper from "../components/Wrapper";
+import Wrapper from "./Wrapper";
 import './styles/globals.css';
 
 export const metadata = {
