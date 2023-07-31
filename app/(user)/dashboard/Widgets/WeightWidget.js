@@ -80,7 +80,19 @@ const WeightWidget = ({ weightData, currentWeightGoal }) => {
                   </span>{" "}
                   pounds untill weight goal
                 </Typography>
-              ) : null}
+              ) : (
+                <Typography
+                  variant="body2"
+                  sx={{
+                    color: "neutral.500",
+                  }}
+                >
+                  <span style={{ fontSize:"16px", color: "#6366F1" }}>
+                    {currentWeightGoal - lastWeight}{" "}
+                  </span>{" "}
+                  pounds untill weight goal
+                </Typography>
+              )}
           </Grid>
         </Grid>
 

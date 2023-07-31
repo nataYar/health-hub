@@ -8,13 +8,11 @@ import { guestUser } from "../context/guestUser";
 
 const AuthButton = () => {
   const { myUser, updateUser } = useContext(UserContext);
-
   const router = useRouter();
 
   async function signOut() {
     try {
       await Auth.signOut();
-      // updateUser(guestUser)
       router.push("/auth") 
     } catch (error) {
       console.log('error signing out: ', error);
@@ -54,7 +52,7 @@ const AuthButton = () => {
          
         }}
       >
-        {  myUser && myUser.id !== 'userId123' ?  "Sign out" : "Log in" }
+        {  myUser.id.length > 0  ?  "Sign out" : "Log in" }
       </Box>
     </ButtonBase>
   );

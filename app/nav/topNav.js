@@ -8,6 +8,7 @@ import {
   Box,
   IconButton,
   Toolbar,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -93,13 +94,13 @@ const TopNav = ({ drawerWidth, handleDrawerToggle }) => {
         <AuthButton />
 
         <Box sx={{ flexGrow: 0 }}>
-       
+          <Tooltip title={myUser.nickname}>
             <IconButton sx={buttonStyles}>
               <Typography variant="h2" sx={typographyStyles}>
                 {initials}
               </Typography>
             </IconButton>
-
+          </Tooltip>
         </Box>
       </Toolbar>
     </AppBar>

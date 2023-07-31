@@ -15,7 +15,6 @@ export function Providers({ children }) {
   useEffect(() => {
     document.body.style.overflow = "visible"; // Set overflow to visible on mount
     return () => {
-      // No need to reset the overflow here since we want it to remain visible
     };
   }, []);
 

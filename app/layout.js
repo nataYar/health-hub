@@ -18,7 +18,6 @@ export default function RootLayout({ children }) {
       </head>
       <body style={{ overflow: "visible" }}>
         <Providers>
-       
           <Nav />
           <Wrapper>
           {children}

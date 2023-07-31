@@ -2,8 +2,8 @@
 
 import { createContext, useState, useEffect } from 'react';
 import { DataStore } from "@aws-amplify/datastore";
-import { Exercise, Log } from "../models";
-
+import { User, Exercise, Log } from "../models";
+import { getUserFn } from '../utils/userFn'
 
 // Create the user context
 const UserContext = createContext();
@@ -21,10 +21,24 @@ const UserProvider = ({ children }) => {
   const [screenWidth, setScreenWidth] = useState(
     typeof window !== 'undefined' ? window.innerWidth : 0
   );
-  
-
   const [currentCaloriesGoal, setCurrentCaloriesGoal] = useState(null);
   const [currentWeightGoal, selCurrentWeightGoal] = useState(null);
+
+  // set the user as test User
+  // useEffect(() => {
+  //   const getUser = async() => {
+  //     const user = await getUserFn("n.yarysheva@gmail.com")
+  //     updateUser({
+  //       id: user.id, 
+  //       nickname: user.nickname,
+  //       email: user.email,
+  //     })
+  //     console.log(user)
+  //     return user
+  //   }
+  //   getUser()
+   
+  // }, [])
 
   useEffect(() => {
     const lastLoggedWeightGoal = () => {
@@ -54,6 +68,7 @@ const UserProvider = ({ children }) => {
     lastC ? setCurrentCaloriesGoal(lastC) : null;
   }, [userLogs]);
 
+  // keep Logs updated
   useEffect(() => {
     if(myUser.id.length > 0) {
       const subscription = DataStore.observeQuery(Log, (p) =>
@@ -71,6 +86,7 @@ const UserProvider = ({ children }) => {
     }
   }, [myUser]);
 
+  // keep user Exercises updated
   useEffect(() => {
     if(myUser.id.length > 0) {
       const subscription = DataStore.observeQuery(Exercise, (p) =>
