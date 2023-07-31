@@ -76,7 +76,7 @@ const DonutChart = ({ logs, currentDate }) => {
         },
         height: {
           xs: "auto",
-          sm: "450px",
+          sm: "480px",
         },
         padding: "20px",
         backgroundColor: "white",
@@ -93,7 +93,7 @@ const DonutChart = ({ logs, currentDate }) => {
           fontSize: "14px",
           color:  theme.palette.neutral[400],
           fontWeight:"500",
-          mb: "20px",
+          mb: "5px",
           lineHeight:"12px",
         }}
         >
@@ -106,7 +106,6 @@ const DonutChart = ({ logs, currentDate }) => {
             }}
           >
             {intro}
-            
           </span>
           <br/>
           {displayedDate}
