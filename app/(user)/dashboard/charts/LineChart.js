@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+
 import { Stack, Typography, useTheme } from "@mui/material";
 import dayjs from "dayjs";
 import { Line } from "react-chartjs-2";
@@ -26,12 +26,21 @@ const LineChart = ({ logs }) => {
   let minWeight;
   // Create an array to store weight values
   if(logs){
-    labelArray = logs.map((log) => dayjs(log.date).format('MMMM D'));
-    weightArray = logs.map((log) => log.weight);
+    labelArray = logs
+    .map((log) => {
+      if (typeof log.weight === 'number') {
+        // Only include the date if a weight is logged
+        return dayjs(log.date).format('MMMM D');
+      }
+      return null; // If there's no weight, return null
+    })
+    .filter((date) => date !== null); 
+    weightArray = logs.map((log) => log.weight).filter((num) => typeof num === 'number');;
     minWeight = Math.min(...weightArray);
     maxWeight = Math.max(...weightArray);
   }
 
+  console.log(weightArray)
 
 
   const weightData = {

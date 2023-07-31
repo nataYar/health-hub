@@ -2,9 +2,10 @@
 import { Card, Typography, Avatar, Grid, Divider } from "@mui/material";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import { neutral } from "@/app/theme/colors";
+import dayjs from "dayjs";
 
 const ExerciseWidget = ({ exercisesDuration }) => {
-  const { duration, average } = exercisesDuration;
+  const { duration, average, lastDate } = exercisesDuration;
 
   return (
     <Card
@@ -18,7 +19,7 @@ const ExerciseWidget = ({ exercisesDuration }) => {
         width="100%"
       >
 
-        <Grid item>
+        <Grid item display='flex' alignItems="baseline">
           <Typography
             sx={{
               fontSize: "2.125rem",
@@ -34,8 +35,20 @@ const ExerciseWidget = ({ exercisesDuration }) => {
               }}
             >
                {duration ? " min" : null}
+
             </span>
           </Typography>
+          {
+            lastDate ? (
+              <Typography variant="subtitle2"
+              sx={{ 
+                fontSize: "14px",
+              color: neutral[500],
+              fontWeight:"500"}}>
+              | {dayjs(lastDate).format("MMMM DD")}
+            </Typography>
+            ) : null
+          }
         </Grid>
         <Grid item>
           <Avatar

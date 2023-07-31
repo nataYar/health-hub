@@ -18,7 +18,8 @@ export default function Dashboard() {
 
   const [exercisesDuration, setExercisesDuration] = useState({
     duration: null, 
-    average: null
+    average: null,
+    lastDate: null
   });
 
   const [caloriesToday, setCaloriesToday] = useState(0)
@@ -48,11 +49,23 @@ export default function Dashboard() {
     const averageDuration = totalDuration / userExercises.length;
 
     const exToday = userExercises.filter(day => day.date === currentDate)
+    console.log(exToday)
     if (exToday.length > 0) {
       // Check if logToday array is not empty before accessing its properties
       setExercisesDuration({duration: exToday[0].duration, average: averageDuration})
-    } else {
-      console.log("No exercises logged today.");
+    } else  if((exToday.length == 0)){
+      const lastLoggedEx = () => {
+        for (let i = userExercises.length - 1; i >= 0; i--) {
+          const log = userExercises[i];
+          if (log.duration !== null) {
+            return log;
+          }
+        }
+      };
+      const lastDur = lastLoggedEx();
+      console.log(lastDur)
+      lastDur ? 
+      setExercisesDuration({duration: lastDur.duration, average: averageDuration, lastDate: lastDur.date}) : null
     }
 
     // CALORIES consumed today

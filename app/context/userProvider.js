@@ -33,11 +33,9 @@ const UserProvider = ({ children }) => {
         nickname: user.nickname,
         email: user.email,
       })
-      console.log(user)
       return user
     }
     getUser()
-   
   }, [])
 
   useEffect(() => {

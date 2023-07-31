@@ -17,14 +17,16 @@ const PopupModal = ({ text, open, onClose }) => {
     <Dialog
     style={{
       borderRadius:"12px",
+      width:"250px",
+      height: "200px"
     }}
       open={open}
       onClose={onClose}
       sx={{
         position: 'absolute',
-        top: '50%',
+        top: '100px',
         left: '50%',
-        transform: 'translate(-50%, -50%)',
+        transform: 'translateX(-50%)',
         zIndex: '100',
         display: 'flex',
         flexDirection: 'column',
