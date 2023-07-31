@@ -16,7 +16,7 @@ const ExerciseCard = ({ exercise }) => {
   return (
     <Stack
       sx={{
-        m: "50px",
+        m:  { xs: "0px", sm: "50px" },
         position: "relative",
         width: { xs: "100%", sm: "350px" },
         display: "flex",

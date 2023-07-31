@@ -83,21 +83,26 @@ const DonutChart = ({ logs, currentDate }) => {
         borderRadius: "20px",
       }}
     >
-      <Doughnut data={data} width={"100%"} height={"100%"} />
-      <Stack
-        direction="row"
-        width="100%"
-        justifyContent="space-between"
-        marginTop="20px"
-        alignItems="flex-start"
+      <Typography
+        variant="h5"
       >
-
-        <Typography variant="h5" textAlign="left">
+        Nutrients
+      </Typography>
+      <Typography variant="subtitle2" textAlign="left"
+        sx={{
+          fontSize: "14px",
+          color:  theme.palette.neutral[400],
+          fontWeight:"500",
+          mb: "20px",
+          lineHeight:"12px",
+        }}
+        >
           <span
             style={{
               color: theme.palette.neutral[400],
               fontWeight: "normal",
               fontSize: "12px",
+              lineHeight:"12px",
             }}
           >
             {intro}
@@ -106,7 +111,14 @@ const DonutChart = ({ logs, currentDate }) => {
           <br/>
           {displayedDate}
         </Typography>
-
+      <Doughnut data={data} width={"100%"} height={"100%"} />
+      <Stack
+        direction="row"
+        width="100%"
+        justifyContent="space-evenly"
+        marginTop="20px"
+        alignItems="flex-start"
+      >
         <Typography variant="h5" textAlign="left">
           <span
             style={{

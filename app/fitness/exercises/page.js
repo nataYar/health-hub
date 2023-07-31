@@ -28,7 +28,6 @@ useEffect(()=>{
   console.log(exercises)
 }, bodyParts)
   return (
-
         <Box sx={{ width: "100%" }}>
           <HorizontalBar
             data={bodyParts}

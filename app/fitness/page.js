@@ -57,7 +57,7 @@ const LogExercise = () => {
       <Box
         component={Paper}
         sx={{
-          width: "70%",
+          width: {xs: '100%', sm:"70%"},
           mb: "15px",
           mx: "auto",
           p: "32px 24px",
@@ -147,7 +147,7 @@ const LogExercise = () => {
       <Box
         component={Paper}
         sx={{
-          width: "70%",
+          width: {xs: '100%', sm:"70%"},
           mb: "15px",
           mx: "auto",
           p: "32px 24px",
