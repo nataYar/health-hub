@@ -1,3 +1,6 @@
+"use client";
+import { useContext } from "react";
+import { UserContext } from "../../../context/userProvider";
 import {
   Card,
   Typography,
@@ -10,6 +13,8 @@ import RamenDiningRoundedIcon from "@mui/icons-material/RamenDiningRounded";
 import { extraColors } from '@/app/theme/colors';
 
 const CaloryWidget = ({ currentCaloriesGoal, caloriesToday } ) => {
+  const { myUser, updateUser } = useContext(UserContext);
+
   let percentConsumed;
   if (currentCaloriesGoal && caloriesToday) {
     percentConsumed = (caloriesToday / currentCaloriesGoal) * 100;
@@ -24,7 +29,7 @@ const CaloryWidget = ({ currentCaloriesGoal, caloriesToday } ) => {
     } else if (currentCaloriesGoal && !caloriesToday) {
       return <>{currentCaloriesGoal}</>;
     } else if (!currentCaloriesGoal && !caloriesToday) {
-      return <span style={{ fontSize:"16px",color: extraColors.red }}> Add consumed food to display calories</span>;
+      return <span style={{ fontSize:"14px",color: extraColors.red }}> Add consumed food to display calories</span>;
     }
   };
 
@@ -38,19 +43,15 @@ const CaloryWidget = ({ currentCaloriesGoal, caloriesToday } ) => {
         alignItems="baseline"
         width="100%"
       >
-        <Grid item>
-          <Typography
+        <Grid item width='80%'>
+          <Typography variant="body1"
             sx={{
-              fontSize: "2.125rem",
+              fontSize: "14px",
               fontWeight: 500,
-              mr: 1,
+             lineHeight:""
             }}
           >
               {getCaloriesText()}
-          {/* {
-            currentCaloriesGoal && caloriesToday ?
-            currentCaloriesGoal-caloriesToday : null
-          } */}
           </Typography>
         </Grid>
         <Grid item>
@@ -90,16 +91,22 @@ const CaloryWidget = ({ currentCaloriesGoal, caloriesToday } ) => {
         </Grid>
         <Grid item sx={{ mb: 1.25 }}>
         <ProgressBar percentage={percentConsumed} />
-          </Grid>
-          <Typography
-            variant="body2"
-              sx={{
-                color: "neutral.500",
-                mb: 0.75,
-              }}
-            >
-              <span style={{ fontSize:"16px",color: extraColors.green }}>{caloriesToday ? caloriesToday : 0}</span> out of <span style={{ fontSize:"16px", color: extraColors.green }}>{currentCaloriesGoal}</span>
-            </Typography>
+        </Grid>
+        {
+          myUser.id.length > 0 ? (
+            <Grid item sx={{ mb: 1.25 }}>
+            <Typography
+                variant="body2"
+                  sx={{
+                    color: "neutral.500",
+                    mb: 0.75,
+                  }}
+                >
+                  <span style={{ fontSize:"16px",color: extraColors.green }}>{caloriesToday ? caloriesToday : 0}</span> out of <span style={{ fontSize:"16px", color: extraColors.green }}>{currentCaloriesGoal}</span>
+                </Typography>
+            </Grid>
+          ) : null
+        }
       </Grid>
     </Card>
   );

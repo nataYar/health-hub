@@ -1,10 +1,9 @@
 "use client";
-import { useState, useContext, useEffect } from "react";
+import { useContext } from "react";
 import { UserContext } from "../context/userProvider";
 import { Box, ButtonBase} from "@mui/material";
 import { useRouter } from "next/navigation";
 import { Auth } from "aws-amplify";
-import { guestUser } from "../context/guestUser";
 
 const AuthButton = () => {
   const { myUser, updateUser } = useContext(UserContext);
