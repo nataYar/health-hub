@@ -24,6 +24,7 @@ export default function Dashboard() {
 
   const [caloriesToday, setCaloriesToday] = useState(0)
   const currentDate = dayjs().format("YYYY-MM-DD");
+
   useEffect(() => {
     const lastLoggedWeight = () => {
       for (let i = userLogs.length - 1; i >= 0; i--) {
@@ -49,7 +50,6 @@ export default function Dashboard() {
     const averageDuration = totalDuration / userExercises.length;
 
     const exToday = userExercises.filter(day => day.date === currentDate)
-    console.log(exToday)
     if (exToday.length > 0) {
       // Check if logToday array is not empty before accessing its properties
       setExercisesDuration({duration: exToday[0].duration, average: averageDuration})
@@ -63,7 +63,6 @@ export default function Dashboard() {
         }
       };
       const lastDur = lastLoggedEx();
-      console.log(lastDur)
       lastDur ? 
       setExercisesDuration({duration: lastDur.duration, average: averageDuration, lastDate: lastDur.date}) : null
     }
@@ -82,13 +81,9 @@ export default function Dashboard() {
     <Box
       sx={{
         width: { sm: "100%", lg: "90%" },
-        // padding: { 
-        //   xs: "90px 20px 20px 20px", 
-        //   md: "120px 30px 30px 300px" },
         color: "neutral.800",
         borderRadius: "20px",
         height:"auto",
-        // overflowY:"scroll",
         display: "flex",
         flexDirection: "column", // Add this to make the container flex column
         flexGrow: 1, // Allow the container to grow to take available space
@@ -115,10 +110,10 @@ export default function Dashboard() {
         }}
       >
         <CaloryWidget currentCaloriesGoal={currentCaloriesGoal} 
-        caloriesToday={caloriesToday}
+        caloriesToday={caloriesToday} currentDate={currentDate}
         />
-        <ExerciseWidget exercisesDuration={exercisesDuration}/>
-        <WeightWidget weightData={weightData} currentWeightGoal={currentWeightGoal }/>
+        <ExerciseWidget exercisesDuration={exercisesDuration} currentDate={currentDate}/>
+        <WeightWidget weightData={weightData} currentWeightGoal={currentWeightGoal } currentDate={currentDate} />
         
       </Box>
 
@@ -130,8 +125,8 @@ export default function Dashboard() {
         alignItems="flex-start"
         sx={{ gap: "25px", width: "100%"}}
       >
-        <LineChart logs={userLogs}/>
         <DonutChart logs={userLogs} currentDate={currentDate} />
+        <LineChart logs={userLogs} currentDate={currentDate}/>
       </Box>
     </Box>
   );

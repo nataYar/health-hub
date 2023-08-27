@@ -10,6 +10,7 @@ export const createUserFn = async (nickname, email) => {
         Logs: [],
       })
     );
+    console.log(user)
     return user;
   } catch (error) {
     console.log("Error saving new user:", error);
@@ -28,7 +29,6 @@ export const getUserFn = async (email) => {
 
 export const saveLogFieldFn = async (userId, date, field, value) => {
   try {
-    console.log(userId, date, field, value);
     const logsByDate = await DataStore.query(Log, (log) => log.date.eq(date));
 
     // check if the Log exists

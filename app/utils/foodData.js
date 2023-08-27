@@ -31,8 +31,6 @@ export const fetchNutritionData = async (searchQuery) => {
     ? searchQuery.trim().split("\n")
         .map(str => str.trim().replace(/(^,)|(,$)/g, ''))
     : [searchQuery];
-   
-  
 
     console.log(ingr)
     const url = `https://api.edamam.com/api/nutrition-details?app_id=${nutritionApiId}&app_key=${nutritionApiKey}`;

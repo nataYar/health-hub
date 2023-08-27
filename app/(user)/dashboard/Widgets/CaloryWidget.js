@@ -17,7 +17,7 @@ const CaloryWidget = ({ currentCaloriesGoal, caloriesToday }) => {
 
   // Function to determine the value to be rendered
   const getCaloriesText = () => {
-    if (currentCaloriesGoal && caloriesToday) {
+    if (currentCaloriesGoal && caloriesToday && currentCaloriesGoal > caloriesToday) {
       return (
         <Typography
           variant="body1"
@@ -29,7 +29,20 @@ const CaloryWidget = ({ currentCaloriesGoal, caloriesToday }) => {
           {currentCaloriesGoal - caloriesToday}
         </Typography>
       );
-    } else if (!currentCaloriesGoal && caloriesToday) {
+    }  else if (currentCaloriesGoal && caloriesToday && currentCaloriesGoal < caloriesToday) {
+      return (
+        <Typography
+          variant="body1"
+          sx={{
+            fontSize: "2.125rem",
+            fontWeight: 500,
+          }}
+        >
+         "0"
+        </Typography>
+      );
+    }
+    else if (!currentCaloriesGoal && caloriesToday) {
       return (
         <Typography
           variant="body1"
@@ -46,7 +59,15 @@ const CaloryWidget = ({ currentCaloriesGoal, caloriesToday }) => {
         </Typography>
       );
     } else if (currentCaloriesGoal && !caloriesToday) {
-      return <>{currentCaloriesGoal}</>;
+      return (
+        <Typography
+        variant="body1"
+        sx={{
+          fontSize: "2.125rem",
+          fontWeight: 500,
+        }}
+      >{currentCaloriesGoal}</Typography>
+      )
     } else if (!currentCaloriesGoal && !caloriesToday) {
       return (
         <span style={{ fontSize: "14px", color: extraColors.red, lineHeight:"14px" }}>

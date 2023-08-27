@@ -9,38 +9,55 @@ import dayjs from "dayjs";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const DonutChart = ({ logs, currentDate }) => {
-  const [nutrients, setNutrients] = useState({ carbs: null, fals: null, protein: null })
-  const [displayedDate, setDate] = useState('')
+  const [nutrients, setNutrients] = useState({
+    carbs: null,
+    fals: null,
+    protein: null,
+  });
+  const [displayedDate, setDate] = useState("");
   const [intro, setIntro] = useState("");
   const theme = useTheme();
+  let nutrientsArray;
 
   useEffect(() => {
     if (logs) {
-      // Create an array to store weight values
-      const log = logs.filter(el => el.date === currentDate);
-      if (log.length > 0) {
-        const el = log[0];
-        setNutrients({
-          carbs: el.carbs !== null ? el.carbs : 0,
-          fats: el.fats !== null ? el.fats : 0,
-          protein: el.protein !== null ? el.protein : 0
-        });
-        setDate(dayjs(currentDate).format('MMMM D'))
-      } else if (log.length == 0) {
-        for (let i = logs.length - 1; i >= 0; i--) {
-          const logEntry = logs[i];
-          if (logEntry.carbs !== null || logEntry.fats !== null || logEntry.protein !== null) {
-            console.log(logEntry.date)
+      nutrientsArray = logs
+        .map((log) => {
+          // Only include the date is before or equal to the current date
+          const logDate = dayjs(log.date);
+          if (
+            logDate.isBefore(currentDate) ||
+            logDate.isSame(currentDate, "day")
+          ) {
+            return log;
+          }
+          return null;
+        })
+        .filter((log) => log !== null);
+      if (nutrientsArray.length > 0) {
+        for (let i = nutrientsArray.length - 1; i >= 0; i--) {
+          const logEntry = nutrientsArray[i];
+          if (
+            logEntry.carbs !== null ||
+            logEntry.fats !== null ||
+            logEntry.protein !== null
+          ) {
             setNutrients({
               carbs: logEntry.carbs,
               fats: logEntry.fats,
-              protein: logEntry.protein
+              protein: logEntry.protein,
             });
-            setIntro('last log')
-            setDate(dayjs(logEntry.date).format('MMMM D'))
+            setIntro("last log");
+            setDate(dayjs(logEntry.date).format("MMMM D"));
             break;
           }
         }
+      } else if (nutrientsArray.length == 0) {
+        setNutrients({
+          carbs: 0,
+          fats: 0,
+          protein: 0,
+        });
       }
     }
   }, [logs]);
@@ -49,7 +66,7 @@ const DonutChart = ({ logs, currentDate }) => {
     labels: ["Carbs", "Protein", "Fat"],
     datasets: [
       {
-        data: [nutrients.carbs, nutrients.protein , nutrients.fats],
+        data: [nutrients.carbs, nutrients.protein, nutrients.fats],
         backgroundColor: [
           extraColors.orange,
           extraColors.green,
@@ -71,45 +88,32 @@ const DonutChart = ({ logs, currentDate }) => {
       sx={{
         width: {
           xs: "100%",
-          sm: '48%',
+          sm: "48%",
           md: "350px",
         },
         height: {
           xs: "auto",
-          sm: "480px",
+          sm: "550px",
         },
         padding: "20px",
         backgroundColor: "white",
         borderRadius: "20px",
       }}
     >
+      <Typography variant="h5">Nutrients</Typography>
       <Typography
-        variant="h5"
-      >
-        Nutrients
-      </Typography>
-      <Typography variant="subtitle2" textAlign="left"
+        variant="subtitle2"
+        textAlign="left"
         sx={{
+          mb: "16px",
+          color: theme.palette.neutral[400],
+          fontWeight: "normal",
           fontSize: "14px",
-          color:  theme.palette.neutral[400],
-          fontWeight:"500",
-          mb: "5px",
-          lineHeight:"12px",
         }}
-        >
-          <span
-            style={{
-              color: theme.palette.neutral[400],
-              fontWeight: "normal",
-              fontSize: "12px",
-              lineHeight:"12px",
-            }}
-          >
-            {intro}
-          </span>
-          <br/>
-          {displayedDate}
-        </Typography>
+      >
+        {intro} - {displayedDate}
+      </Typography>
+
       <Doughnut data={data} width={"100%"} height={"100%"} />
       <Stack
         direction="row"
@@ -128,7 +132,7 @@ const DonutChart = ({ logs, currentDate }) => {
           >
             carbs:{" "}
           </span>
-          <br/>
+          <br />
           {nutrients.carbs}
         </Typography>
         <Typography variant="h5" textAlign="left">
@@ -141,7 +145,7 @@ const DonutChart = ({ logs, currentDate }) => {
           >
             protein:{" "}
           </span>
-          <br/>
+          <br />
           {nutrients.protein}
         </Typography>
         <Typography variant="h5" textAlign="left">
@@ -153,9 +157,8 @@ const DonutChart = ({ logs, currentDate }) => {
             }}
           >
             fat:{" "}
-
           </span>
-          <br/>
+          <br />
           {nutrients.fats}
         </Typography>
       </Stack>

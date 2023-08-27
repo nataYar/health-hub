@@ -1,5 +1,5 @@
 "use client";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { UserContext } from "../context/userProvider";
 import { alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
@@ -12,28 +12,13 @@ import {
   Typography,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import AuthButton from "./authButton";
-import { useRouter } from "next/navigation";
-
+import LogInButton from "./LogInButton";
+import SignOutButton from "./signOutButton";
+import GuestButton from "./guestUser";
 
 const TopNav = ({ drawerWidth, handleDrawerToggle }) => {
   const { myUser, updateUser } = useContext(UserContext);
-  const router = useRouter();
-
-
-  useEffect(() => {
-    const storedUser = localStorage.getItem('myUser');
-
-    if (storedUser) {
-      updateUser(JSON.parse(storedUser));
-    } 
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('myUser', JSON.stringify(myUser));
-  }, [myUser]);
-
-
+  
   const buttonStyles = {
     p: 0,
     backgroundColor: 'primary.main',
@@ -48,8 +33,6 @@ const TopNav = ({ drawerWidth, handleDrawerToggle }) => {
   };
 
   const initials = myUser && myUser.nickname  ? myUser.nickname[0].toUpperCase() : <Avatar sx={{ height:"48px", width:"48px"}}/>;
-
-
 
   return (
     <AppBar
@@ -91,7 +74,9 @@ const TopNav = ({ drawerWidth, handleDrawerToggle }) => {
           <MenuIcon />
         </IconButton>
 
-        <AuthButton />
+        { myUser.email == 'n.yarysheva@gmail.com' ? <GuestButton/> : null}
+        { myUser.email.length > 0 ? <SignOutButton text="Sign out"/> : <SignOutButton text="Log in"/> }
+        
 
         <Box sx={{ flexGrow: 0 }}>
           <Tooltip title={myUser.nickname}>

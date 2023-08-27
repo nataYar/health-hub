@@ -13,7 +13,7 @@ import { getUserFn } from "../utils/userFn";
 Auth.configure(awsmobile);
 
 function AuthContainer() {
-  const { myUser, updateUser } = useContext(UserContext);
+  const { updateUser } = useContext(UserContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [userEmail, setEmail] = useState("");
@@ -41,21 +41,29 @@ function AuthContainer() {
       return;
     }
     try {
-      const { user } = await Auth.signUp({
-        username: userEmail,
-        password,
-        attributes: {
-          email: userEmail,
-          nickname: nickname,
-        },
-        autoVerifyEmail: true,
-        autoSignIn: {
-          enabled: true,
-        },
-      });
+      const findUser = await getUserFn(userEmail)
 
-      setRequiresEmailConfirmation(true);
-      setEmail(user.username);
+      if(findUser){
+        console.log('findUser')
+        console.log(findUser)
+        alert('user exists')
+      } else if(!findUser){
+        const { user } = await Auth.signUp({
+          username: userEmail,
+          password,
+          attributes: {
+            email: userEmail,
+            nickname: nickname,
+          },
+          autoVerifyEmail: true,
+          autoSignIn: {
+            enabled: true,
+          },
+        });
+        setRequiresEmailConfirmation(true);
+        setEmail(user.username);
+      }
+      
     } catch (error) {
       console.log("error signing up:", error);
     }
@@ -63,15 +71,17 @@ function AuthContainer() {
 
   const handleSignIn = async () => {
     try {
-      const user = await Auth.signIn(userEmail, password);
+      // const user = await Auth.signIn(userEmail, password);
       const registeredUser = await getUserFn(user.attributes.email)
+      // console.log(user)
+      console.log(registeredUser)
+
       const { email, nickname, id } = registeredUser;
       updateUser({
         id: id,
         nickname: nickname,
         email: email,
       });
-
       router.push("./dashboard");
     } catch (error) {
       setIsModalOpen(true);

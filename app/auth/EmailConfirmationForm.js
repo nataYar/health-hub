@@ -20,7 +20,9 @@ function EmailConfirmationForm({ nickname, email }) {
     event.preventDefault();
     try {
       const data = await Auth.confirmSignUp(email, confirmationCode);
+      console.log(data)
       const newUser = await createUserFn(nickname, email); 
+      console.log(newUser)
       listenToAutoSignInEvent(newUser)
     } catch (error) {
       console.log(error);
@@ -33,8 +35,8 @@ function EmailConfirmationForm({ nickname, email }) {
       const { event } = payload;
       if (event === 'autoSignIn') {
         const user = payload.data;
-        //CREATE QUERY TO GET ALL LOGS AND EXERCISES, 
-        // STORE THEM IN MYUSER
+        
+       console.log(user)
         updateUser({
           nickname: newUser.nickname,
           email: newUser.email,
@@ -49,11 +51,8 @@ function EmailConfirmationForm({ nickname, email }) {
   }
 
   useEffect(() => {
-
      console.log(myUser)
-    
   }, [myUser]);
-
 
   return (
     <Box

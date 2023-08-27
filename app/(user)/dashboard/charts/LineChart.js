@@ -18,7 +18,7 @@ ChartJS.register(
   PointElement
 );
 
-const LineChart = ({ logs }) => {
+const LineChart = ({ logs, currentDate }) => {
   const theme = useTheme();
   let labelArray ;
   let weightArray;
@@ -28,19 +28,20 @@ const LineChart = ({ logs }) => {
   if(logs){
     labelArray = logs
     .map((log) => {
-      if (typeof log.weight === 'number') {
-        // Only include the date if a weight is logged
-        return dayjs(log.date).format('MMMM D');
+      // Only include the date if a weight is logged and the date is before or equal to the current date
+      const logDate = dayjs(log.date);
+      if (logDate.isBefore(currentDate) || logDate.isSame(currentDate, 'day')) {
+        return logDate.format('MMMM D');
       }
-      return null; // If there's no weight, return null
+      return null; 
     })
     .filter((date) => date !== null); 
-    weightArray = logs.map((log) => log.weight).filter((num) => typeof num === 'number');;
+    weightArray = logs.map((log) => log.weight).filter((num) => typeof num === 'number');
+   
     minWeight = Math.min(...weightArray);
+
     maxWeight = Math.max(...weightArray);
   }
-
-  console.log(weightArray)
 
 
   const weightData = {
@@ -122,7 +123,7 @@ const LineChart = ({ logs }) => {
         >
           max:{" "}
         </span>
-        {maxWeight}
+        {maxWeight ? maxWeight : "-" }
         <span
           style={{
             color: theme.palette.neutral[400],
@@ -133,7 +134,7 @@ const LineChart = ({ logs }) => {
         >
           min:{" "}
         </span>
-        {minWeight}
+        {minWeight  ? minWeight : "-" }
       </Typography>
     </Stack>
   );

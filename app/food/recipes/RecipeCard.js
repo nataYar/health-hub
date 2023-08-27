@@ -21,7 +21,9 @@ const RecipeCard = ({
   totalWeight,
 }) => {
   return (
-    <Card sx={{ width: "350px", height: "auto" }}>
+    <Card 
+    // sx={{ width: "350px", height: "auto" }}
+    >
       <CardHeader sx={{ textAlign: "center" }} title={title} />
 
       <Typography

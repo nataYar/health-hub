@@ -167,13 +167,13 @@ const Recipes = () => {
         </FormControl>
       </Stack>
 
-      <Masonry columns={{ xs: 1, md: 2, lg: 3 }} spacing={5}
-      height='auto'>
+      <Masonry columns={{ xs: 1, md: 2 }} spacing={4}
+      height='100%'>
         {recipes.length > 0 ? (
           recipes[0].hits.map(( el, index) => (
 
               <RecipeCard
-              key={index} 
+                key={index} 
                 title={el.recipe.label}
                 image={el.recipe.image}
                 calories={el.recipe.calories}

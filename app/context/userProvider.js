@@ -2,7 +2,7 @@
 
 import { createContext, useState, useEffect } from 'react';
 import { DataStore } from "@aws-amplify/datastore";
-import { User, Exercise, Log } from "../models";
+import { Exercise, Log } from "../models";
 import { getUserFn } from '../utils/userFn'
 
 // Create the user context
@@ -24,19 +24,32 @@ const UserProvider = ({ children }) => {
   const [currentCaloriesGoal, setCurrentCaloriesGoal] = useState(null);
   const [currentWeightGoal, selCurrentWeightGoal] = useState(null);
 
+  //  useEffect(() => {
+  //   const storedUser = localStorage.getItem('myUser');
+
+  //   if (storedUser) {
+  //     updateUser(JSON.parse(storedUser));
+  //   } 
+  // }, []);
+
+  // useEffect(() => {
+  //   localStorage.setItem('myUser', JSON.stringify(myUser));
+  // }, [myUser]);
+
+
   // set the user as test User
-  useEffect(() => {
-    const getUser = async() => {
-      const user = await getUserFn("n.yarysheva@gmail.com")
-      updateUser({
-        id: user.id, 
-        nickname: user.nickname,
-        email: user.email,
-      })
-      return user
-    }
-    getUser()
-  }, [])
+  // useEffect(() => {
+  //   const getUser = async() => {
+  //     const user = await getUserFn("n.yarysheva@gmail.com")
+  //     updateUser({
+  //       id: user.id, 
+  //       nickname: user.nickname,
+  //       email: user.email,
+  //     })
+  //     return user
+  //   }
+  //   getUser()
+  // }, [])
 
   useEffect(() => {
     const lastLoggedWeightGoal = () => {

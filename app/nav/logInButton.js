@@ -1,22 +1,9 @@
 "use client";
-import { useContext } from "react";
-import { UserContext } from "../context/userProvider";
 import { Box, ButtonBase} from "@mui/material";
 import { useRouter } from "next/navigation";
-import { Auth } from "aws-amplify";
 
-const AuthButton = () => {
-  const { myUser, updateUser } = useContext(UserContext);
+const LogInButton = () => {
   const router = useRouter();
-
-  async function signOut() {
-    try {
-      await Auth.signOut();
-      router.push("/auth") 
-    } catch (error) {
-      console.log('error signing out: ', error);
-    }
-  }
 
   const handleClick = () => {
      router.push("/auth") 
@@ -51,10 +38,10 @@ const AuthButton = () => {
          
         }}
       >
-        {  myUser.id.length > 0  ?  "Sign out" : "Log in" }
+        Log in
       </Box>
     </ButtonBase>
   );
 };
 
-export default AuthButton;
+export default LogInButton;
