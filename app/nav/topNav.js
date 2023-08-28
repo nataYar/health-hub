@@ -12,7 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import LogInButton from "./LogInButton";
+import LogInButton from "./logInButton";
 import SignOutButton from "./signOutButton";
 import GuestButton from "./guestUser";
 
