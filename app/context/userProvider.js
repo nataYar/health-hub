@@ -38,18 +38,18 @@ const UserProvider = ({ children }) => {
 
 
   // set the user as test User
-  // useEffect(() => {
-  //   const getUser = async() => {
-  //     const user = await getUserFn("n.yarysheva@gmail.com")
-  //     updateUser({
-  //       id: user.id, 
-  //       nickname: user.nickname,
-  //       email: user.email,
-  //     })
-  //     return user
-  //   }
-  //   getUser()
-  // }, [])
+  useEffect(() => {
+    const getUser = async() => {
+      const user = await getUserFn("n.yarysheva@gmail.com")
+      updateUser({
+        id: user.id, 
+        nickname: user.nickname,
+        email: user.email,
+      })
+      return user
+    }
+    getUser()
+  }, [])
 
   useEffect(() => {
     const lastLoggedWeightGoal = () => {
