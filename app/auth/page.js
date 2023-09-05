@@ -1,16 +1,17 @@
 "use client";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { UserContext } from "../context/userProvider";
 import { TextField, Button } from "@mui/material";
-import awsmobile from "../aws-exports";
+
 import { Card, Paper } from "@mui/material";
 import EmailConfirmationForm from "./EmailConfirmationForm";
 import PopupModal from "../../components/PopupModal";
 import { Auth } from "aws-amplify";
-import { getUserFn } from "../utils/userFn";
-
-Auth.configure(awsmobile);
+import { getUserFn, createUserFn } from "../utils/userFn";
+// import { DataStore } from "@aws-amplify/datastore";
+// import awsmobile from "../aws-exports";
+// Auth.configure(awsmobile);
 
 function AuthContainer() {
   const { updateUser } = useContext(UserContext);
@@ -29,6 +30,14 @@ function AuthContainer() {
     setIsModalOpen(false);
   };
 
+  // useEffect(() => {
+  //   const fn = async () => { 
+  //     await DataStore.clear()
+  //     await getUserFn('n')
+  //   }
+  //   fn()
+  // }, [])
+
   const handleSignUp = async () => {
     // Check if all required fields are filled
     if (!userEmail || !password || !confirmPassword || !nickname) {
@@ -42,12 +51,11 @@ function AuthContainer() {
     }
     try {
       const findUser = await getUserFn(userEmail)
-
+      console.log(findUser)
       if(findUser){
-        console.log('findUser')
-        console.log(findUser)
+        console.log('user exists')
         alert('user exists')
-      } else if(!findUser){
+      } else {
         const { user } = await Auth.signUp({
           username: userEmail,
           password,
@@ -63,7 +71,6 @@ function AuthContainer() {
         setRequiresEmailConfirmation(true);
         setEmail(user.username);
       }
-      
     } catch (error) {
       console.log("error signing up:", error);
     }
@@ -71,19 +78,25 @@ function AuthContainer() {
 
   const handleSignIn = async () => {
     try {
-      // const user = await Auth.signIn(userEmail, password);
+      console.log(userEmail, password);
+      const user = await Auth.signIn(userEmail, password);
+      console.log(user)
+
       const registeredUser = await getUserFn(user.attributes.email)
-      // console.log(user)
       console.log(registeredUser)
 
       const { email, nickname, id } = registeredUser;
+      
+    //  await createUser('nickname', 'wtf@gmail.com')  ;
+      
       updateUser({
         id: id,
         nickname: nickname,
         email: email,
       });
       router.push("./dashboard");
-    } catch (error) {
+    } 
+    catch (error) {
       setIsModalOpen(true);
       console.log("error signing in ", error);
     }

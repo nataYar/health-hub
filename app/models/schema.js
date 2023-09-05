@@ -17,17 +17,17 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "duration": {
-                    "name": "duration",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
                 "date": {
                     "name": "date",
                     "isArray": false,
                     "type": "AWSDate",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "duration": {
+                    "name": "duration",
+                    "isArray": false,
+                    "type": "Int",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -113,17 +113,31 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "fats": {
+                    "name": "fats",
+                    "isArray": false,
+                    "type": "Float",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "carbs": {
                     "name": "carbs",
                     "isArray": false,
-                    "type": "Int",
+                    "type": "Float",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "protein": {
+                    "name": "protein",
+                    "isArray": false,
+                    "type": "Float",
                     "isRequired": false,
                     "attributes": []
                 },
                 "weight": {
                     "name": "weight",
                     "isArray": false,
-                    "type": "Float",
+                    "type": "String",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -132,20 +146,6 @@ export const schema = {
                     "isArray": false,
                     "type": "ID",
                     "isRequired": true,
-                    "attributes": []
-                },
-                "fats": {
-                    "name": "fats",
-                    "isArray": false,
-                    "type": "Int",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "protein": {
-                    "name": "protein",
-                    "isArray": false,
-                    "type": "Int",
-                    "isRequired": false,
                     "attributes": []
                 },
                 "caloriesGoal": {
@@ -158,7 +158,7 @@ export const schema = {
                 "weightGoal": {
                     "name": "weightGoal",
                     "isArray": false,
-                    "type": "Int",
+                    "type": "Float",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -233,7 +233,7 @@ export const schema = {
                 "email": {
                     "name": "email",
                     "isArray": false,
-                    "type": "AWSEmail",
+                    "type": "String",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -315,5 +315,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "b0dee55ee1e18e0fb1d0ba1845a8e8c3"
+    "version": "037ce778e93a75b4865c68734532a567"
 };

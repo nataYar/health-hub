@@ -1,7 +1,7 @@
 {
   "version": 1,
   "serviceConfiguration": {
-    "apiName": "healthHub20",
+    "apiName": "HealthHub",
     "serviceName": "AppSync",
     "defaultAuthType": {
       "mode": "API_KEY",
@@ -15,7 +15,7 @@
     ],
     "conflictResolution": {
       "defaultResolutionStrategy": {
-        "type": "AUTOMERGE"
+        "type": "OPTIMISTIC_CONCURRENCY"
       }
     }
   }

@@ -24,18 +24,27 @@ const UserProvider = ({ children }) => {
   const [currentCaloriesGoal, setCurrentCaloriesGoal] = useState(null);
   const [currentWeightGoal, selCurrentWeightGoal] = useState(null);
 
-  //  useEffect(() => {
-  //   const storedUser = localStorage.getItem('myUser');
+   useEffect(() => {
+    // const storedUser = localStorage.getItem('myUser');
 
-  //   if (storedUser) {
-  //     updateUser(JSON.parse(storedUser));
-  //   } 
-  // }, []);
+    // if (storedUser) {
+    //   updateUser(JSON.parse(storedUser));
+    // } 
+
+    const startDataBase = async () =>{
+     
+      await DataStore.start();
+    }
+   startDataBase()
+  }, []);
 
   // useEffect(() => {
   //   localStorage.setItem('myUser', JSON.stringify(myUser));
   // }, [myUser]);
 
+ useEffect(() => {
+   console.log(myUser);
+  }, [myUser]);
 
   // set the user as test User
   useEffect(() => {
@@ -81,7 +90,7 @@ const UserProvider = ({ children }) => {
 
   // keep Logs updated
   useEffect(() => {
-    if(myUser.id.length > 0) {
+    if(myUser && myUser.id.length > 0) {
       const subscription = DataStore.observeQuery(Log, (p) =>
       p.userID.eq(myUser.id)
     ).subscribe((snapshot) => {

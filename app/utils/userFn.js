@@ -2,7 +2,9 @@ import { DataStore } from "@aws-amplify/datastore";
 import { Exercise, User, Log } from "../models";
 
 export const createUserFn = async (nickname, email) => {
+  
   try {
+   
     const user = await DataStore.save(
       new User({
         nickname: nickname,
@@ -19,7 +21,9 @@ export const createUserFn = async (nickname, email) => {
 
 export const getUserFn = async (email) => {
   try {
+    console.log(email)
     const user = await DataStore.query(User, (p) => p.email.eq(email));
+    console.log(user[0])
     return user[0];
   } catch (error) {
     console.log("Error saving new user:", error);
@@ -30,7 +34,6 @@ export const getUserFn = async (email) => {
 export const saveLogFieldFn = async (userId, date, field, value) => {
   try {
     const logsByDate = await DataStore.query(Log, (log) => log.date.eq(date));
-
     // check if the Log exists
     const logByUser = logsByDate.filter((log) => log.userID === userId);
 
@@ -66,6 +69,7 @@ export const saveLogFn = async (
   carbsVal
 ) => {
   try {
+   
     const logsByDate = await DataStore.query(Log, (log) => log.date.eq(date));
     // check if the Log exists
     const logByUser = logsByDate.filter((log) => log.userID === userId);
@@ -141,8 +145,9 @@ export const deleteExerciseFn = async (logID) => {
 
 export const saveGoals = async (userId, caloriesGoal, weightGoal, date) => {
   try {
-    console.log(userId, caloriesGoal, weightGoal)
+    console.log(userId, caloriesGoal, weightGoal, date)
     const logs = await DataStore.query(Log, (log) => log.userID.eq(userId));
+    console.log(logs)
     const lastLog = logs[logs.length - 1];
 
     if (logs.length > 0) {

@@ -1,0 +1,18 @@
+projects:
+  HealthHub-staging:
+    schemaPath: app/graphql/schema.json
+    includes:
+      - .app
+    excludes:
+      - ./amplify/**
+    extensions:
+      amplify:
+        codeGenTarget: javascript
+        generatedFileName: ''
+        docsFilePath: .
+        region: us-east-1
+        apiId: bi3aeiqn2zhtviogb5qeodnyoq
+        maxDepth: 2
+extensions:
+  amplify:
+    version: 3

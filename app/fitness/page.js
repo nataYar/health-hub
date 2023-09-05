@@ -49,7 +49,14 @@ const LogExercise = () => {
   };
 
   const handleDurationChange = (event) => {
-    setDuration(event.target.value);
+   // Get the input value as a string
+  const valueAsString = event.target.value;
+
+  // Use parseInt to convert the string to a number
+  const valueAsNumber = parseInt(valueAsString, 10);
+
+  // Set the duration to the parsed number
+  setDuration(valueAsNumber);
   };
 
   return (

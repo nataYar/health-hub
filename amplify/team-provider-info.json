@@ -1,21 +1,36 @@
 {
   "staging": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-healthhub20-staging-35110-authRole",
-      "UnauthRoleArn": "arn:aws:iam::614634849392:role/amplify-healthhub20-staging-35110-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::614634849392:role/amplify-healthhub20-staging-35110-authRole",
+      "AuthRoleName": "amplify-healthhub-staging-50926-authRole",
+      "UnauthRoleArn": "arn:aws:iam::614634849392:role/amplify-healthhub-staging-50926-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::614634849392:role/amplify-healthhub-staging-50926-authRole",
       "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-healthhub20-staging-35110-deployment",
-      "UnauthRoleName": "amplify-healthhub20-staging-35110-unauthRole",
-      "StackName": "amplify-healthhub20-staging-35110",
-      "StackId": "arn:aws:cloudformation:us-east-1:614634849392:stack/amplify-healthhub20-staging-35110/7ff43d10-25e7-11ee-a2bc-125b42ece115",
-      "AmplifyAppId": "d3cki944m0cp7q"
+      "DeploymentBucketName": "amplify-healthhub-staging-50926-deployment",
+      "UnauthRoleName": "amplify-healthhub-staging-50926-unauthRole",
+      "StackName": "amplify-healthhub-staging-50926",
+      "StackId": "arn:aws:cloudformation:us-east-1:614634849392:stack/amplify-healthhub-staging-50926/0dde3140-4a18-11ee-98dd-12c0d092d679",
+      "AmplifyAppId": "d3p7i6gdddchvw"
     },
     "categories": {
       "auth": {
-        "healthhub203540ac1a": {},
-        "healthHub20": {}
+        "HealthHub": {}
+      },
+      "api": {
+        "HealthHub": {}
       }
+    }
+  },
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-healthhub-dev-234407-authRole",
+      "UnauthRoleArn": "arn:aws:iam::614634849392:role/amplify-healthhub-dev-234407-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::614634849392:role/amplify-healthhub-dev-234407-authRole",
+      "Region": "us-west-1",
+      "DeploymentBucketName": "amplify-healthhub-dev-234407-deployment",
+      "UnauthRoleName": "amplify-healthhub-dev-234407-unauthRole",
+      "StackName": "amplify-healthhub-dev-234407",
+      "StackId": "arn:aws:cloudformation:us-west-1:614634849392:stack/amplify-healthhub-dev-234407/48ba2c30-4a25-11ee-8240-06d6fda7f303",
+      "AmplifyAppId": "d1ap7jhufuf0sl"
     }
   }
 }

@@ -22,7 +22,6 @@ function EmailConfirmationForm({ nickname, email }) {
       const data = await Auth.confirmSignUp(email, confirmationCode);
       console.log(data)
       const newUser = await createUserFn(nickname, email); 
-      console.log(newUser)
       listenToAutoSignInEvent(newUser)
     } catch (error) {
       console.log(error);
