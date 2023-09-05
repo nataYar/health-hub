@@ -1,5 +1,5 @@
 "use client";
-
+import { useState, useEffect } from "react";
 import { Stack, Typography, useTheme } from "@mui/material";
 import dayjs from "dayjs";
 import { Line } from "react-chartjs-2";
@@ -19,30 +19,39 @@ ChartJS.register(
 );
 
 const LineChart = ({ logs, currentDate }) => {
+  
+  const [maxWeight, setMaxWeight] = useState(null);
+  const [minWeight, setMinWeight] = useState(null);
   const theme = useTheme();
   let labelArray ;
   let weightArray;
-  let maxWeight;
-  let minWeight;
-  // Create an array to store weight values
-  if(logs){
-    labelArray = logs
-    .map((log) => {
-      // Only include the date if a weight is logged and the date is before or equal to the current date
-      const logDate = dayjs(log.date);
-      if (logDate.isBefore(currentDate) || logDate.isSame(currentDate, 'day')) {
-        return logDate.format('MMMM D');
+
+  useEffect(() =>{
+    console.log(minWeight)
+  }, [minWeight])
+
+  useEffect(() => {
+    if(logs){
+      // Create an array to store weight values
+      labelArray = logs
+      .map((log) => {
+        // Only include the date if a weight is logged and the date is before or equal to the current date
+        const logDate = dayjs(log.date);
+        if (logDate.isBefore(currentDate) || logDate.isSame(currentDate, 'day')) {
+          return logDate.format('MMMM D');
+        }
+        return null; 
+      })
+      .filter((date) => date !== null); 
+      weightArray = logs.map((log) => log.weight).filter((num) => typeof num === 'number');
+     
+      if(weightArray.length >0){
+        setMinWeight(Math.min(...weightArray))
+        setMaxWeight(Math.max(...weightArray))
       }
-      return null; 
-    })
-    .filter((date) => date !== null); 
-    weightArray = logs.map((log) => log.weight).filter((num) => typeof num === 'number');
-   
-    minWeight = Math.min(...weightArray);
-
-    maxWeight = Math.max(...weightArray);
-  }
-
+      
+    }
+  }, [logs])
 
   const weightData = {
     labels: labelArray, //feed it data
@@ -60,7 +69,6 @@ const LineChart = ({ logs, currentDate }) => {
     ],
   };
  
-
   const options = {
     responsive: true,
     plugins: {
@@ -134,7 +142,7 @@ const LineChart = ({ logs, currentDate }) => {
         >
           min:{" "}
         </span>
-        {minWeight  ? minWeight : "-" }
+        {minWeight ? minWeight : "-" }
       </Typography>
     </Stack>
   );

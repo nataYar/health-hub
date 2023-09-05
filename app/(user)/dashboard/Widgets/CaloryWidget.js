@@ -70,7 +70,7 @@ const CaloryWidget = ({ currentCaloriesGoal, caloriesToday }) => {
       )
     } else if (!currentCaloriesGoal && !caloriesToday) {
       return (
-        <span style={{ fontSize: "14px", color: extraColors.red, lineHeight:"14px" }}>
+        <span style={{ fontSize: "14px", color: neutral[500], lineHeight:"14px" }}>
           Add consumed food to display calories
         </span>
       );
